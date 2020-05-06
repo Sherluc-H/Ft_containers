@@ -6,7 +6,7 @@
 /*   By: lhuang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:51:24 by lhuang            #+#    #+#             */
-/*   Updated: 2020/05/04 01:16:14 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/05/06 00:00:32 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ ft::list<T>::list(InputIterator first, InputIterator last)
 {
 	this->first_el = NULL;
 	this->l_size = 0;
-	this->push_back(*first);
+	//this->push_back(*first);
 	while(first != last)
 	{
 		std::cout << "a" << std::endl;
@@ -265,15 +265,29 @@ template <class T>
 ft::list<T>::list(const list& l)
 {
 	std::cout << "list copy constructor" << std::endl;
-	this = l;
+	*this = l;
 }
 
 template <class T>
 ft::list<T> &ft::list<T>::operator=(const list& l)
 {
+	t_list_el *el;
 	std::cout << "list op=" << std::endl;
-	this->l = l.l;
-	this->l_size = l.l_size;
+//	this->first_el = l.first_el;
+//	this->l_size = l.l_size;
+	this->l_size = 0;
+	this->first_el = NULL;
+	if (l.l_size > 0)
+	{
+		el = l.first_el;
+		while (el->next)
+		{
+			this->push_back(el->value);
+			el = el->next;
+		}
+		this->push_back(el->value);
+	}
+	return (*this);
 }
 
 template <class T>
