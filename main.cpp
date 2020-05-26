@@ -6,7 +6,7 @@
 /*   By: lhuang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/05/06 00:10:39 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/05/26 18:57:39 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int		main(void)
 	ft_l.push_front(3);
 	std_l.push_front(2);
 	std_l.push_front(3);
+	ft_l.push_back(1);
+	std_l.push_back(1);
+//	ft_l.show_all();
 	std::cout << "fl size: " << ft_l.size() << std::endl;
 	std::cout << "fl: " << ft_l.max_size() << std::endl;
 	std::cout << "sl size: " << std_l.size() << std::endl;
@@ -118,6 +121,24 @@ int		main(void)
 	std::cout << "fl: " << ft_l5.back() << std::endl;
 	std::cout << "sl: " << std_l5.front() << std::endl;
 	std::cout << "sl: " << std_l5.back() << std::endl;
+
+	ft_l5 = ft_l6;
+	std_l5 = std_l6;
+	std::cout << "fl5 size: " << ft_l5.size() << std::endl;
+	std::cout << "sl5 size: " << std_l5.size() << std::endl;
+//	std::cout << "fl: " << ft_l5.front() << std::endl;
+//	std::cout << "fl: " << ft_l5.back() << std::endl;
+//	std::cout << "sl: " << std_l5.front() << std::endl;
+//	std::cout << "sl: " << std_l5.back() << std::endl;
+
+	const ft::list<int> ft_l8(5, 6);
+	const ft::list<int> std_l8(5, 6);
+	std::cout << "fl8 size: " << ft_l8.size() << std::endl;
+	std::cout << "sl8 size: " << std_l8.size() << std::endl;
+	std::cout << "fl: " << ft_l8.front() << std::endl;
+	std::cout << "fl: " << ft_l8.back() << std::endl;
+	std::cout << "sl: " << std_l8.front() << std::endl;
+	std::cout << "sl: " << std_l8.back() << std::endl;
 
 	return (0);
 }
