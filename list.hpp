@@ -6,7 +6,7 @@
 /*   By: lhuang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:51:24 by lhuang            #+#    #+#             */
-/*   Updated: 2020/05/26 19:10:35 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/05/30 00:15:06 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ namespace ft
 	template <class T>
 	class list
 	{
+		typedef T value_type;
+		typedef value_type& reference;
+		typedef const value_type& const_reference;
+		typedef size_t size_type;
 		typedef struct	s_list_el
 		{
 			struct s_list_el *previous;
-			T value;
+			value_type value;
 			struct s_list_el *next;
 		}				t_list_el;
 		public:
@@ -30,24 +34,24 @@ namespace ft
 				public:
 					iterator()
 					{
-						std::cout << "it default constructor" << std::endl;
+					//	std::cout << "it default constructor" << std::endl;
 					}
 					iterator(t_list_el* l, bool is_start): l(l), is_start(is_start), crement(0)
 					{
-						std::cout << "it param constructor" << std::endl;
+					//	std::cout << "it param constructor" << std::endl;
 					}
 					~iterator()
 					{
-						std::cout << "it destructor" << std::endl;
+					//	std::cout << "it destructor" << std::endl;
 					}
 					iterator(const iterator& it)
 					{
-						std::cout << "it copy constructor" << std::endl;
+					//	std::cout << "it copy constructor" << std::endl;
 						*this = it;
 					}
 					iterator &operator=(const iterator& it)
 					{
-						std::cout << "it op=" << std::endl;
+					//	std::cout << "it op=" << std::endl;
 						this->l = it.l;
 						this->is_start = it.is_start;
 						this->crement = it.crement;
@@ -65,7 +69,7 @@ namespace ft
 							return (false);
 						return (true);
 					}
-					T &operator*()
+					value_type &operator*()
 					{
 						return ((get_it_ptr_el(*this))->value);
 					}
@@ -142,20 +146,20 @@ namespace ft
 				public:
 					const_iterator(const t_list_el* l, bool is_start): l(l), is_start(is_start), crement(0)
 					{
-						std::cout << "it const param constructor" << std::endl;
+					//	std::cout << "it const param constructor" << std::endl;
 					}
 					~const_iterator()
 					{
-						std::cout << "it destructor" << std::endl;
+					//	std::cout << "it destructor" << std::endl;
 					}
 					const_iterator(const const_iterator& it)
 					{
-						std::cout << "it copy constructor" << std::endl;
+					//	std::cout << "it copy constructor" << std::endl;
 						*this = it;
 					}
 					const_iterator &operator=(const const_iterator& it)
 					{
-						std::cout << "it op=" << std::endl;
+					//	std::cout << "it op=" << std::endl;
 						this->l = it.l;
 						this->is_start = it.is_start;
 						this->crement = it.crement;
@@ -165,35 +169,192 @@ namespace ft
 				private:
 					const_iterator()
 					{
-						std::cout << "it default constructor" << std::endl;
+					//	std::cout << "it default constructor" << std::endl;
 					}
 					const t_list_el* l;
 					bool is_start;
 					int crement;
 			};
 			//add reverse_iterator && const_reverse_iterator
-			explicit list();
-			explicit list(int n, const T& val);
+			explicit list()
+			{
+			//	std::cout << "list default constructor" << std::endl;
+				this->first_el = NULL;
+				this->l_size = 0;
+			}
+			explicit list(size_type n, const value_type& val = value_type())
+			{
+				size_type i;
+
+			//	std::cout << "list fill constructor" << std::endl;
+				i = 0;
+				this->first_el = NULL;
+				this->l_size = 0;
+				while (i < n)
+				{
+					this->push_back(val);
+					i++;
+				}
+			}
 			template <class InputIterator>
-			list(InputIterator start, InputIterator end);
-			~list();
-			list(const list& l);
-			list &operator=(const list& l);
-			iterator begin();
-			const_iterator begin() const;
-			iterator end();
-			const_iterator end() const;
-			bool empty() const;
-			size_t size() const;
-			size_t max_size() const;
-			T &front();
-			const T &front() const;
-			T &back();
-			const T &back() const;
-			void push_front(const T& val);
-			void pop_front();
-			void push_back(const T& val);
-			void pop_back();
+			list(InputIterator start, InputIterator end)
+			{
+				this->first_el = NULL;
+				this->l_size = 0;
+				Construct<InputIterator, std::numeric_limits<InputIterator>::is_integer>()(start, end, this);
+			}
+			~list()
+			{
+			//	std::cout << "list destructor" << std::endl;
+				this->clear();
+			}
+			list(const list& l)
+			{
+			//	std::cout << "list copy constructor" << std::endl;
+				this->first_el = NULL;
+				this->l_size = 0;
+				*this = l;
+			}
+			list &operator=(const list& l)
+			{
+				t_list_el *el;
+
+			//	std::cout << "list op=" << std::endl;
+				this->clear();
+				this->first_el = NULL;
+				this->l_size = 0;
+				if (l.l_size > 0)
+				{
+					el = l.first_el;
+					while (el && el->next)
+					{
+						this->push_back(el->value);
+						el = el->next;
+					}
+					this->push_back(el->value);
+				}
+				return (*this);
+			}
+			iterator begin()
+			{
+				return (ft::list<T>::iterator(this->first_el, true));
+			}
+			const_iterator begin() const
+			{
+				return (ft::list<T>::const_iterator(this->first_el, true));
+			}
+			iterator end()
+			{
+				return (ft::list<T>::iterator(this->first_el, false));
+			}
+			const_iterator end() const
+			{
+				return (ft::list<T>::const_iterator(this->first_el, false));
+			}
+			bool empty() const
+			{
+				if (this->l_size == 0)
+					return (true);
+				return (false);
+			}
+			size_type size() const
+			{
+				return (this->l_size);
+			}
+			size_type max_size() const
+			{
+				return (std::numeric_limits<size_t>::max());
+			}
+			reference front()
+			{
+				return (this->first_el->value);
+			}
+			const_reference front() const
+			{
+				return (this->first_el->value);
+			}
+			reference back()
+			{
+				t_list_el *end_el;
+
+				end_el = this->first_el;
+				while (end_el && end_el->next)
+					end_el = end_el->next;
+				return (end_el->value);
+			}
+			const_reference back() const
+			{
+				t_list_el *end_el;
+
+				end_el = first_el;
+				while (end_el && end_el->next)
+					end_el = end_el->next;
+				return(end_el->value);
+			}
+			void push_front(const value_type& val)
+			{
+				t_list_el *new_el = new t_list_el;
+
+			//	std::cout << "push_front" << std::endl;
+				new_el->previous = NULL;
+				new_el->value = val;
+				new_el->next = this->first_el;
+				if (this->l_size)
+					this->first_el->previous = new_el;
+				this->first_el = new_el;
+				this->l_size = this->l_size + 1;
+			}
+			void pop_front()
+			{
+				t_list_el *tmp;
+
+				tmp = this->first_el;
+				this->first_el = this->first_el->next;
+				delete tmp;
+				this->l_size = this->l_size - 1;
+			}
+			void push_back(const value_type& val)
+			{
+				t_list_el *end_el;
+				t_list_el *new_el;
+
+			//	std::cout << "push_back" << std::endl;
+				if (this->l_size == 0)
+				{
+					this->push_front(val);
+					return ;
+				}
+				new_el = new t_list_el;
+				end_el = this->first_el;
+				while (end_el && end_el->next)
+					end_el = end_el->next;
+				new_el->previous = end_el;
+				new_el->value = val;
+				new_el->next = NULL;
+				end_el->next = new_el;
+				this->l_size = this->l_size + 1;
+			}
+			void pop_back()
+			{
+				t_list_el *new_end_el;
+				t_list_el *tmp;
+
+				tmp = this->first_el;
+				while(tmp && tmp->next)
+					tmp = tmp->next;
+				if (tmp && tmp->previous)
+				{
+					new_end_el = tmp->previous;
+					new_end_el->next = NULL;
+					delete tmp;
+				}
+				else
+				{
+					delete this->first_el;
+					this->first_el = NULL;
+				}
+				this->l_size = this->l_size - 1;
+			}
 			void clear()
 			{
 				while (this->l_size)
@@ -204,232 +365,56 @@ namespace ft
 		private:
 			t_list_el *first_el;
 			size_t l_size;
+			template <class U, bool>
+			class Construct
+			{
+				public:
+					Construct(){}
+					~Construct(){}
+				private:
+					Construct(const Construct& c);
+					Construct &operator=(const Construct& c);
+			};
+			template <class U>
+			class Construct<U, true>
+			{
+				public:
+					Construct(){}
+					~Construct(){}
+					void operator()(U n, U val, ft::list<T> *ctnr)
+					{
+						U i;
+
+						i = 0;
+						while (i < n)
+						{
+							ctnr->push_back(val);
+							i++;
+						}
+					}
+				private:
+					Construct(const Construct& c);
+					Construct &operator=(const Construct& c);
+			};
+			template <class U>
+			class Construct<U, false>
+			{
+				public:
+					Construct(){}
+					~Construct(){}
+					void operator()(U start, U end, ft::list<T> *ctnr)
+					{
+						while (start != end)
+						{
+							ctnr->push_back(*start);
+							start++;
+						}
+					}
+				private:
+					Construct(const Construct& c);
+					Construct &operator=(const Construct& c);
+			};
 	};
-}
-
-template <class T>
-ft::list<T>::list()
-{
-	std::cout << "list default constructor" << std::endl;
-	this->first_el = NULL;
-	this->l_size = 0;
-}
-
-template <class T>
-ft::list<T>::list(int n, const T& val)
-{
-	int i;
-
-	std::cout << "list fill constructor" << std::endl;
-	i = 0;
-	this->first_el = NULL;
-	this->l_size = 0;
-	while (i < n)
-	{
-		this->push_back(val);
-		i++;
-	}
-}
-
-template <class T>
-template <class InputIterator>
-ft::list<T>::list(InputIterator first, InputIterator last)
-{
-	this->first_el = NULL;
-	this->l_size = 0;
-	while(first != last)
-	{
-		this->push_back(*first);
-		first++;
-	}
-}
-
-template <class T>
-ft::list<T>::~list()
-{
-	std::cout << "list destructor" << std::endl;
-	this->clear();
-}
-
-template <class T>
-ft::list<T>::list(const list& l)
-{
-	std::cout << "list copy constructor" << std::endl;
-	this->first_el = NULL;
-	this->l_size = 0;
-	*this = l;
-}
-
-template <class T>
-ft::list<T> &ft::list<T>::operator=(const list& l)
-{
-	t_list_el *el;
-
-	std::cout << "list op=" << std::endl;
-	this->clear();
-	this->first_el = NULL;
-	this->l_size = 0;
-	if (l.l_size > 0)
-	{
-		el = l.first_el;
-		while (el && el->next)
-		{
-			this->push_back(el->value);
-			el = el->next;
-		}
-		this->push_back(el->value);
-	}
-	return (*this);
-}
-
-template <class T>
-typename ft::list<T>::iterator ft::list<T>::begin()
-{
-	return (ft::list<T>::iterator(this->first_el, true));
-}
-
-template <class T>
-typename ft::list<T>::const_iterator ft::list<T>::begin() const
-{
-	return (ft::list<T>::const_iterator(this->first_el, true));
-}
-
-template <class T>
-typename ft::list<T>::iterator ft::list<T>::end()
-{
-	return (ft::list<T>::iterator(this->first_el, false));
-}
-
-template <class T>
-typename ft::list<T>::const_iterator ft::list<T>::end() const
-{
-	return (ft::list<T>::const_iterator(this->first_el, false));
-}
-
-template <class T>
-bool ft::list<T>::empty() const
-{
-	if (this->l_size == 0)
-		return (true);
-	return (false);
-}
-
-template <class T>
-size_t ft::list<T>::size() const
-{
-	return (this->l_size);
-}
-
-template <class T>
-size_t ft::list<T>::max_size() const
-{
-	return (std::numeric_limits<size_t>::max());
-}
-
-template <class T>
-T &ft::list<T>::front()
-{
-	return (this->first_el->value);
-}
-
-template <class T>
-const T &ft::list<T>::front() const
-{
-	return (this->first_el->value);
-}
-
-template <class T>
-T &ft::list<T>::back()
-{
-	t_list_el *end_el;
-
-	end_el = this->first_el;
-	while (end_el && end_el->next)
-		end_el = end_el->next;
-	return (end_el->value);
-}
-
-template <class T>
-const T &ft::list<T>::back() const
-{
-	t_list_el *end_el;
-
-	end_el = first_el;
-	while (end_el && end_el->next)
-		end_el = end_el->next;
-	return(end_el->value);
-}
-
-template <class T>
-void ft::list<T>::push_front(const T& val)
-{
-	t_list_el *new_el = new t_list_el;
-
-	std::cout << "push_front" << std::endl;
-	new_el->previous = NULL;
-	new_el->value = val;
-	new_el->next = this->first_el;
-	if (this->l_size)
-		this->first_el->previous = new_el;
-	this->first_el = new_el;
-	this->l_size = this->l_size + 1;
-}
-
-template <class T>
-void ft::list<T>::pop_front()
-{
-	t_list_el *tmp;
-
-	tmp = this->first_el;
-	this->first_el = this->first_el->next;
-	delete tmp;
-	this->l_size = this->l_size - 1;
-}
-
-template <class T>
-void ft::list<T>::push_back(const T& val)
-{
-	t_list_el *end_el;
-	t_list_el *new_el;
-
-	std::cout << "push_back" << std::endl;
-	if (this->l_size == 0)
-	{
-		this->push_front(val);
-		return ;
-	}
-	new_el = new t_list_el;
-	end_el = this->first_el;
-	while (end_el && end_el->next)
-		end_el = end_el->next;
-	new_el->previous = end_el;
-	new_el->value = val;
-	new_el->next = NULL;
-	end_el->next = new_el;
-	this->l_size = this->l_size + 1;
-}
-
-template <class T>
-void ft::list<T>::pop_back()
-{
-	t_list_el *new_end_el;
-	t_list_el *tmp;
-
-	tmp = this->first_el;
-	while(tmp && tmp->next)
-		tmp = tmp->next;
-	if (tmp && tmp->previous)
-	{
-		new_end_el = tmp->previous;
-		new_end_el->next = NULL;
-		delete tmp;
-	}
-	else
-	{
-		delete this->first_el;
-		this->first_el = NULL;
-	}
-	this->l_size = this->l_size - 1;
 }
 
 template <class T>
