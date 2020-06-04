@@ -6,16 +6,17 @@
 /*   By: lhuang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:51:24 by lhuang            #+#    #+#             */
-/*   Updated: 2020/05/30 00:15:06 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/06/04 17:54:24 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <memory>
 #include <limits>
 
 namespace ft
 {
-	template <class T>
+	template <class T, class Alloc = std::allocator<T> >
 	class list
 	{
 		typedef T value_type;
@@ -237,19 +238,19 @@ namespace ft
 			}
 			iterator begin()
 			{
-				return (ft::list<T>::iterator(this->first_el, true));
+				return (ft::list<T, Alloc>::iterator(this->first_el, true));
 			}
 			const_iterator begin() const
 			{
-				return (ft::list<T>::const_iterator(this->first_el, true));
+				return (ft::list<T, Alloc>::const_iterator(this->first_el, true));
 			}
 			iterator end()
 			{
-				return (ft::list<T>::iterator(this->first_el, false));
+				return (ft::list<T, Alloc>::iterator(this->first_el, false));
 			}
 			const_iterator end() const
 			{
-				return (ft::list<T>::const_iterator(this->first_el, false));
+				return (ft::list<T, Alloc>::const_iterator(this->first_el, false));
 			}
 			bool empty() const
 			{
@@ -263,7 +264,10 @@ namespace ft
 			}
 			size_type max_size() const
 			{
-				return (std::numeric_limits<size_t>::max());
+				//return (std::numeric_limits<size_t>::max());
+				typename Alloc::template rebind<t_list_el>::other r;
+
+				return (r.max_size());
 			}
 			reference front()
 			{
@@ -293,8 +297,10 @@ namespace ft
 			}
 			void push_front(const value_type& val)
 			{
-				t_list_el *new_el = new t_list_el;
+			//	t_list_el *new_el = new t_list_el;
+				typename Alloc::template rebind<t_list_el>::other r;
 
+				t_list_el *new_el = r.allocate(1);
 			//	std::cout << "push_front" << std::endl;
 				new_el->previous = NULL;
 				new_el->value = val;
@@ -307,16 +313,20 @@ namespace ft
 			void pop_front()
 			{
 				t_list_el *tmp;
+				typename Alloc::template rebind<t_list_el>::other r;
 
 				tmp = this->first_el;
 				this->first_el = this->first_el->next;
-				delete tmp;
+				//delete tmp;
+				r.deallocate(tmp, 1);
+				r.destroy(tmp);
 				this->l_size = this->l_size - 1;
 			}
 			void push_back(const value_type& val)
 			{
 				t_list_el *end_el;
 				t_list_el *new_el;
+				typename Alloc::template rebind<t_list_el>::other r;
 
 			//	std::cout << "push_back" << std::endl;
 				if (this->l_size == 0)
@@ -324,7 +334,8 @@ namespace ft
 					this->push_front(val);
 					return ;
 				}
-				new_el = new t_list_el;
+				//new_el = new t_list_el;
+				new_el = r.allocate(1);
 				end_el = this->first_el;
 				while (end_el && end_el->next)
 					end_el = end_el->next;
@@ -338,6 +349,7 @@ namespace ft
 			{
 				t_list_el *new_end_el;
 				t_list_el *tmp;
+				typename Alloc::template rebind<t_list_el>::other r;
 
 				tmp = this->first_el;
 				while(tmp && tmp->next)
@@ -346,11 +358,15 @@ namespace ft
 				{
 					new_end_el = tmp->previous;
 					new_end_el->next = NULL;
-					delete tmp;
+					//delete tmp;
+					r.deallocate(tmp, 1);
+					r.destroy(tmp);
 				}
 				else
 				{
-					delete this->first_el;
+					//delete this->first_el;
+					r.deallocate(this->first_el, 1);
+					r.destroy(this->first_el);
 					this->first_el = NULL;
 				}
 				this->l_size = this->l_size - 1;
@@ -361,7 +377,7 @@ namespace ft
 					this->pop_front();
 			}
 
-			void show_all();
+//			void show_all();
 		private:
 			t_list_el *first_el;
 			size_t l_size;
@@ -416,7 +432,7 @@ namespace ft
 			};
 	};
 }
-
+/*
 template <class T>
 void ft::list<T>::show_all()
 {
@@ -433,4 +449,4 @@ void ft::list<T>::show_all()
 		el = el->next;
 		std::cout << el->value << std::endl;
 	}
-}
+}*/
