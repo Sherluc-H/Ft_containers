@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lhuang <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/25 14:56:25 by lhuang            #+#    #+#              #
-#    Updated: 2020/05/25 15:01:59 by lhuang           ###   ########.fr        #
+#    Updated: 2020/09/19 10:15:13 by lhuang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC= clang++
 CFLAGS= -Wall -Wextra -Werror
 RM= rm -f
 SRCS= main.cpp
-HEADERS= list.hpp
+HEADERS= list.hpp reverse_iterator.hpp
 
 all: $(NAME)
 
