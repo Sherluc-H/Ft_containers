@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 10:12:49 by lhuang            #+#    #+#             */
-/*   Updated: 2020/09/19 20:27:05 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/09/22 11:49:45 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ namespace ft
             template <class Iter>
             reverse_iterator(const reverse_iterator<Iter>& rev_it)
             {
-                this->base_it = rev_it.base_it;
+                *this = reverse_iterator(rev_it.base());
             }
             iterator_type base() const
             {

@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/09/19 21:05:11 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/09/22 13:44:34 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void ft_swap_check()
 	one.push_back(2);
 	one.push_back(3);
 	one.push_back(4);
-	one.push_back(5);
+	one.push_back(6);
 	T two;
 	two.push_back(10);
 	two.push_back(20);
@@ -165,18 +165,34 @@ void ft_swap_check()
 	else
 		std::cout << "smaller" << std::endl;
 	typename T::iterator one_it_begin = one.begin();
-	typename T::iterator one_it_end = one.end();
+	typename T::iterator one_it_begin2 = one.begin();
+	one_it_begin2--;
+	// one_it_begin2--;
+	// std::cout << "begin:" << *one_it_begin << &(*one_it_begin) << std::endl;
+	// std::cout << "begin:" << *one_it_begin2 << &(*one_it_begin2) << std::endl;
+	if (one_it_begin == one_it_begin2)
+		std::cout << "same" << std::endl;
+	else
+		std::cout << "not same" << std::endl;
+	// one_it_begin--;
+	// std::cout << "b" << *one_it_begin << &(*one_it_begin) << std::endl;
+	// one_it_begin--;
+	// std::cout << "b" << *one_it_begin << &(*one_it_begin) << std::endl;
+	// one_it_begin--;
+	// one_it_begin--;
+	// one_it_begin++;
+	std::cout << "b" << *one_it_begin << &(*one_it_begin) << std::endl;
 	typename T::iterator two_it_begin = two.begin();
-	// typename T::iterator two_it_end =
 	// one.insert(one_it_begin, 1, 2);
-	// one.assign(1, 2);
+	one.assign(1, 2);
 	// typename T::iterator two_it_end = two.end();
 	// std::swap(one, two);
 	one.swap(two);
 	std::cout << "c" << std::endl;
-	// two.push_back(60);
+	two.push_back(60);//il y avait probleme ici
 	std::cout << "d" << std::endl;
 	typename T::iterator two_it_end = two.end();
+	typename T::iterator one_it_end = one.end();
 	// std::swap(one, two);
 	std::cout << "e" << std::endl;
 	while (one_it_begin != two_it_end)
@@ -184,9 +200,11 @@ void ft_swap_check()
 		std::cout << "one: " << *one_it_begin << std::endl;
 		one_it_begin++;
 	}
+	one_it_end--;
+	std::cout << "end" << *one_it_end << std::endl;
 	while (two_it_begin != one_it_end)
 	{
-		std::cout << "two: " << *two_it_begin << std::endl;
+		std::cout << "two" << *two_it_begin << std::endl;
 		two_it_begin++;
 	}
 	std::cout << "here" << std::endl;
@@ -242,7 +260,8 @@ void ft_reverse_iterator_check()
 		std::cout << *d << "|" << &(*d) << std::endl;
 		d++;
 	}
-	// l.sort();//un soucis ici
+	l.sort();//il y avait un soucis ici
+	std::cout << l.front() << std::endl;
 	l.pop_front();
 	b = l.begin();
 	e = l.end();
@@ -261,7 +280,8 @@ typedef struct	s_data
 	int b;
 }				t_data;
 
-int		main(int argc, char *argv[])
+template <class T>
+void ft_data_type_struct_check()
 {
 	t_data data;
 	data.a = 1;
@@ -269,12 +289,74 @@ int		main(int argc, char *argv[])
 	data.b = 2;
 	t_data *test = &data;
 	std::cout << test->a << "|" << (*test).a << std::endl;
-	ft::list<s_data> list;
+	T list;
 	list.push_back(data);
+	std::cout << list.front().b << std::endl;
 	list.pop_front();
 	std::cout << "here" << std::endl;
-	// std::list<s_data>::iterator ita = list.begin();
+	// typename T::iterator ita = list.begin();
 	// std::cout << ita->a << ita->s << ita->b << std::endl;
+}
+
+template <class T>
+void ft_const_check()
+{
+	std::cout << "---const check---" << std::endl;
+	T cl;
+	cl.push_back(1);
+	cl.push_back(2);
+	typename T::iterator it_begin = cl.begin();
+	typename T::iterator it_end = cl.end();
+	*it_begin = 3;
+	while (it_begin != it_end)
+	{
+		std::cout << *it_begin << std::endl;
+		it_begin++;
+	}
+	const T cl2 = cl;
+	typename T::const_iterator cit_begin = cl2.begin();
+	typename T::const_iterator cit_end = cl2.end();
+	// *cit_begin = 3;
+	while (cit_begin != cit_end)
+	{
+		std::cout << *cit_begin << std::endl;
+		cit_begin++;
+	}
+
+	typename T::reverse_iterator rit_begin = cl.rbegin();
+	typename T::reverse_iterator rit_end = cl.rend();
+	*rit_begin = 6;
+	while (rit_begin != rit_end)
+	{
+		std::cout << *rit_begin << std::endl;
+		rit_begin++;
+	}
+	if (rit_begin == rit_end)
+		std::cout << "same" << std::endl;
+	else
+		std::cout << "not same" << std::endl;
+	// std::reverse_iterator<std::list<int>::iterator> cc = cl.rbegin();
+	// std::cout << *cc << std::endl;
+	// *cc = 1;
+	// typename T::const_reverse_iterator cri = cl.rbegin();//ne marchait pas
+	// ft::reverse_iterator<ft::list<int>::iterator> cd = cl.rbegin();
+	// *cd = 1;
+	T clr = cl;
+	typename T::reverse_iterator cri = clr.rbegin();
+	std::cout << *cri << std::endl;
+	*cri = 8;
+
+	typename T::const_reverse_iterator r2 = clr.rend();
+	r2 = cri;
+	std::cout << *r2 << std::endl;
+	*cri = 9;
+	// *r2 = 10;
+	*cri = 7;
+	std::cout << *r2 << std::endl;
+}
+
+int		main(int argc, char *argv[])
+{
 	std::string arg_str;
 	if (argc > 1)
 		arg_str = argv[1];
@@ -284,6 +366,8 @@ int		main(int argc, char *argv[])
 		ft_iterator_check<ft::list<int>>();
 		ft_swap_check<ft::list<int>>();
 		ft_reverse_iterator_check<ft::list<int>>();
+		ft_data_type_struct_check<ft::list<t_data>>();
+		ft_const_check<ft::list<int>>();
 	}
 	else if (argc == 2 && arg_str.compare("std") == 0)
 	{
@@ -291,6 +375,8 @@ int		main(int argc, char *argv[])
 		ft_iterator_check<std::list<int>>();
 		ft_swap_check<std::list<int>>();
 		ft_reverse_iterator_check<std::list<int>>();
+		ft_data_type_struct_check<std::list<t_data>>();
+		ft_const_check<std::list<int>>();
 	}
 	else
 		std::cout << "Wrong arguments" << std::endl;

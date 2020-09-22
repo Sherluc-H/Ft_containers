@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:51:24 by lhuang            #+#    #+#             */
-/*   Updated: 2020/09/19 20:47:43 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/09/22 13:50:35 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ namespace ft
 		public:
 			typedef T											value_type;
 			typedef Alloc										allocator_type;
-			typedef typename allocator_type::reference			reference;
-			typedef typename allocator_type::const_reference	const_reference;
-			typedef typename allocator_type::pointer			pointer;
-			typedef typename allocator_type::const_pointer		const_pointer;
+			typedef value_type&									reference;
+			typedef const value_type&							const_reference;
+			typedef value_type*									pointer;
+			typedef const value_type*							const_pointer;
 			typedef ptrdiff_t									difference_type;
 			typedef size_t										size_type;
 			
@@ -42,10 +42,10 @@ namespace ft
 				public:
 					typedef value_type value_type;
 					typedef difference_type difference_type;
-					typedef pointer pointer;
-					typedef reference reference;
+					typedef value_type* pointer;
+					typedef value_type& reference;
 					typedef ft::bidirectional_iterator_tag iterator_category;
-				// public:
+
 					iterator()
 					{
 						this->el = NULL;
@@ -76,35 +76,38 @@ namespace ft
 					}
 					bool operator==(const iterator& it2)
 					{
-						// std::cout << "a" << std::endl;
 						t_list_el *one = this->el;
 						t_list_el *two = it2.el;
-						// std::cout << this->crement << "|" << it2.crement << std::endl;
 						int i = 0;
 						while (i < this->crement)
 						{
-							// if (one)
-								one = one->next;
+							one = one->next;
+							i++;
+						}
+						i = 0;
+						while (this->crement + i < 0)
+						{
+							one = one->previous;
 							i++;
 						}
 						i = 0;
 						while (i < it2.crement)
 						{
-							// if (two)
-								two = two->next;
+							two = two->next;
 							i++;
 						}
-						// std::cout << "hereb" << one << "|" << two << std::endl;
+						i = 0;
+						while (it2.crement + i < 0)
+						{
+							two = two->previous;
+							i++;
+						}
 						if (one == two)
 							return (true);
 						return (false);
-						// if ((this->el) == it2.el)
-						// 	return (true);
-						// return (false);
 					}
 					bool operator!=(const iterator& it2)
 					{
-						// std::cout << "in" << std::endl;
 						return (!(*this == it2));
 					}
 					value_type &operator*()
@@ -123,53 +126,35 @@ namespace ft
 							tmp = tmp->previous;
 							i++;
 						}
-						// std::cout << "c" << std::endl;
 						return (tmp->value);
-						// return (this->el->value);
 					}
 					value_type *operator->()
 					{
-						int i = 0;
-						t_list_el *tmp = this->el;
-
-						while (i < this->crement)
-						{
-							tmp = tmp->next;
-						}
-						return (&this->el->value);
-						// return (&this->el->value);
+						return (&(this->operator*()));
 					}
 					iterator &operator++()
 					{
-						// this->el = this->el->next;
 						this->crement++;
-						// std::cout << "aa" << std::endl;
 						return (*this);
 					}
-					iterator operator++(int i)
+					iterator operator++(int)
 					{
 						iterator tmp;
-						(void)i;
 
 						tmp = *this;
-						// this->el = this->el->next;
 						this->crement++;
-						// std::cout << "bb" << std::endl;
 						return (tmp);
 					}
 					iterator &operator--()
 					{
-						// this->el = this->el->previous;
 						this->crement--;
 						return (*this);
 					}
-					iterator operator--(int i)
+					iterator operator--(int)
 					{
 						iterator tmp;
-						(void)i;
 
 						tmp = *this;
-						// this->el = this->el->previous;
 						this->crement--;
 						return (tmp);
 					}
@@ -181,65 +166,85 @@ namespace ft
 			class const_iterator
 			{
 				public:
+					typedef const value_type value_type;
+					typedef difference_type difference_type;
+					typedef value_type* pointer;
+					typedef value_type& reference;
+					typedef ft::bidirectional_iterator_tag iterator_category;
+
 					const_iterator()
 					{
+						this->it = iterator();
 					//	std::cout << "it default constructor" << std::endl;
-					}
-					const_iterator(const t_list_el* el)
-					{
-						this->el = el;
-					//	std::cout << "it const param constructor" << std::endl;
 					}
 					~const_iterator()
 					{
 					//	std::cout << "it destructor" << std::endl;
 					}
-					const_iterator(const const_iterator& it)
+					const_iterator(const iterator& it)
+					{
+						this->it = it;
+					}
+					const_iterator(const const_iterator& cit)
 					{
 					//	std::cout << "it copy constructor" << std::endl;
-						*this = it;
+						*this = cit;
 					}
-					const_iterator &operator=(const const_iterator& it)
+					const_iterator &operator=(const const_iterator& cit)
 					{
 					//	std::cout << "it op=" << std::endl;
-						this->el = it.el;
+						this->it = cit.it;
 						return (*this);
 					}
-					bool operator==(const const_iterator& it)
+					bool operator==(const const_iterator& cit2)
 					{
-						if (this->el == it.el)
-							return (true);
-						return (false);
+						return (this->it == cit2.it);
 					}
-					bool operator!=(const const_iterator& it)
+					bool operator!=(const const_iterator& cit2)
 					{
-						return (!(*this == it));
+						return (!(*this == cit2));
 					}
-					value_type operator*()
+					value_type &operator*()
 					{
-						return (this->el->value);
+						return (*(this->it));
+					}
+					value_type *operator->()
+					{
+						return (&(this->operator*()));
 					}
 					const_iterator &operator++()
 					{
-						this->el = this->el->next;
+						this->it++;
 						return (*this);
 					}
-					const_iterator operator++(int i)
+					const_iterator operator++(int)
 					{
-						(void)i;
 						const_iterator tmp = *this;
 
-						this->el = this->el->next;
+						this->it++;
+						return (tmp);
+					}
+					const_iterator &operator--()
+					{
+						this->it--;
+						return (*this);
+					}
+					const_iterator operator--(int)
+					{
+						const_iterator tmp = *this;
+
+						this->it--;
 						return (tmp);
 					}
 
 				private:
-					const t_list_el* el;
+					iterator it;
 			};
 		public:
 			typedef class iterator iterator;
 			typedef class const_iterator const_iterator;
-			typedef reverse_iterator<iterator> reverse_iterator;
+			typedef class ft::reverse_iterator<iterator> reverse_iterator;
+			typedef class ft::reverse_iterator<const_iterator> const_reverse_iterator;
 			//add reverse_iterator && const_reverse_iterator
 			explicit list()
 			{
@@ -270,33 +275,22 @@ namespace ft
 			}
 			~list()
 			{
-				std::cout << "list destructor" << std::endl;
+				// std::cout << "list destructor" << std::endl;
 				this->clear();
-				std::cout << "end" << std::endl;
+				// std::cout << "end" << std::endl;
 			}
 			list(const list& x)
 			{
-				// t_list_el *el;
-				std::cout << "list copy constructor" << std::endl;
+				// std::cout << "list copy constructor" << std::endl;
 				this->first_el = NULL;
 				this->l_size = 0;
 				*this = x;
-				// if (x.l_size > 0)
-				// {
-				// 	el = x.first_el;
-				// 	while (el && el->next)
-				// 	{
-				// 		this->push_back(el->value);
-				// 		el = el->next;
-				// 	}
-				// 	this->push_back(el->value);
-				// }
 			}
 			list &operator=(const list& x)
 			{
 				t_list_el *el;
 
-				std::cout << "list op=" << std::endl;
+				// std::cout << "list op=" << std::endl;
 				this->clear();
 				this->first_el = NULL;
 				this->l_size = 0;
@@ -318,45 +312,31 @@ namespace ft
 			}
 			const_iterator begin() const
 			{
-				return (ft::list<T, Alloc>::const_iterator(this->first_el));
+				return (ft::list<T, Alloc>::const_iterator(ft::list<T, Alloc>::iterator(this->first_el)));
 			}
 			iterator end()
 			{
-				// t_list_el *tmp = this->first_el;
-				// while (tmp->next)
-				// 	tmp = tmp->next;
-				// tmp = tmp->next;
 				return (ft::list<T, Alloc>::iterator(this->first_el, this->l_size));
 			}
 			const_iterator end() const
 			{
-				// t_list_el *tmp = this->first_el;
-				// while (tmp->next)
-				// 	tmp = tmp->next;
-				// tmp = tmp->next;
-				return (ft::list<T, Alloc>::const_iterator(this->first_el, this->l_size));
+				return (ft::list<T, Alloc>::const_iterator(ft::list<T, Alloc>::iterator(this->first_el, this->l_size)));
 			}
 			reverse_iterator rbegin()
 			{
-				// std::cout << "test" << std::endl;
-				// iterator a = this->end();
-				// // --a;
-				// // a--;
-				// // std::cout << "aa" << *a << std::endl;
-				// iterator b = this->begin();
-				// iterator c = this->begin();
-				// b++;
-				// while (b != a)
-				// {
-				// 	c++;
-				// 	b++;
-				// }
-				// std::cout << *c << std::endl;
-				return (ft::reverse_iterator<iterator>(this->end()));
+				return (ft::list<T, Alloc>::reverse_iterator(this->end()));
+			}
+			const_reverse_iterator rbegin() const
+			{
+				return (ft::list<T, Alloc>::const_reverse_iterator(ft::list<T, Alloc>::const_iterator(this->end())));
 			}
 			reverse_iterator rend()
 			{
-				return (ft::reverse_iterator<iterator>(this->begin()));
+				return (ft::list<T, Alloc>::reverse_iterator(this->begin()));
+			}
+			const_reverse_iterator rend() const
+			{
+				return (ft::list<T, Alloc>::const_reverse_iterator(ft::list<T, Alloc>::const_iterator(this->begin())));
 			}
 			bool empty() const
 			{
@@ -370,10 +350,6 @@ namespace ft
 			}
 			size_type max_size() const
 			{
-				// allocator_type a;
-				// std::cout << a.max_size() << std::endl;
-
-				//return (std::numeric_limits<size_t>::max());
 				typename Alloc::template rebind<t_list_el>::other r;
 
 				return (r.max_size());
@@ -385,10 +361,7 @@ namespace ft
 				// if (!this->first_el)
 				// 	return (0);
 				if (!this->first_el)
-				{
-					// std::cout << "here" << std::endl;
 					return (*t);
-				}
 				return (this->first_el->value);
 			}
 			const_reference front() const
@@ -428,25 +401,30 @@ namespace ft
 					end_el = end_el->next;
 				return(end_el->value);
 			}
-			//assign
 			template <class InputIterator>
 			void assign(InputIterator first, InputIterator last)
 			{
 				this->clear();
-				ft_push_elements(first, last, *this, std::numeric_limits<InputIterator>::is_integer);
+				// S<InputIterator, std::numeric_limits<InputIterator>::is_integer> s;
+				S<InputIterator, std::numeric_limits<InputIterator>::is_integer>()(first, last, this);//remplacer par specialization class
 			}
 			void assign(size_type n, const value_type& val)
 			{
 				this->clear();
-				ft_push_elements(n, val, *this);
+				// S s;
+				// s.ft_push_elements(n, val, *this);
+				size_type i = 0;
+				while (i < n)
+				{
+					this->push_back(val);
+					i++;
+				}
 			}
 			void push_front(const value_type& val)
 			{
-			//	t_list_el *new_el = new t_list_el;
 				typename Alloc::template rebind<t_list_el>::other r;
 
 				t_list_el *new_el = r.allocate(1);
-			//	std::cout << "push_front" << std::endl;
 				new_el->previous = NULL;
 				new_el->value = val;
 				new_el->next = this->first_el;
@@ -457,17 +435,13 @@ namespace ft
 			}
 			void pop_front()
 			{
-				// std::cout << "here1" << std::endl;
 				t_list_el *tmp;
 				typename Alloc::template rebind<t_list_el>::other r;
 
 				tmp = this->first_el->next;
-				// this->first_el = this->first_el->next;
-				//delete tmp;
 				r.deallocate(this->first_el, 1);
 				r.destroy(this->first_el);
 				this->first_el = tmp;
-				// r.destroy(tmp);
 				this->l_size = this->l_size - 1;
 			}
 			void push_back(const value_type& val)
@@ -476,13 +450,11 @@ namespace ft
 				t_list_el *new_el;
 				typename Alloc::template rebind<t_list_el>::other r;
 
-			//	std::cout << "push_back" << std::endl;
 				if (this->l_size == 0)
 				{
 					this->push_front(val);
 					return ;
 				}
-				//new_el = new t_list_el;
 				new_el = r.allocate(1);
 				end_el = this->first_el;
 				while (end_el && end_el->next)
@@ -506,34 +478,22 @@ namespace ft
 				{
 					new_end_el = tmp->previous;
 					new_end_el->next = NULL;
-					//delete tmp;
 					r.deallocate(tmp, 1);
 					r.destroy(tmp);
 				}
 				else
 				{
-					//delete this->first_el;
 					r.deallocate(this->first_el, 1);
 					r.destroy(this->first_el);
 					this->first_el = NULL;
 				}
 				this->l_size = this->l_size - 1;
 			}
-			// void clear()
-			// {
-			// 	while (this->l_size)
-			// 		this->pop_front();//pop front problem ?
-			// }
-			//insert
 			iterator insert(iterator position, const value_type& val)
 			{
-				std::cout << "insert" << std::endl;
 				t_list_el *el = this->first_el;
 				while (el && &(el->value) != &(*position) && el->next)
-				{
-				// std::cout << &(el->next->value)<< "|" << el->value << &(el->value) << "||" <<  *position << std::endl;
 					el = el->next;
-				}
 				t_list_el *prev_el = el->previous;
 				typename Alloc::template rebind<t_list_el>::other r;
 				t_list_el *new_el = r.allocate(1);
@@ -546,15 +506,6 @@ namespace ft
 				else if (prev_el)//a verifier
 					prev_el->next = new_el;
 				this->l_size = this->l_size + 1;
-				// t_list_el *to_show = this->first_el;
-				// std::cout << "start" << std::endl;
-				// while (to_show)
-				// {
-				// 	std::cout << to_show->value << std::endl;
-				// 	// std::cout << this->l_size << std::endl;
-				// 	to_show = to_show->next;
-				// }
-				// std::cout << "end" << std::endl;
 				return (position);
 			}
 			void insert(iterator position, size_type n, const value_type& val)
@@ -569,25 +520,7 @@ namespace ft
 			template <class InputIterator>
 			void insert(iterator position, InputIterator first, InputIterator last)//rajouter protection cas n == int
 			{
-				// if (std::numeric_limits<InputIterator>::is_integer)
-				// {
-				// 	// this->insert(position, (size_type)first, (value_type)last);
-				// 	F<InputIterator, true>()(position, first, last, this);
-				// 	return;
-				// }
-				// else
-				// {
-					F<InputIterator, std::numeric_limits<InputIterator>::is_integer>()(position, first, last, this);
-					// ft_insert_from_iterator<U, false>(position, first, last);
-					// ft_insert_from_iterator(position, first, last, std::numeric_limits<InputIterator>::is_integer);
-					// while (first != last)
-					// {
-					// 	if (std::numeric_limits<InputIterator>::is_integer)
-					// 		this->insert(position, *first);
-					// 	position++;
-					// 	first++;
-					// }
-				// }
+				F<InputIterator, std::numeric_limits<InputIterator>::is_integer>()(position, first, last, this);
 			}
 			iterator erase(iterator position)
 			{
@@ -621,29 +554,12 @@ namespace ft
 			}
 			void swap(list& x)
 			{
-				(void)x;
-				// list tmp = *this;
 				t_list_el *tmp = this->first_el;
 				size_type tmp_size = this->l_size;
-				(void)tmp;
-				// this->clear();
-				// this->insert(x.begin(), x.begin(), x.end());
-				// x.clear();
-				// x.insert(tmp->begin(), tmp->begin(), tmp->end());
-				// this->first_el = (t_list_el*)&(((char*)(&x.front()))[-sizeof(char*)]);
 				this->first_el = x.first_el;
 				this->l_size = x.l_size;
-				// std::cout << "a" << std::endl;
 				x.first_el = tmp;
 				x.l_size = tmp_size;
-				// std::cout << "b" << std::endl;
-				// t_list_el *x_first_el = (t_list_el*)&(((char*)&x.front())[-sizeof(char*)]);
-				// x_first_el->previous = (t_list_el*)&(((char*)&(tmp.front()))[-sizeof(char*)]);
-				// x_first_el->value = tmp.front();
-				// (t_list_el*)&(((char*)&(x.front()))[sizeof(char*)]) = tmp.front();
-				// x.insert(x.begin(), tmp->begin(), tmp->end());
-				// x = NULL;
-				// x = list(tmp);
 			}
 			void resize(size_type n, value_type val = value_type())
 			{
@@ -714,16 +630,6 @@ namespace ft
 			}
 			void remove(const value_type& val)
 			{
-				// size_type i = 0;
-				// t_list_el *tmp = this->first_el;
-				// while (i < this->l_size)
-				// {
-				// 	if (tmp->value == val)
-				// 	{
-						
-				// 	}
-				// 	i++;
-				// }
 				iterator begin = this->begin();
 				iterator end = this->end();
 				while (begin != end)
@@ -780,20 +686,12 @@ namespace ft
 			}
 			void merge(list& x)
 			{
-				// iterator begin = this->begin();
-				// iterator end = this->end();
-				// iterator x_begin = x.begin();
-				// iterator x_end = x.end();
 				t_list_el *tmp = this->first_el;
 				size_type tmp_size = this->l_size;
 				size_type i = 0;
 				t_list_el *x_tmp = x.first_el;
 				size_type x_tmp_size = x.l_size;
 				size_type j = 0;
-				// while (tmp)
-				// {
-					// tmp = tmp->next;
-				// }
 				t_list_el *prev;
 				if (x_tmp->value <= tmp->value)
 				{
@@ -843,20 +741,12 @@ namespace ft
 			template <class Compare>
 			void merge(list& x, Compare comp)
 			{
-				// iterator begin = this->begin();
-				// iterator end = this->end();
-				// iterator x_begin = x.begin();
-				// iterator x_end = x.end();
 				t_list_el *tmp = this->first_el;
 				size_type tmp_size = this->l_size;
 				size_type i = 0;
 				t_list_el *x_tmp = x.first_el;
 				size_type x_tmp_size = x.l_size;
 				size_type j = 0;
-				// while (tmp)
-				// {
-					// tmp = tmp->next;
-				// }
 				t_list_el *prev;
 				// if (x_tmp->value < tmp->value)
 				if (comp(x_tmp->value, tmp->value))
@@ -911,8 +801,7 @@ namespace ft
 				t_list_el *tmp_next;
 				size_type i = 0;
 				size_type j = 0;
-				// value_type* tmp_value_ptr;
-				t_list_el *new_el;
+				t_list_el *new_first = tmp;
 				while (i < this->l_size)
 				{
 					j = 0;
@@ -921,27 +810,34 @@ namespace ft
 						tmp_next = tmp->next;
 						if (tmp && tmp_next && tmp->value > tmp_next->value)//checker les next et previous
 						{
-							tmp_next->previous = tmp->previous;
+							t_list_el *save = tmp;
+							t_list_el *prev = save->previous;
 							tmp->previous = tmp_next;
 							tmp->next = tmp_next->next;
+							tmp_next->previous = save->previous;
 							tmp_next->next = tmp;
-							// tmp->next = tmp_next;
-							// tmp_value_ptr = &tmp->value;
-							new_el->next = tmp_next;
+							if (prev)
+								prev->next = tmp_next;
+							if (j == 0)
+								this->first_el = new_first;
 						}
 						else
-							new_el->next = tmp;
-						new_el = new_el->next;
-						tmp = tmp->next;
+						{
+							if (j == 0)
+								this->first_el = new_first;
+						}
+						if (tmp && tmp->next)
+							tmp = tmp->next;
 						j++;
 					}
-					tmp = new_el;
+					tmp = new_first;
 					i++;
 				}
-				this->first_el = new_el;
+				this->first_el = new_first;
 				this->first_el->previous = NULL;
 				tmp = this->first_el;
-				while (i < this->l_size)
+				i = 0;
+				while (i < this->l_size - 1)
 				{
 					tmp = tmp->next;
 					i++;
@@ -955,8 +851,7 @@ namespace ft
 				t_list_el *tmp_next;
 				size_type i = 0;
 				size_type j = 0;
-				value_type* tmp_value_ptr;
-				t_list_el *new_el;
+				t_list_el *new_first = tmp;
 				while (i < this->l_size)
 				{
 					j = 0;
@@ -965,27 +860,34 @@ namespace ft
 						tmp_next = tmp->next;
 						if (tmp && tmp_next && comp(tmp_next->value, tmp->value))//checker les next et previous
 						{
-							tmp_next->previous = tmp->previous;
+							t_list_el *save = tmp;
+							t_list_el *prev = save->previous;
 							tmp->previous = tmp_next;
 							tmp->next = tmp_next->next;
+							tmp_next->previous = save->previous;
 							tmp_next->next = tmp;
-							// tmp->next = tmp_next;
-							// tmp_value_ptr = &tmp->value;
-							new_el->next = tmp_next;
+							if (prev)
+								prev->next = tmp_next;
+							if (j == 0)
+								this->first_el = new_first;
 						}
 						else
-							new_el->next = tmp;
-						new_el = new_el->next;
-						tmp = tmp->next;
+						{
+							if (j == 0)
+								this->first_el = new_first;
+						}
+						if (tmp && tmp->next)
+							tmp = tmp->next;
 						j++;
 					}
-					tmp = new_el;
+					tmp = new_first;
 					i++;
 				}
-				this->first_el = new_el;
-				this->first_el.previous = NULL;
+				this->first_el = new_first;
+				this->first_el->previous = NULL;
 				tmp = this->first_el;
-				while (i < this->l_size)
+				i = 0;
+				while (i < this->l_size - 1)
 				{
 					tmp = tmp->next;
 					i++;
@@ -1022,59 +924,54 @@ namespace ft
 			// 	return (a);
 			// }
 
-//			void show_all();
+			// void show_all()//a enlever apres
+			// {
+			// 	t_list_el *tmp = this->first_el;
+			// 	std::cout << "start size = " << this->l_size << std::endl;
+			// 	while (tmp)
+			// 	{
+			// 		std::cout << tmp->value << std::endl;
+			// 		tmp = tmp->next;
+			// 	}
+			// 	std::cout << "show end" << std::endl;
+			// }
 		private:
 			t_list_el	*first_el;
 			size_t		l_size;
-			template <class U>
-			void ft_push_elements(U n, U val, ft::list<T> ctnr)
+			template <class U, bool>
+			class S
 			{
-				*this = ctnr;
-				U i = 0;
-				while (i < n)
-				{
-					ctnr.push_back(val);
-					i++;
-				}
-			}
+				public:
+					S(){}
+					~S(){}
+			};
 			template <class U>
-			void ft_push_elements(U first, U last, ft::list<T> ctnr, bool is_integer)
+			class S<U, true>
 			{
-				*this = ctnr;
-				if (!is_integer)
-				{
-					while (first != last)
+				public:
+					void operator()(U n, U val, ft::list<T> *ctnr)
 					{
-						ctnr.push_back(*first);
-						first++;
+						U i = 0;
+						while (i < n)
+						{
+							ctnr->push_back(val);
+							i++;
+						}
 					}
-					return;
-				}
-				U n = first;
-				U val = last;
-				U i = 0;
-				
-				while (i < n)
-				{
-					ctnr.push_back(val);
-					i++;
-				}
-			}
-			// template <bool, class U>
-			// void ft_insert_from_iterator(iterator position, U first, U last)
-			// {
-			// 	U i = 0;
-			// 	while (i < last)
-			// 	{
-			// 		this->insert(position, first);
-			// 		i++;
-			// 	}
-			// }
-			// template <class U, bool>
-			// struct f
-			// {
-				
-			// };
+			};
+			template <class U>
+			class S<U, false>
+			{
+				public:
+					void operator()(U first, U last, ft::list<T> *ctnr)
+					{
+						while (first != last)
+						{
+							ctnr->push_back(*first);
+							first++;
+						}
+					}
+			};
 			template <class U, bool>
 			class F
 			{
@@ -1113,9 +1010,7 @@ namespace ft
 			class Construct
 			{
 				public:
-					Construct(){
-						std::cout << "HERE" << std::endl;
-					}
+					Construct(){}
 					~Construct(){}
 				private:
 					Construct(const Construct& c);
@@ -1129,7 +1024,6 @@ namespace ft
 					~Construct(){}
 					void operator()(U n, U val, ft::list<T> *ctnr)
 					{
-						// ft_push_elements(n, val, ctnr);
 						U i;
 
 						i = 0;
@@ -1232,21 +1126,3 @@ namespace ft
 		x.swap(y);
 	}
 }
-/*
-template <class T>
-void ft::list<T>::show_all()
-{
-	t_list_el *el;
-
-	el = first_el;
-	std::cout << "start show all, size = " << this->l_size << std::endl;
-	if (el)
-	{
-		std::cout << el->value << std::endl;
-	}
-	while (el && el->next)
-	{
-		el = el->next;
-		std::cout << el->value << std::endl;
-	}
-}*/
