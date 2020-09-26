@@ -6,12 +6,13 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/09/22 13:44:34 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/09/26 12:22:05 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "list.hpp"
+#include "vector.hpp"
 #include <list>
 #include <vector>
 
@@ -160,12 +161,18 @@ void ft_swap_check()
 	two.push_back(40);
 	two.push_back(50);
 	// two.push_back(6);
+	// const T one1 = one;
+	// const T two2 = two;
+	// const ft::list<int> one1 = one;
+	// const ft::list<int> two1 = two;
 	if (one >= two)
 		std::cout << "bigger or eq" << std::endl;
 	else
 		std::cout << "smaller" << std::endl;
 	typename T::iterator one_it_begin = one.begin();
 	typename T::iterator one_it_begin2 = one.begin();
+	// typename T::const_iterator cit = one_it_begin;//conversion ok
+	// typename T::iterator iit = cit;//conversion pas ok
 	one_it_begin2--;
 	// one_it_begin2--;
 	// std::cout << "begin:" << *one_it_begin << &(*one_it_begin) << std::endl;
@@ -260,9 +267,9 @@ void ft_reverse_iterator_check()
 		std::cout << *d << "|" << &(*d) << std::endl;
 		d++;
 	}
-	l.sort();//il y avait un soucis ici
+	// l.sort();//il y avait un soucis ici
 	std::cout << l.front() << std::endl;
-	l.pop_front();
+	// l.pop_front();
 	b = l.begin();
 	e = l.end();
 	std::cout << "start" << std::endl;
@@ -355,6 +362,238 @@ void ft_const_check()
 	std::cout << *r2 << std::endl;
 }
 
+class test
+{
+	public:
+		test()
+		{
+			std::cout << "constructor test" << std::endl;
+			this->p = new int();
+		}
+		~test()
+		{
+			delete this->p;
+			std::cout << "destructor test" << std::endl;
+		}
+	private:
+		int *p;
+};
+
+template <class T>
+void ft_check()
+{
+	T vec;
+
+	vec.reserve(3);
+	// vec.pop_back();
+	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+	vec.push_back(1);
+	std::cout << vec[0] << std::endl;
+	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+	vec.push_back(2);
+	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+	vec.push_back(3);
+	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+	vec.push_back(4);
+	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+	vec.push_back(1);
+	vec.push_back(3);
+	vec.push_back(5);
+	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+	// vec.pop_back();
+	// vec.pop_back();
+	// vec.pop_back();
+	// vec.pop_back();
+	// vec.pop_back();
+	// vec.pop_back();
+	// vec.pop_back();
+	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+	// vec.push_back(1);
+	// vec.push_back(2);
+	// vec.push_back(3);
+	// vec.pop_back();
+	// vec.clear();
+	// std::cout << vec[1] << std::endl;
+	// std::cout << vec[2] << std::endl;
+	vec.resize(14);
+	// std::cout << vec.at(0) << std::endl;
+	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+
+	std::vector<test> v1;
+	test a;
+	// v1.push_back(a);
+	ft::vector<test> v2;
+	// v2.push_back(a);
+	// v2.pop_back();
+
+	const T vec2 = vec;
+	std::cout << vec2.capacity() << std::endl;
+	std::cout << vec2.size() << std::endl;
+	std::cout << vec2[1] << std::endl;
+	std::cout << vec2.at(2) << std::endl;
+}
+
+template <class T>
+void	ft_iterator_rand_access_check()
+{
+	std::cout << "---iterator check---" << std::endl;
+	T ctnr;
+
+	ctnr.push_back(1);
+	ctnr.push_back(2);
+	ctnr.push_back(0);
+	ctnr.push_back(3);
+
+	// int *p = ctnr.get_allocator().allocate(10);
+	// ctnr.get_allocator().deallocate(p, 5);
+
+	typename T::iterator ctnr_it = ctnr.begin();
+	typename T::iterator ctnr_it_end = ctnr.end();
+
+	typename T::const_iterator ccit = ctnr_it;
+	typename T::const_iterator ccit_end = ctnr_it_end;
+
+	// typename T::iterator iit = ccit;
+
+	std::cout << *(ccit + 1) << std::endl;
+	std::cout << *(1 + ccit) << std::endl;
+	std::cout << &(ccit) << std::endl;
+	// if (ctnr_it == ccit)
+	// {
+	// 	std::cout << "bigger" << std::endl;
+	// }
+	// else
+	// 	std::cout << "smaller" << std::endl;
+	if (ccit == ctnr_it)
+	{
+		std::cout << "bigger" << std::endl;
+	}
+	else
+		std::cout << "smaller" << std::endl;
+	if (ccit == ccit_end)
+	{
+		std::cout << "bigger" << std::endl;
+	}
+	else
+		std::cout << "smaller" << std::endl;
+	// std::cout << ccit - ccit_end << std::endl;
+	// std::cout << ccit - ctnr_it_end << std::endl;
+	// std::cout << ctnr_it - ccit_end << std::endl;
+
+	ctnr_it++;
+
+	std::cout << *ctnr_it << std::endl;
+	std::cout << ctnr_it[0] << std::endl;
+	std::cout << ctnr_it[1] << std::endl;
+	std::cout << *ctnr_it_end << std::endl;
+	std::cout << ctnr_it_end[-1] << std::endl;
+	std::cout << ctnr_it_end[-2] << std::endl;
+
+	ctnr_it--;
+
+	const typename T::iterator cit = ctnr_it;
+	const typename T::iterator cit_end = ctnr_it_end;
+
+	std::cout << "const" << std::endl;
+	std::cout << *(cit) << std::endl;
+	std::cout << *(cit +2) << std::endl;
+	// ++cit;
+
+	if (cit > cit_end)
+	{
+		std::cout << "bigger" << std::endl;
+	}
+	else
+		std::cout << "not bigger" << std::endl;
+	if (cit == cit_end)
+	{
+		std::cout << "equal" << std::endl;
+	}
+	else
+		std::cout << "not equal" << std::endl;
+	
+	if (ctnr_it > ctnr_it)
+		std::cout << "bigger" << std::endl;
+	else
+		std::cout << "not bigger" << std::endl;
+
+	// std::cout << (--ctnr_it) << std::endl;
+	// std::cout << (ctnr_it++2) << std::endl;
+
+	std::cout << cit_end - cit << std::endl;
+	std::cout << ctnr_it_end - cit << std::endl;
+	std::cout << cit - ctnr_it << std::endl;
+	// cit++;
+
+	std::cout << "here" << std::endl;
+	std::cout << *cit << std::endl;
+	// cit+=1;
+	std::cout << *cit << std::endl;
+	*cit = 5;
+
+	std::cout << "hey" << std::endl;
+	std::cout << *ctnr_it << std::endl;
+	ctnr_it+=-1;
+	std::cout << *(ctnr_it-=-1) << std::endl;
+	// std::cout << &(ctnr_it+=1) << std::endl;
+	// ctnr_it+=1;
+	std::cout << *ctnr_it << std::endl;
+	// ctnr_it-=2;
+	std::cout << *(ctnr_it + 1) << std::endl;
+	std::cout << *(1 + ctnr_it - -1) << std::endl;
+	// std::cout << &(ctnr_it + 1) << std::endl;
+	*(ctnr_it + 1) = 8;
+	std::cout << *(1 + ctnr_it) << std::endl;
+	std::cout << *(3 + ctnr_it - 2) << std::endl;
+	std::cout << ctnr_it_end - ctnr_it << std::endl;
+	std::cout << ctnr_it_end - (ctnr_it + 2) << std::endl;
+
+	typename T::const_iterator cc(ctnr_it);
+	// typename T::iterator ccc(cc);
+
+	std::cout << "first: " << *ctnr_it << std::endl;
+	std::cout << ctnr.size() << std::endl;
+	// ctnr.insert(ctnr_it, 100);
+	std::cout << ctnr.size() << std::endl;
+	std::cout << "first: " << *ctnr_it << std::endl;
+	*ctnr_it = 6;
+	std::cout << "first: " << *ctnr_it << std::endl;
+
+	std::cout << "front: " << ctnr.front() << std::endl;
+	std::cout << "back: " << ctnr.back() << std::endl;
+
+	T ctnr2(ctnr_it, ctnr_it_end);
+
+	std::cout << "size: " << ctnr2.size() << std::endl;
+	std::cout << "front: " << ctnr2.front() << std::endl;
+	std::cout << "back: " << ctnr2.back() << std::endl;
+
+	T ctnr3(ctnr_it, ctnr_it);
+
+	std::cout << "size: " << ctnr3.size() << std::endl;
+
+	typename T::iterator ctnr_it2 = ctnr.begin();
+	// ctnr_it2++;
+	T ctnr5(ctnr_it, ++ctnr_it2);
+	std::cout << &(*ctnr_it) << std::endl;
+	std::cout << &(*ctnr_it2) << std::endl;
+
+	std::cout << "size: " << ctnr5.size() << std::endl;
+	std::cout << "front: " << ctnr5.front() << std::endl;
+	std::cout << "back: " << ctnr5.back() << std::endl;
+
+	std::cout << *ctnr_it << std::endl;
+	ctnr_it--;
+	std::cout << *ctnr_it << std::endl;
+	while (ctnr_it != ctnr_it_end)
+	{
+		std::cout << *ctnr_it << std::endl;
+		ctnr_it++;
+	}
+	// typename T::iterator it;
+	// std::cout << *it << std::endl;
+}
+
 int		main(int argc, char *argv[])
 {
 	std::string arg_str;
@@ -368,6 +607,11 @@ int		main(int argc, char *argv[])
 		ft_reverse_iterator_check<ft::list<int>>();
 		ft_data_type_struct_check<ft::list<t_data>>();
 		ft_const_check<ft::list<int>>();
+		ft_check<ft::vector<int>>();
+		ft_iterator_rand_access_check<ft::vector<int>>();
+		ft_swap_check<ft::vector<int>>();
+		// ft_common_check<ft::vector<int>>();
+		ft_reverse_iterator_check<ft::vector<int>>();
 	}
 	else if (argc == 2 && arg_str.compare("std") == 0)
 	{
@@ -377,6 +621,11 @@ int		main(int argc, char *argv[])
 		ft_reverse_iterator_check<std::list<int>>();
 		ft_data_type_struct_check<std::list<t_data>>();
 		ft_const_check<std::list<int>>();
+		ft_check<std::vector<int>>();
+		ft_iterator_rand_access_check<std::vector<int>>();
+		ft_swap_check<std::vector<int>>();
+		// ft_common_check<std::vector<int>>();
+		ft_reverse_iterator_check<std::vector<int>>();
 	}
 	else
 		std::cout << "Wrong arguments" << std::endl;

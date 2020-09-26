@@ -6,14 +6,18 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:51:24 by lhuang            #+#    #+#             */
-/*   Updated: 2020/09/22 13:50:35 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/09/26 11:27:18 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <memory>
-#include <limits>
-#include "reverse_iterator.hpp"
+#ifndef LIST_HPP
+# define LIST_HPP
+
+# include <memory>
+# include <limits>
+# include "reverse_iterator.hpp"
+
+// # include <iostream>
 
 namespace ft
 {
@@ -1079,23 +1083,25 @@ namespace ft
 		return (false);
 	}
 	template <class T, class Alloc>
-	bool operator!=(list<T, Alloc>& lhs, list<T, Alloc>& rhs)
+	bool operator!=(const list<T, Alloc>& lhs, const list<T, Alloc>& rhs)
 	{
 		return (!(lhs == rhs));
 	}
 	template <class T, class Alloc>
-	bool operator<(list<T, Alloc>& lhs, list<T, Alloc>& rhs)
+	bool operator<(const list<T, Alloc>& lhs, const list<T, Alloc>& rhs)
 	{
 		(void)lhs;
 		(void)rhs;
-		typename list<T, Alloc>::iterator lhs_begin = lhs.begin();
-		typename list<T, Alloc>::iterator lhs_end = lhs.end();
-		typename list<T, Alloc>::iterator rhs_begin = rhs.begin();
-		typename list<T, Alloc>::iterator rhs_end = rhs.end();
+		typename list<T, Alloc>::const_iterator lhs_begin = lhs.begin();
+		typename list<T, Alloc>::const_iterator lhs_end = lhs.end();
+		typename list<T, Alloc>::const_iterator rhs_begin = rhs.begin();
+		typename list<T, Alloc>::const_iterator rhs_end = rhs.end();
 		while (lhs_begin != lhs_end && rhs_begin != rhs_end)
 		{
 			if (*lhs_begin < *rhs_begin)
 				return (true);
+			else if (*rhs_begin < *lhs_begin)
+				return (false);
 			lhs_begin++;
 			rhs_begin++;
 		}
@@ -1106,17 +1112,17 @@ namespace ft
 		return (false);
 	}
 	template <class T, class Alloc>
-	bool operator<=(list<T, Alloc>& lhs, list<T, Alloc>& rhs)
+	bool operator<=(const list<T, Alloc>& lhs, const list<T, Alloc>& rhs)
 	{
 		return (!(rhs < lhs));
 	}
 	template <class T, class Alloc>
-	bool operator>(list<T, Alloc>& lhs, list<T, Alloc>& rhs)
+	bool operator>(const list<T, Alloc>& lhs, const list<T, Alloc>& rhs)
 	{
 		return (rhs < lhs);
 	}
 	template <class T, class Alloc>
-	bool operator>=(list<T, Alloc>& lhs, list<T, Alloc>& rhs)
+	bool operator>=(const list<T, Alloc>& lhs, const list<T, Alloc>& rhs)
 	{
 		return (!(lhs < rhs));
 	}
@@ -1126,3 +1132,5 @@ namespace ft
 		x.swap(y);
 	}
 }
+
+#endif
