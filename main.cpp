@@ -6,15 +6,17 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/09/26 12:22:05 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/02 14:24:26 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "list.hpp"
 #include "vector.hpp"
+#include "map.hpp"
 #include <list>
 #include <vector>
+#include <map>
 
 template <class T>
 void	ft_common_check(void)
@@ -191,7 +193,7 @@ void ft_swap_check()
 	std::cout << "b" << *one_it_begin << &(*one_it_begin) << std::endl;
 	typename T::iterator two_it_begin = two.begin();
 	// one.insert(one_it_begin, 1, 2);
-	one.assign(1, 2);
+	// one.assign(1, 2);
 	// typename T::iterator two_it_end = two.end();
 	// std::swap(one, two);
 	one.swap(two);
@@ -384,6 +386,8 @@ void ft_check()
 {
 	T vec;
 
+	std::cout << vec.max_size() << std::endl;
+
 	vec.reserve(3);
 	// vec.pop_back();
 	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
@@ -452,6 +456,19 @@ void	ft_iterator_rand_access_check()
 
 	typename T::const_iterator ccit = ctnr_it;
 	typename T::const_iterator ccit_end = ctnr_it_end;
+	typename T::reverse_iterator rcit = ctnr.rend();
+	typename T::const_reverse_iterator crcit = ctnr.rend();
+
+	if (crcit == rcit)
+		std::cout << "eq" << std::endl;
+	// if (rcit == crcit)
+		// std::cout << "eq" << std::endl;
+	// rcit = ccit;
+	// ccit = rcit;
+	// if (rcit == ccit)
+	// 	std::cout << "eq" << std::endl;
+	// else
+	// 	std::cout << "not eq" << std::endl;
 
 	// typename T::iterator iit = ccit;
 
@@ -460,10 +477,10 @@ void	ft_iterator_rand_access_check()
 	std::cout << &(ccit) << std::endl;
 	// if (ctnr_it == ccit)
 	// {
-	// 	std::cout << "bigger" << std::endl;
+	// 	std::cout << "eq" << std::endl;
 	// }
 	// else
-	// 	std::cout << "smaller" << std::endl;
+	// 	std::cout << "not eq" << std::endl;
 	if (ccit == ctnr_it)
 	{
 		std::cout << "bigger" << std::endl;
@@ -551,18 +568,39 @@ void	ft_iterator_rand_access_check()
 	typename T::const_iterator cc(ctnr_it);
 	// typename T::iterator ccc(cc);
 
-	std::cout << "first: " << *ctnr_it << std::endl;
+	// ft_iterator_check<T>();
+	std::cout << "first: " << (*ctnr_it) << std::endl;
 	std::cout << ctnr.size() << std::endl;
-	// ctnr.insert(ctnr_it, 100);
+	ctnr.insert(ctnr_it, 100);
+	ctnr_it = ctnr.begin();//pour vector les iterator sont invalides apres une reallocation
+	ctnr_it_end = ctnr.end();
 	std::cout << ctnr.size() << std::endl;
-	std::cout << "first: " << *ctnr_it << std::endl;
+	std::cout << "first: " << (*ctnr_it) << std::endl;
 	*ctnr_it = 6;
 	std::cout << "first: " << *ctnr_it << std::endl;
 
 	std::cout << "front: " << ctnr.front() << std::endl;
 	std::cout << "back: " << ctnr.back() << std::endl;
 
+	std::cout << "A" << std::endl;
+	std::cout << *ctnr_it << "|" << *ctnr_it_end << std::endl;
+	typename T::iterator ctnr_it22 = ctnr_it;
+	typename T::iterator ctnr_it_end22 = ctnr_it_end;
+	while (ctnr_it22 != ctnr_it_end22)
+	{
+		std::cout << "h:" << *ctnr_it22 << std::endl;
+		ctnr_it22++;
+	}
+	// ctnr_it++;
 	T ctnr2(ctnr_it, ctnr_it_end);
+	// ctnr2.ft_show_all();
+	size_t i = 0;
+	while (i < ctnr2.size())
+	{
+		std::cout << ctnr2[i] << std::endl;
+		i++;
+	}
+	std::cout << "B" << std::endl;
 
 	std::cout << "size: " << ctnr2.size() << std::endl;
 	std::cout << "front: " << ctnr2.front() << std::endl;
@@ -594,38 +632,311 @@ void	ft_iterator_rand_access_check()
 	// std::cout << *it << std::endl;
 }
 
+template <class T>
+void ft_check_map()
+{
+	T valcmp;
+	std::cout << valcmp.value_comp()(std::pair<const int, int>(1, 2), std::pair<const int, int>(2, 3)) << std::endl;
+	typename T::value_compare valc = valcmp.value_comp();
+	std::cout << valc(std::pair<const int, int>(1, 1), std::pair<const int, int>(1, 2)) << std::endl;
+	// std::cout << valcmp.value_comp() << std::endl;
+	// ft::map<int, int> fvalcmp;
+	// std::cout << fvalcmp.value_comp()(std::pair<const int, int>(1, 2), std::pair<const int, int>(2, 3)) << std::endl;
+	// ft::map<int, int>::value_compare fvalc = fvalcmp.value_comp();
+	// std::cout << fvalc(std::pair<const int, int>(1, 1), std::pair<const int, int>(1, 2)) << std::endl;
+
+	// std::cout << std::map<int, int>::value_compare()(std::pair<const int, int>(1, 1), std::pair<const int, int>(1, 1)) << std::endl;
+	// std::cout << ft::map<int, int>::value_compare()(std::pair<const int, int>(1, 1), std::pair<const int, int>(1, 1)) << std::endl;
+	// std::pair<const int, int> a(1, 2);
+	// std::pair<const int, int> b(2, 2);
+	// std::less<int> ls;
+	// ft::map<int, int>::value_compare test(ls);
+	// std::cout << test(a, b) << std::endl;
+	// std::map<int, int>::value_compare test2(ls);
+	// std::cout << test2(a, b) << std::endl;
+	typename T::value_compare::first_argument_type f(10, 2);
+	// f = a;
+	std::cout << f.first << std::endl;
+	
+	std::map<int, int> m;
+	m[1] = 2;
+	m[2] = 3;
+	std::cout << m.size() << "|" << &(m[1]) << std::endl;
+	std::map<int, int> m2;
+	m2 = m;
+	std::cout << m2.size() << "|" << &(m2[1]) << "|" << m.size() << "|" << &(m[1]) << std::endl;
+
+	std::cout << valcmp.max_size() << std::endl;
+	// std::cout << fvalcmp.max_size() << std::endl;
+
+	T mm;
+	std::pair<const int, int> p(1, 2);
+	std::pair<const int, int> p2(2, 2);
+	// mm.ft_show_all();
+	std::cout << mm.size() << std::endl;
+	mm.insert(p2);
+	// mm.insert(p2);
+	// mm.insert(p2);
+	// mm.ft_show_all();
+	std::cout << mm.size() << std::endl;
+	// mm.insert(p);
+	mm.insert(p);
+	std::cout << mm.size() << std::endl;
+	// mm.insert(p);
+	std::cout << mm.size() << std::endl;
+	std::pair<const int, int> p3(3, 3);
+	mm.insert(p3);
+	std::cout << mm.size() << std::endl;
+	// mm.ft_show_all();
+	// std::pair<const int, int> p2(2, 2);
+	// p = p2;
+
+	T map_test;
+	map_test.insert(std::pair<const int, int>(11, 11));
+	// map_test.insert(std::pair<const int, int>(11, 11));
+	map_test.insert(std::pair<const int, int>(5, 5));
+	map_test.insert(std::pair<const int, int>(8, 8));
+	map_test.insert(std::pair<const int, int>(3, 3));
+	map_test.insert(std::pair<const int, int>(1, 1));
+	map_test.insert(std::pair<const int, int>(4, 4));
+	map_test.insert(std::pair<const int, int>(2, 2));
+	map_test.insert(std::pair<const int, int>(9, 9));
+	map_test.insert(std::pair<const int, int>(6, 6));
+	map_test.insert(std::pair<const int, int>(10, 10));
+	map_test.insert(std::pair<const int, int>(20, 20));
+	map_test.insert(std::pair<const int, int>(15, 15));
+	map_test.insert(std::pair<const int, int>(25, 25));
+	map_test.insert(std::pair<const int, int>(30, 30));
+	map_test.insert(std::pair<const int, int>(31, 31));
+	map_test.insert(std::pair<const int, int>(12, 12));
+	// map_test.ft_show_all();
+	// map_test.insert(std::pair<const int, int>(12, 12));
+	std::cout << map_test.size() << std::endl;
+	std::cout << "here1" << std::endl;
+	const T mapc = map_test;
+	std::cout << "here:" << (*(mapc.find(1))).first << std::endl;
+	std::cout << mapc.count(10) << std::endl;
+	std::cout << (*(mapc.lower_bound(2))).first << std::endl;
+	std::cout << (*(mapc.upper_bound(3))).first << std::endl;
+	// T::ft_comp_lower(2, 3);
+	// map_test.ft_show_all();
+	std::pair<typename T::const_iterator, typename T::const_iterator> its = mapc.equal_range(25);
+	std::cout << (*(its.first)).first << std::endl;
+	std::cout << (*(its.second)).first << std::endl;
+
+	typename T::iterator it_begin = map_test.begin();
+	typename T::iterator it_end = map_test.end();
+	const typename T::iterator cit_begin = it_begin;
+	std::cout << (*cit_begin).first << std::endl;
+	// cit_begin++;
+	// --cit_begin;
+	while (it_begin != it_end)
+	{
+		// std::cout << "c" << std::endl;
+		std::cout << &(*it_begin) << "|" << (*it_begin).first << "|" << (*it_begin).second << std::endl;
+		// std::cout << "d" << std::endl;
+		it_begin++;
+	}
+	it_end--;
+	std::cout << (*it_end).first << std::endl;
+	it_begin--;
+	it_begin--;
+	std::cout << "e:" << (*it_begin).first << std::endl;
+	// map_test.erase(it_begin);
+	std::cout << "e:" << (*it_begin).first << std::endl;
+	it_begin = map_test.begin();
+	it_end = map_test.end();
+	it_begin++;
+	it_begin++;
+	it_begin++;
+	it_begin++;
+	it_begin++;
+	it_begin++;
+	it_begin++;
+	it_begin++;
+	it_begin++;
+	std::cout << "BEGIN" << (*it_begin).first << std::endl;
+	std::cout << map_test.size() << std::endl;
+	std::cout << map_test.count(3) << std::endl;
+	// std::cout << map_test[3] << std::endl;
+	typename T::iterator it_begin_next = it_begin;
+	it_begin_next++;
+	map_test.erase(3);
+	map_test.insert(std::pair<const int, int>(11, 11));
+	// map_test.ft_show_all();
+	// map_test.insert(std::pair<const int, int>(11, 11));
+	// std::cout << "first" << map_test.front() << std::endl;
+	// map_test.erase(++it_begin);
+	// std::cout << map_test[3] << std::endl;
+	std::cout << map_test.count(3) << std::endl;
+	// std::cout << "B:" << (*it_begin).first << std::endl;
+	// std::cout << "HERE" << (*it_begin_next).first << std::endl;//probleme ici
+	std::cout << map_test.size() << std::endl;
+	// map_test.erase(it_begin);
+	// map_test[10] = 100;
+	// map_test[22] = 9;
+	// map_test[22] = 22;
+	// std::cout << map_test[1] << std::endl;
+	// map_test.insert(std::pair<int, int>(1, 1));
+	// map_test.insert(std::pair<int, int>(1, 1));
+	// map_test.insert(std::pair<int, int>(1, 1));
+	it_begin = map_test.begin();
+	it_end = map_test.end();
+	while (it_begin != it_end)
+	{
+		std::cout << (*it_begin).first << std::endl;
+		it_begin++;
+	}
+	// std::cout << "hh:" << &(*it_begin) << "|" << (*it_end).first << std::endl;
+}
+
 int		main(int argc, char *argv[])
 {
 	std::string arg_str;
 	if (argc > 1)
 		arg_str = argv[1];
-	if (argc == 1 || (argc == 2 && arg_str.compare("ft") == 0))
+	else if (argc < 2 || argc > 3)
 	{
-		ft_common_check<ft::list<int>>();
-		ft_iterator_check<ft::list<int>>();
-		ft_swap_check<ft::list<int>>();
-		ft_reverse_iterator_check<ft::list<int>>();
-		ft_data_type_struct_check<ft::list<t_data>>();
-		ft_const_check<ft::list<int>>();
-		ft_check<ft::vector<int>>();
-		ft_iterator_rand_access_check<ft::vector<int>>();
-		ft_swap_check<ft::vector<int>>();
-		// ft_common_check<ft::vector<int>>();
-		ft_reverse_iterator_check<ft::vector<int>>();
+		std::cout << "Wrong number of argument" << std::endl;
+		return (1);
 	}
-	else if (argc == 2 && arg_str.compare("std") == 0)
+	if (argc == 1 || (argc == 2 && arg_str.compare("list") == 0) || (argc == 3 && arg_str.compare("list") == 0))
 	{
-		ft_common_check<std::list<int>>();
-		ft_iterator_check<std::list<int>>();
-		ft_swap_check<std::list<int>>();
-		ft_reverse_iterator_check<std::list<int>>();
-		ft_data_type_struct_check<std::list<t_data>>();
-		ft_const_check<std::list<int>>();
-		ft_check<std::vector<int>>();
-		ft_iterator_rand_access_check<std::vector<int>>();
-		ft_swap_check<std::vector<int>>();
-		// ft_common_check<std::vector<int>>();
-		ft_reverse_iterator_check<std::vector<int>>();
+		if (argc == 3)
+			arg_str = argv[2];
+		if (argc == 1 || argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
+		{
+			ft_common_check<ft::list<int>>();
+			ft_iterator_check<ft::list<int>>();
+			ft_swap_check<ft::list<int>>();
+			ft_reverse_iterator_check<ft::list<int>>();
+			ft_data_type_struct_check<ft::list<t_data>>();
+			ft_const_check<ft::list<int>>();
+		}
+		else if (argc == 3 && arg_str.compare("std") == 0)
+		{
+			ft_common_check<std::list<int>>();
+			ft_iterator_check<std::list<int>>();
+			ft_swap_check<std::list<int>>();
+			ft_reverse_iterator_check<std::list<int>>();
+			ft_data_type_struct_check<std::list<t_data>>();
+			ft_const_check<std::list<int>>();
+		}
+		else
+			std::cout << "namespace not recognized" << std::endl;
+	}
+	else if ((argc == 2 && arg_str.compare("vector") == 0) || (argc == 3 && arg_str.compare("vector") == 0))
+	{
+		if (argc == 3)
+			arg_str = argv[2];
+		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
+		{
+			ft_check<ft::vector<int>>();
+			ft_iterator_rand_access_check<ft::vector<int>>();
+			ft_swap_check<ft::vector<int>>();
+			ft_reverse_iterator_check<ft::vector<int>>();
+		}
+		else if (argc == 3 && arg_str.compare("std") == 0)
+		{
+			ft_check<std::vector<int>>();
+			ft_iterator_rand_access_check<std::vector<int>>();
+			ft_swap_check<std::vector<int>>();
+			ft_reverse_iterator_check<std::vector<int>>();
+		}
+		else
+			std::cout << "namespace not recognized" << std::endl;
+	}
+	else if ((argc == 2 && arg_str.compare("map") == 0) || (argc == 3 && arg_str.compare("map") == 0))
+	{
+		if (argc == 3)
+			arg_str = argv[2];
+		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
+		{
+			ft_check_map<ft::map<int, int>>();
+		}
+		else if (argc == 3 && arg_str.compare("std") == 0)
+		{
+			ft_check_map<std::map<int, int>>();
+		}
+		else
+			std::cout << "namespace not recognized" << std::endl;
+		// std::map<int, int> valcmp;
+		// std::cout << valcmp.value_comp()(std::pair<const int, int>(1, 2), std::pair<const int, int>(2, 3)) << std::endl;
+		// std::map<int, int>::value_compare valc = valcmp.value_comp();
+		// std::cout << valc(std::pair<const int, int>(1, 1), std::pair<const int, int>(1, 2)) << std::endl;
+		// // std::cout << valcmp.value_comp() << std::endl;
+		// ft::map<int, int> fvalcmp;
+		// std::cout << fvalcmp.value_comp()(std::pair<const int, int>(1, 2), std::pair<const int, int>(2, 3)) << std::endl;
+		// ft::map<int, int>::value_compare fvalc = fvalcmp.value_comp();
+		// std::cout << fvalc(std::pair<const int, int>(1, 1), std::pair<const int, int>(1, 2)) << std::endl;
+
+		// // std::cout << std::map<int, int>::value_compare()(std::pair<const int, int>(1, 1), std::pair<const int, int>(1, 1)) << std::endl;
+		// // std::cout << ft::map<int, int>::value_compare()(std::pair<const int, int>(1, 1), std::pair<const int, int>(1, 1)) << std::endl;
+		// // std::pair<const int, int> a(1, 2);
+		// // std::pair<const int, int> b(2, 2);
+		// // std::less<int> ls;
+		// // ft::map<int, int>::value_compare test(ls);
+		// // std::cout << test(a, b) << std::endl;
+		// // std::map<int, int>::value_compare test2(ls);
+		// // std::cout << test2(a, b) << std::endl;
+		// ft::map<int, int>::value_compare::first_argument_type f(10, 2);
+		// // f = a;
+		// std::cout << f.first << std::endl;
+		
+		// std::map<int, int> m;
+		// m[1] = 2;
+		// m[2] = 3;
+		// std::cout << m.size() << "|" << &(m[1]) << std::endl;
+		// std::map<int, int> m2;
+		// m2 = m;
+		// std::cout << m2.size() << "|" << &(m2[1]) << "|" << m.size() << "|" << &(m[1]) << std::endl;
+
+		// std::cout << valcmp.max_size() << std::endl;
+		// std::cout << fvalcmp.max_size() << std::endl;
+
+		// ft::map<int, int> mm;
+		// std::pair<const int, int> p(1, 2);
+		// std::pair<const int, int> p2(2, 2);
+		// mm.ft_show_all();
+		// std::cout << mm.size() << std::endl;
+		// mm.insert(p2);
+		// mm.insert(p2);
+		// mm.insert(p2);
+		// mm.ft_show_all();
+		// std::cout << mm.size() << std::endl;
+		// mm.insert(p);
+		// mm.insert(p);
+		// std::cout << mm.size() << std::endl;
+		// mm.insert(p);
+		// std::cout << mm.size() << std::endl;
+		// std::pair<const int, int> p3(3, 3);
+		// mm.insert(p3);
+		// std::cout << mm.size() << std::endl;
+		// mm.ft_show_all();
+		// // std::pair<const int, int> p2(2, 2);
+		// // p = p2;
+
+		// ft::map<int, int> map_test;
+		// map_test.insert(std::pair<const int, int>(11, 11));
+		// map_test.insert(std::pair<const int, int>(5, 5));
+		// map_test.insert(std::pair<const int, int>(8, 8));
+		// map_test.insert(std::pair<const int, int>(3, 3));
+		// map_test.insert(std::pair<const int, int>(1, 1));
+		// map_test.insert(std::pair<const int, int>(4, 4));
+		// map_test.insert(std::pair<const int, int>(2, 2));
+		// map_test.insert(std::pair<const int, int>(9, 9));
+		// map_test.insert(std::pair<const int, int>(6, 6));
+		// map_test.insert(std::pair<const int, int>(10, 10));
+		// map_test.insert(std::pair<const int, int>(20, 20));
+		// map_test.insert(std::pair<const int, int>(15, 15));
+		// map_test.insert(std::pair<const int, int>(25, 25));
+		// map_test.insert(std::pair<const int, int>(30, 30));
+		// map_test.insert(std::pair<const int, int>(31, 31));
+		// std::cout << map_test.size() << std::endl;
+		// map_test.ft_show_all();
+
+		// ft::map<int, int>::iterator it;
+		// *it;
 	}
 	else
 		std::cout << "Wrong arguments" << std::endl;
