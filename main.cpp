@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/02 14:24:26 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/02 18:00:47 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 #include "list.hpp"
 #include "vector.hpp"
 #include "map.hpp"
+#include "stack.hpp"
+#include "queue.hpp"
 #include <list>
 #include <vector>
 #include <map>
+#include <stack>
+#include <queue>
 
 template <class T>
 void	ft_common_check(void)
@@ -790,6 +794,69 @@ void ft_check_map()
 	// std::cout << "hh:" << &(*it_begin) << "|" << (*it_end).first << std::endl;
 }
 
+template <class T>
+void ft_check_stack()
+{
+	T s;
+	T s2;
+	std::cout << s.size() << "|" << s.empty() << std::endl;
+	if (s == s2)
+		std::cout << "same1" << std::endl;
+	else
+		std::cout << "diff1" << std::endl;
+	if (s != s2)
+		std::cout << "diff2" << std::endl;
+	else
+		std::cout << "same2" << std::endl;
+	if (s <= s2)
+		std::cout << "smaller ou eq1" << std::endl;
+	std::cout << s.top() << std::endl;
+	s.push(2);
+	std::cout << s.top() << std::endl;
+	s.push(5);
+	s.push(6);
+	s.push(8);
+	s.push(9);
+	std::cout << s.size() << "|" << s.top() << "|" << s.empty() << std::endl;
+	s.pop();
+	std::cout << s.size() << "|" << s.top() << "|" << s.empty() << std::endl;
+	if (s == s2)
+		std::cout << "same3" << std::endl;
+	if (s <= s2)
+		std::cout << "smaller ou eq2" << std::endl;
+}
+
+template <class T>
+void ft_check_queue()
+{
+	T q;
+	T q2;
+
+	std::cout << q.size() << "|" << q.empty() << std::endl;
+	if (q == q2)
+		std::cout << "same1" << std::endl;
+	if (q <= q2)
+		std::cout << "smaller ou eq1" << std::endl;
+	q.push(3);
+	if (q == q2)
+		std::cout << "same2" << std::endl;
+	std::cout << q.front() << std::endl;
+	std::cout << q.back() << std::endl;
+	q.push(2);
+	std::cout << q.front() << std::endl;
+	std::cout << q.back() << std::endl;
+	std::cout << q.size() << "|" << q.empty() << std::endl;
+	q.push(5);
+	q.push(6);
+	q.push(8);
+	q.push(9);
+	std::cout << q.front() << "|" << q.back() << "|" << q.size() << "|" << q.empty() << std::endl;
+	q.pop();
+	std::cout << q.front() << "|" << q.back() << "|" << q.size() << "|" << q.empty() << std::endl;
+	if (q <= q2)
+		std::cout << "smaller ou eq2" << std::endl;
+}
+
 int		main(int argc, char *argv[])
 {
 	std::string arg_str;
@@ -937,6 +1004,36 @@ int		main(int argc, char *argv[])
 
 		// ft::map<int, int>::iterator it;
 		// *it;
+	}
+	else if ((argc == 2 && arg_str.compare("stack") == 0) || (argc == 3 && arg_str.compare("stack") == 0))
+	{
+		if (argc == 3)
+			arg_str = argv[2];
+		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
+		{
+			ft_check_stack<ft::stack<int, ft::list<int>>>();
+		}
+		else if (argc == 3 && arg_str.compare("std") == 0)
+		{
+			ft_check_stack<std::stack<int, std::list<int>>>();
+		}
+		else
+			std::cout << "namespace not recognized" << std::endl;
+	}
+	else if ((argc == 2 && arg_str.compare("queue") == 0) || (argc == 3 && arg_str.compare("queue") == 0))
+	{
+		if (argc == 3)
+			arg_str = argv[2];
+		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
+		{
+			ft_check_queue<ft::queue<int, ft::list<int>>>();
+		}
+		else if (argc == 3 && arg_str.compare("std") == 0)
+		{
+			ft_check_queue<std::queue<int, std::list<int>>>();
+		}
+		else
+			std::cout << "namespace not recognized" << std::endl;
 	}
 	else
 		std::cout << "Wrong arguments" << std::endl;
