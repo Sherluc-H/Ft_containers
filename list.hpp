@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:51:24 by lhuang            #+#    #+#             */
-/*   Updated: 2020/09/26 11:27:18 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/06 21:57:48 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,22 @@ namespace ft
 					{
 						this->el = NULL;
 						this->crement = 0;
+						this->before_end = NULL;
 					//	std::cout << "it default constructor" << std::endl;
 					}
 					iterator(t_list_el* el, int crement = 0)
 					{
 						this->el = el;
 						this->crement = crement;
+						this->before_end = NULL;
+						int i = 0;
+						while (i < crement)
+						{
+							if (this->el->next == NULL)
+								this->before_end = this->el;
+							this->el = this->el->next;
+							i++;
+						}
 					//	std::cout << "it param constructor" << std::endl;
 					}
 					~iterator()
@@ -76,69 +86,76 @@ namespace ft
 					//	std::cout << "it op=" << std::endl;
 						this->el = it.el;
 						this->crement = it.crement;
+						this->before_end = it.before_end;
 						return (*this);
 					}
-					bool operator==(const iterator& it2)
+					bool operator==(const iterator& it2) const
 					{
-						t_list_el *one = this->el;
-						t_list_el *two = it2.el;
-						int i = 0;
-						while (i < this->crement)
-						{
-							one = one->next;
-							i++;
-						}
-						i = 0;
-						while (this->crement + i < 0)
-						{
-							one = one->previous;
-							i++;
-						}
-						i = 0;
-						while (i < it2.crement)
-						{
-							two = two->next;
-							i++;
-						}
-						i = 0;
-						while (it2.crement + i < 0)
-						{
-							two = two->previous;
-							i++;
-						}
-						if (one == two)
+						// t_list_el *one = this->el;
+						// t_list_el *two = it2.el;
+						// int i = 0;
+						// while (i < this->crement)
+						// {
+						// 	one = one->next;
+						// 	i++;
+						// }
+						// i = 0;
+						// while (this->crement + i < 0)
+						// {
+						// 	one = one->previous;
+						// 	i++;
+						// }
+						// i = 0;
+						// while (i < it2.crement)
+						// {
+						// 	two = two->next;
+						// 	i++;
+						// }
+						// i = 0;
+						// while (it2.crement + i < 0)
+						// {
+						// 	two = two->previous;
+						// 	i++;
+						// }
+						// if (one == two)
+						if (this->el == it2.el)
 							return (true);
 						return (false);
 					}
-					bool operator!=(const iterator& it2)
+					bool operator!=(const iterator& it2) const
 					{
 						return (!(*this == it2));
 					}
-					value_type &operator*()
+					value_type &operator*() const
 					{
-						int i = 0;
-						t_list_el *tmp = this->el;
+						// int i = 0;
+						// t_list_el *tmp = this->el;
 						
-						while (i < this->crement)
-						{
-							tmp = tmp->next;
-							i++;
-						}
-						i = 0;
-						while (this->crement + i < 0)
-						{
-							tmp = tmp->previous;
-							i++;
-						}
-						return (tmp->value);
+						// while (i < this->crement)
+						// {
+						// 	tmp = tmp->next;
+						// 	i++;
+						// }
+						// i = 0;
+						// while (this->crement + i < 0)
+						// {
+						// 	tmp = tmp->previous;
+						// 	i++;
+						// }
+						// std::cout << "===" << &(this->el->next) << std::endl;
+						// std::cout << "===" << &(this->el->value) << std::endl;
+						return (this->el->value);
 					}
-					value_type *operator->()
+					value_type *operator->() const
 					{
 						return (&(this->operator*()));
 					}
 					iterator &operator++()
 					{
-						this->crement++;
+						// this->crement++;
+						if (this->el->next == NULL)
+							this->before_end = this->el;
+						this->el = this->el->next;
 						return (*this);
 					}
 					iterator operator++(int)
@@ -146,25 +163,48 @@ namespace ft
 						iterator tmp;
 
 						tmp = *this;
-						this->crement++;
+						if (this->el->next == NULL)
+							this->before_end = this->el;
+						this->el = this->el->next;
+						// this->crement++;
 						return (tmp);
 					}
 					iterator &operator--()
 					{
-						this->crement--;
+						// this->crement--;
+						if (this->el == NULL)
+							this->el = this->before_end;
+						else
+							this->el = this->el->previous;
 						return (*this);
 					}
 					iterator operator--(int)
 					{
+						// std::cout << "a:" << &((this->before_end->next)) << std::endl;
 						iterator tmp;
 
 						tmp = *this;
-						this->crement--;
+						// this->crement--;
+						if (this->el == NULL)
+						{
+							// std::cout << "here1" << "|" << &(this->el->value) << std::endl;
+							this->el = this->before_end;
+							// std::cout << &this->el << std::endl;
+							// std::cout << "here2" << "|" << &(this->el->value) << std::endl;
+						}
+						else
+						{
+							// std::cout << "here3" << std::endl;
+							this->el = this->el->previous;
+							// std::cout << "here4" << std::endl;
+						}
 						return (tmp);
 					}
 
 				private:
+				// public:
 					t_list_el* el;
+					t_list_el* before_end;
 					int crement;
 			};
 			class const_iterator
@@ -200,19 +240,19 @@ namespace ft
 						this->it = cit.it;
 						return (*this);
 					}
-					bool operator==(const const_iterator& cit2)
+					bool operator==(const const_iterator& cit2) const
 					{
 						return (this->it == cit2.it);
 					}
-					bool operator!=(const const_iterator& cit2)
+					bool operator!=(const const_iterator& cit2) const
 					{
 						return (!(*this == cit2));
 					}
-					value_type &operator*()
+					value_type &operator*() const
 					{
 						return (*(this->it));
 					}
-					value_type *operator->()
+					value_type *operator->() const
 					{
 						return (&(this->operator*()));
 					}
@@ -250,15 +290,17 @@ namespace ft
 			typedef class ft::reverse_iterator<iterator> reverse_iterator;
 			typedef class ft::reverse_iterator<const_iterator> const_reverse_iterator;
 			//add reverse_iterator && const_reverse_iterator
-			explicit list()
+			explicit list(const allocator_type& alloc = allocator_type())
 			{
 			//	std::cout << "list default constructor" << std::endl;
 				this->first_el = NULL;
 				this->l_size = 0;
+				this->alloc = alloc;
 			}
-			explicit list(size_type n, const value_type& val = value_type())
+			explicit list(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			{
 				size_type i;
+				this->alloc = alloc;
 
 			//	std::cout << "list fill constructor" << std::endl;
 				i = 0;
@@ -271,10 +313,11 @@ namespace ft
 				}
 			}
 			template <class InputIterator>
-			list(InputIterator start, InputIterator end)
+			list(InputIterator start, InputIterator end, const allocator_type& alloc = allocator_type())
 			{
 				this->first_el = NULL;
 				this->l_size = 0;
+				this->alloc = alloc;
 				Construct<InputIterator, std::numeric_limits<InputIterator>::is_integer>()(start, end, this);
 			}
 			~list()
@@ -408,29 +451,58 @@ namespace ft
 			template <class InputIterator>
 			void assign(InputIterator first, InputIterator last)
 			{
-				this->clear();
+				// this->clear();
 				// S<InputIterator, std::numeric_limits<InputIterator>::is_integer> s;
 				S<InputIterator, std::numeric_limits<InputIterator>::is_integer>()(first, last, this);//remplacer par specialization class
 			}
 			void assign(size_type n, const value_type& val)
 			{
-				this->clear();
+				// std::cout << "here" << this->l_size << std::endl;
+				// this->clear();
 				// S s;
 				// s.ft_push_elements(n, val, *this);
-				size_type i = 0;
+				// t_list_el* el = this->first_el;
+				// size_type i = 0;
+				// while (i < this->l_size)
+				// {
+				// 	el->value = val;
+				// 	el = el->next;
+				// 	i++;
+				// }
+				// std::cout << "i:" << i << std::endl;
+				iterator it_begin = this->begin();
+				iterator it_end = this->end();
+				while (it_begin != it_end)
+				{
+					*it_begin = val;
+					it_begin++;
+				}
+				size_type i = this->size();
 				while (i < n)
 				{
 					this->push_back(val);
 					i++;
 				}
+				this->resize(n);
 			}
 			void push_front(const value_type& val)
 			{
 				typename Alloc::template rebind<t_list_el>::other r;
 
+				// allocator_type alloc;
+
+				t_list_el el;
+				this->alloc.construct(&(el.value), val);
+				// el.previous = NULL;
+				// el.value = val;
+				// el.next = NULL;
+
 				t_list_el *new_el = r.allocate(1);
+				r.construct(new_el, el);
 				new_el->previous = NULL;
-				new_el->value = val;
+				// allocator_type alloc;
+				// alloc.construct(&(new_el->value), val);
+				// new_el->value = val;
 				new_el->next = this->first_el;
 				if (this->l_size)
 					this->first_el->previous = new_el;
@@ -443,8 +515,9 @@ namespace ft
 				typename Alloc::template rebind<t_list_el>::other r;
 
 				tmp = this->first_el->next;
+				r.destroy(this->first_el);//destroy d abord
 				r.deallocate(this->first_el, 1);
-				r.destroy(this->first_el);
+				// r.destroy(this->first_el);
 				this->first_el = tmp;
 				this->l_size = this->l_size - 1;
 			}
@@ -459,7 +532,10 @@ namespace ft
 					this->push_front(val);
 					return ;
 				}
+				t_list_el el;
+				this->alloc.construct(&(el.value), val);
 				new_el = r.allocate(1);
+				r.construct(new_el, el);
 				end_el = this->first_el;
 				while (end_el && end_el->next)
 					end_el = end_el->next;
@@ -482,25 +558,50 @@ namespace ft
 				{
 					new_end_el = tmp->previous;
 					new_end_el->next = NULL;
-					r.deallocate(tmp, 1);
 					r.destroy(tmp);
+					r.deallocate(tmp, 1);
+					// r.destroy(tmp);
 				}
 				else
 				{
-					r.deallocate(this->first_el, 1);
 					r.destroy(this->first_el);
+					r.deallocate(this->first_el, 1);
+					// r.destroy(this->first_el);
 					this->first_el = NULL;
 				}
 				this->l_size = this->l_size - 1;
 			}
 			iterator insert(iterator position, const value_type& val)
 			{
+				typename Alloc::template rebind<t_list_el>::other r;
 				t_list_el *el = this->first_el;
+				if (position == this->end())
+				{
+					t_list_el *pos = el;
+					while (pos->next)
+						pos = pos->next;
+					// t_list_el end_prev = --position;
+					t_list_el el2;
+					this->alloc.construct(&(el2.value), val);
+					t_list_el *new_el = r.allocate(1);
+					r.construct(new_el, el2);
+					// new_el->previous = end_prev;
+					new_el->next = pos->next;
+					// t_list_el *end_prev = pos;
+					new_el->previous = pos;
+					pos->next = new_el;
+					new_el->value = val;
+					this->l_size = this->l_size + 1;
+					return (--position);
+				}
 				while (el && &(el->value) != &(*position) && el->next)
 					el = el->next;
 				t_list_el *prev_el = el->previous;
-				typename Alloc::template rebind<t_list_el>::other r;
+				// typename Alloc::template rebind<t_list_el>::other r;
+				t_list_el el2;
+				this->alloc.construct(&(el2.value), val);
 				t_list_el *new_el = r.allocate(1);
+				r.construct(new_el, el2);
 				new_el->previous = el->previous;
 				new_el->value = val;
 				new_el->next = el;
@@ -510,7 +611,7 @@ namespace ft
 				else if (prev_el)//a verifier
 					prev_el->next = new_el;
 				this->l_size = this->l_size + 1;
-				return (position);
+				return (--position);
 			}
 			void insert(iterator position, size_type n, const value_type& val)
 			{
@@ -528,32 +629,51 @@ namespace ft
 			}
 			iterator erase(iterator position)
 			{
-				iterator position_next = position++;
+				iterator position_next = position;
+				position_next++;
+				// iterator position_next = position++;
 				t_list_el *tmp = this->first_el;
+				// std::cout << this->first_el->value << std::endl;
+				// std::cout << *position << std::endl;
 				typename Alloc::template rebind<t_list_el>::other r;
+				// std::cout << "hey" << std::endl;
+				// std::cout << this->l_size << std::endl;
 
 				while (tmp && &(tmp->value) != &(*position) && tmp->value)
+				{
+					// std::cout << "a" << std::endl;
 					tmp = tmp->next;
+				}
 				if (this->first_el == tmp)
+				{
+					// std::cout << "here" << std::endl;
+					if (tmp->next)
+						tmp->next->previous = NULL;
 					this->first_el = tmp->next;
+				}
 				else
 				{
 					t_list_el *prev_el = tmp->previous;
 					t_list_el *next_el = tmp->next;
 					prev_el->next = next_el;
-					next_el->previous = prev_el;
+					if (next_el)
+						next_el->previous = prev_el;
 				}
-				r.deallocate(tmp, 1);
 				r.destroy(tmp);
+				r.deallocate(tmp, 1);
+				// r.destroy(tmp);
+				this->l_size = this->l_size - 1;
 				return (position_next);
 			}
 			iterator erase(iterator first, iterator last)
 			{
 				while (first != last)
 				{
+					// std::cout << "a" << std::endl;
 					this->erase(first);
 					first++;
 				}
+				// std::cout << "here" << std::endl;
 				return (last);
 			}
 			void swap(list& x)
@@ -586,61 +706,132 @@ namespace ft
 			void splice(iterator position, list& x)
 			{
 				t_list_el *tmp = this->first_el;
-				t_list_el *tmp_next;
+				// t_list_el *tmp_next;
+				if (x.l_size == 0)
+					return;
 				while (tmp && &tmp->value != &(*position))//1 pos de trop loin ?
 				{
 					tmp = tmp->next;
 				}
-				tmp_next = tmp->next;
-				x.first_el->previous = tmp;
-				tmp->next = x.first_el;
-				tmp->l_size = tmp->l_size + x.l_size;
-				while(tmp->next)
-					tmp = tmp->next;
-				tmp->next = tmp_next;
+				// tmp_next = tmp->next;
+				if (tmp == this->first_el)
+					this->first_el = x.first_el;
+				else
+				{
+					if (tmp == NULL)
+					{
+						t_list_el* tmp_first = this->first_el;
+						while (tmp_first->next)
+							tmp_first = tmp_first->next;
+						tmp_first->next = x.first_el;
+					}
+					else
+						tmp->previous->next = x.first_el;
+				}
+				x.first_el->previous = tmp->previous;
+				t_list_el* el = x.first_el;
+				while (el->next)
+					el = el->next;
+				el->next = tmp;
+				if (tmp)
+					tmp->previous = el;
+				// tmp->next = x.first_el;
+				this->l_size = this->l_size + x.l_size;
+				// while(tmp->next)
+				// 	tmp = tmp->next;
+				// tmp->next = tmp_next;
 				x.first_el = NULL;
 				x.l_size = 0;
 			}
 			void splice(iterator position, list& x, iterator i)
 			{
 				t_list_el *tmp = this->first_el;
-				t_list_el *tmp_next;
+				if (x.l_size == 0)
+					return;
+				// t_list_el *tmp_next;
+				// std::cout << "here" << std::endl;
 				while (tmp && &tmp->value != &(*position))
 					tmp = tmp->next;
+				// std::cout << "here2" << std::endl;
 				t_list_el *to_add_tmp = x.first_el;
-				t_list_el *to_add;
+				// t_list_el *to_add;
 				while (to_add_tmp && &to_add_tmp->value != &(*i))
 					to_add_tmp = to_add_tmp->next;
-				//retire de x
-				t_list_el *before = to_add_tmp->previous;
-				t_list_el *after = to_add_tmp->next;
-				before->next = after;
-				after->previous = before;
+				if (to_add_tmp == NULL)
+					return;
+				if (to_add_tmp == x.first_el)
+					x.first_el = to_add_tmp->next;
+				else
+					to_add_tmp->previous->next = to_add_tmp->next;
+				if (to_add_tmp->next)
+					to_add_tmp->next->previous = to_add_tmp->previous;
 				x.l_size = x.l_size - 1;
-				//
-				to_add = to_add_tmp->previous;
-				to_add->previous = tmp;
-				tmp_next = tmp->next;
-				tmp->next = to_add;
+
+				// std::cout << "hey" << std::endl;
+				if (tmp == this->first_el)
+				{
+					this->first_el = to_add_tmp;
+					to_add_tmp->previous = NULL;
+				}
+				else
+				{
+					if (tmp == NULL)
+					{
+						// std::cout << "HERE" << std::endl;
+						t_list_el* tmp_first = this->first_el;
+						while (tmp_first->next)
+							tmp_first = tmp_first->next;
+						tmp_first->next = to_add_tmp;
+						to_add_tmp->previous = tmp_first;
+					}
+					else
+					{
+						tmp->previous->next = to_add_tmp;
+						to_add_tmp->previous = tmp->previous;
+					}
+				}
+				// std::cout << "hey2" << std::endl;
+				to_add_tmp->next = tmp;
+				if (tmp)
+					tmp->previous = to_add_tmp;
+				// std::cout << "here3" << std::endl;
+				//retire de x
+				// t_list_el *before = to_add_tmp->previous;
+				// t_list_el *after = to_add_tmp->next;
+				// before->next = after;
+				// after->previous = before;
+				// x.l_size = x.l_size - 1;
+				// //
+				// to_add = to_add_tmp->previous;
+				// to_add->previous = tmp;
+				// tmp_next = tmp->next;
+				// tmp->next = to_add;
 				this->l_size = this->l_size + 1;
 			}
 			void splice(iterator position, list& x, iterator first, iterator last)
 			{
+				iterator tmp;
 				while (first != last)
 				{
-					this->splice(position, x, first);//peut etre probleme ici
+					// std::cout << "here" << std::endl;
+					tmp = first;
 					first++;
+					this->splice(position, x, tmp);//peut etre probleme ici
+					// first++;
 				}
 			}
 			void remove(const value_type& val)
 			{
 				iterator begin = this->begin();
 				iterator end = this->end();
+				iterator tmp;
 				while (begin != end)
 				{
-					if (*begin == val)
-						this->erase(begin);
+					tmp = begin;
 					begin++;
+					if (*tmp == val)
+						this->erase(tmp);
+					// begin++;
 				}
 			}
 			template <class Predicate>
@@ -648,48 +839,79 @@ namespace ft
 			{
 				iterator begin = this->begin();
 				iterator end = this->end();
+				iterator tmp;
 				while (begin != end)
 				{
-					if (pred(*begin))
-						this->erase(begin);
+					tmp = begin;
 					begin++;
+					if (pred(*tmp))
+						this->erase(tmp);
+					// begin++;
 				}
 			}
 			void unique()
 			{
 				iterator begin = this->begin();
 				iterator end = this->end();
-				value_type prev = *begin;
+				if (begin == end)
+					return;
+				iterator prev = begin;
 				if (begin != end)
 					begin++;
+				iterator tmp;
+				// std::cout << "here" << std::endl;
 				while (begin != end)
 				{
-					if (prev == *begin)
-						this->erase(begin);
-					else
-						prev = *begin;
+					tmp = begin;
 					begin++;
+					if (*prev == *tmp)
+					{
+						// std::cout << "a" << *tmp << std::endl;
+						this->erase(tmp);
+						// std::cout << "b" << std::endl;
+					}
+					else
+						prev = tmp;
+					// begin++;
 				}
+				// std::cout << "here2" << std::endl;
 			}
 			template <class Predicate>
 			void unique(Predicate pred)
 			{
 				iterator begin = this->begin();
 				iterator end = this->end();
+				if (begin == end)
+					return;
 				iterator prev_it = begin;
+				iterator tmp = begin;
 				if (begin != end)
 					begin++;
+				// iterator tmp;
 				while (begin != end)
 				{
-					if (pred(*begin, *prev_it))
-						this->erase(begin);
-					else
-						prev_it = begin;
+					tmp = begin;
 					begin++;
+					// fonctionne mais error ici
+					// std::cout << *begin << "|" << *tmp << std::endl;
+					// if (pred(*tmp, *begin))
+					// {
+					// 	// std::cout << "here:" << (int)(*begin) << "|" << (int)(*tmp) << std::endl;
+					// 	this->erase(begin);
+					// }
+					// else
+					// 	tmp = begin;
+					// begin++;
+					if (pred(*prev_it, *tmp))
+						this->erase(tmp);
+					else
+						prev_it = tmp;
 				}
 			}
 			void merge(list& x)
 			{
+				if (this->first_el == x.first_el && this->l_size == x.l_size)
+					return;
 				t_list_el *tmp = this->first_el;
 				size_type tmp_size = this->l_size;
 				size_type i = 0;
@@ -697,7 +919,7 @@ namespace ft
 				size_type x_tmp_size = x.l_size;
 				size_type j = 0;
 				t_list_el *prev;
-				if (x_tmp->value <= tmp->value)
+				if (x_tmp->value < tmp->value)
 				{
 					this->first_el = x_tmp;
 					x_tmp = x_tmp->next;
@@ -709,35 +931,62 @@ namespace ft
 					i++;
 				}
 				prev = this->first_el;
-				while (i < tmp_size && j < x_tmp_size)
+				// std::cout << "here" << std::endl;
+				while (i < tmp_size || j < x_tmp_size)
 				{
-					if (tmp->value <= x_tmp->value)
+					// std::cout << "prev:" << prev->value << std::endl;
+					if (i == tmp_size && j < x_tmp_size)
 					{
-						tmp->previous = prev;
-						prev->next = tmp;
-						prev = tmp;
-						tmp = tmp->next;
-						i++;
-					}
-					else
-					{
+						// std::cout << "a:" << x_tmp->value << std::endl;
 						x_tmp->previous = prev;
 						prev->next = x_tmp;
 						prev = x_tmp;
 						x_tmp = x_tmp->next;
 						j++;
 					}
+					else if (i < tmp_size && j == x_tmp_size)
+					{
+						// std::cout << "b:" << tmp->value << std::endl;
+						tmp->previous = prev;
+						prev->next = tmp;
+						prev = tmp;
+						tmp = tmp->next;
+						i++;
+					}
+					else if (x_tmp->value < tmp->value)
+					{
+						// std::cout << "c:" << x_tmp->value << std::endl;
+						x_tmp->previous = prev;
+						prev->next = x_tmp;
+						prev = x_tmp;
+						x_tmp = x_tmp->next;
+						j++;
+					}
+					else
+					{
+						// std::cout << "d:" << tmp->value << std::endl;
+						tmp->previous = prev;
+						prev->next = tmp;
+						prev = tmp;
+						tmp = tmp->next;
+						i++;
+					}
 				}
-				if (i < tmp_size)
-				{
-					tmp->previous = prev;
-					prev->next = tmp;
-				}
-				else
-				{
-					x_tmp->previous = prev;
-					prev->next = x_tmp;
-				}
+				// std::cout << "here2" << std::endl;
+				// if (i < tmp_size)
+				// {
+				// 	std::cout << "aa" << std::endl;
+				// 	tmp->previous = prev;
+				// 	prev->next = tmp;
+				// }
+				// else
+				// {
+				// 	std::cout << "bb" << std::endl;
+				// 	x_tmp->previous = prev;
+				// 	prev->next = x_tmp;
+				// }
+				if (prev)
+					prev->next = NULL;
 				this->l_size = i + j;
 				x.first_el = NULL;
 				x.l_size = 0;
@@ -745,6 +994,8 @@ namespace ft
 			template <class Compare>
 			void merge(list& x, Compare comp)
 			{
+				if (this->first_el == x.first_el && this->l_size == x.l_size)
+					return;
 				t_list_el *tmp = this->first_el;
 				size_type tmp_size = this->l_size;
 				size_type i = 0;
@@ -765,16 +1016,32 @@ namespace ft
 					i++;
 				}
 				prev = this->first_el;
-				while (i < tmp_size && j < x_tmp_size)
+				while (i < tmp_size || j < x_tmp_size)
 				{
 					// if (tmp->value <= x_tmp->value)
-					if (comp(x_tmp->value, tmp->value))
+					if (i == tmp_size && j < x_tmp_size)
 					{
 						x_tmp->previous = prev;
 						prev->next = x_tmp;
 						prev = x_tmp;
 						x_tmp = x_tmp->next;
+						j++;
+					}
+					else if (i < tmp_size && j == x_tmp_size)
+					{
+						tmp->previous = prev;
+						prev->next = tmp;
+						prev = tmp;
+						tmp = tmp->next;
 						i++;
+					}
+					else if (comp(x_tmp->value, tmp->value))
+					{
+						x_tmp->previous = prev;
+						prev->next = x_tmp;
+						prev = x_tmp;
+						x_tmp = x_tmp->next;
+						j++;
 					}
 					else
 					{
@@ -782,133 +1049,212 @@ namespace ft
 						prev->next = tmp;
 						prev = tmp;
 						tmp = tmp->next;
-						j++;
+						i++;
 					}
 				}
-				if (i < tmp_size)
-				{
-					tmp->previous = prev;
-					prev->next = tmp;
-				}
-				else
-				{
-					x_tmp->previous = prev;
-					prev->next = x_tmp;
-				}
+				// if (i < tmp_size)
+				// {
+				// 	tmp->previous = prev;
+				// 	prev->next = tmp;
+				// }
+				// else
+				// {
+				// 	x_tmp->previous = prev;
+				// 	prev->next = x_tmp;
+				// }
+				if (prev)
+					prev->next = NULL;
 				this->l_size = i + j;
 				x.first_el = NULL;
 				x.l_size = 0;
 			}
 			void sort()
 			{
-				t_list_el *tmp = this->first_el;
-				t_list_el *tmp_next;
+				// iterator it_first = this->begin();
+				iterator it_begin = this->begin();
+				iterator it_end = this->end();
+
+				list tmp_l;
+
+				iterator tmp;
 				size_type i = 0;
-				size_type j = 0;
-				t_list_el *new_first = tmp;
-				while (i < this->l_size)
+				size_type size = this->l_size;
+				while (i < size)
 				{
-					j = 0;
-					while (j < this->l_size && tmp)
+					// std::cout << "i:" << i << std::endl;
+					it_begin = this->begin();
+					it_end = this->end();
+					tmp = it_begin;
+					while (it_begin != it_end)
 					{
-						tmp_next = tmp->next;
-						if (tmp && tmp_next && tmp->value > tmp_next->value)//checker les next et previous
-						{
-							t_list_el *save = tmp;
-							t_list_el *prev = save->previous;
-							tmp->previous = tmp_next;
-							tmp->next = tmp_next->next;
-							tmp_next->previous = save->previous;
-							tmp_next->next = tmp;
-							if (prev)
-								prev->next = tmp_next;
-							if (j == 0)
-								this->first_el = new_first;
-						}
-						else
-						{
-							if (j == 0)
-								this->first_el = new_first;
-						}
-						if (tmp && tmp->next)
-							tmp = tmp->next;
-						j++;
+						if (*it_begin < *tmp)
+							tmp = it_begin;
+						it_begin++;
 					}
-					tmp = new_first;
+					// std::cout << "tmp:" << *tmp << std::endl;
+					tmp_l.splice(tmp_l.end(), *this, tmp);
 					i++;
 				}
-				this->first_el = new_first;
-				this->first_el->previous = NULL;
-				tmp = this->first_el;
-				i = 0;
-				while (i < this->l_size - 1)
-				{
-					tmp = tmp->next;
-					i++;
-				}
-				tmp->next = NULL;
+				// std::cout << tmp_l.size() << tmp_l.first_el->value << std::endl;
+				// iterator b = tmp_l.begin();
+				// iterator e = tmp_l.end();
+				// while (b != e)
+				// {
+				// 	std::cout << "b:" << *b << std::endl;
+				// 	b++;
+				// }
+				this->first_el = tmp_l.first_el;
+				this->l_size = tmp_l.l_size;
+				tmp_l.first_el = NULL;
+				tmp_l.l_size = 0;
+				// iterator b2 = this->begin();
+				// iterator e2 = this->end();
+				// while (b2 != e2)
+				// {
+				// 	std::cout << "b2:" << *b2 << std::endl;
+				// 	b2++;
+				// }
+				// std::cout << "a" << std::endl;
+				// t_list_el *tmp = this->first_el;
+				// t_list_el *tmp_next;
+				// size_type i = 0;
+				// size_type j = 0;
+				// t_list_el *new_first = tmp;
+				// while (i < this->l_size)
+				// {
+				// 	std::cout << "here" << i << std::endl;
+				// 	j = 0;
+				// 	while (j < this->l_size && tmp)
+				// 	{
+				// 		tmp_next = tmp->next;
+				// 		if (tmp && tmp_next && tmp->value > tmp_next->value)//checker les next et previous
+				// 		{
+				// 			t_list_el *save = tmp;
+				// 			t_list_el *prev = save->previous;
+				// 			tmp->previous = tmp_next;
+				// 			tmp->next = tmp_next->next;
+				// 			tmp_next->previous = save->previous;
+				// 			tmp_next->next = tmp;
+				// 			if (prev)
+				// 				prev->next = tmp_next;
+				// 			if (j == 0)
+				// 				this->first_el = new_first;
+				// 		}
+				// 		else
+				// 		{
+				// 			if (j == 0)
+				// 				this->first_el = new_first;
+				// 		}
+				// 		if (tmp && tmp->next)
+				// 			tmp = tmp->next;
+				// 		j++;
+				// 	}
+				// 	tmp = new_first;
+				// 	i++;
+				// }
+				// std::cout << "b" << new_first->value << "|" << new_first->next->value << std::endl;
+				// this->first_el = new_first;
+				// this->first_el->previous = NULL;
+				// tmp = this->first_el;
+				// i = 0;
+				// std::cout << "c" << std::endl;
+				// // while (i < this->l_size - 1)
+				// while (tmp->next)
+				// {
+				// 	std::cout << "a" << std::endl;
+				// 	tmp = tmp->next;
+				// 	i++;
+				// }
+				// std::cout << "d" << std::endl;
+				// tmp->next = NULL;
 			}
 			template <class Compare>
 			void sort(Compare comp)
 			{
-				t_list_el *tmp = this->first_el;
-				t_list_el *tmp_next;
+				iterator it_begin = this->begin();
+				iterator it_end = this->end();
+				iterator tmp;
+				list tmp_list;
 				size_type i = 0;
-				size_type j = 0;
-				t_list_el *new_first = tmp;
-				while (i < this->l_size)
+				size_type size = this->l_size;
+
+				while (i < size)
 				{
-					j = 0;
-					while (j < this->l_size && tmp)
+					it_begin = this->begin();
+					it_end = this->end();
+					tmp = it_begin;
+					while (it_begin != it_end)
 					{
-						tmp_next = tmp->next;
-						if (tmp && tmp_next && comp(tmp_next->value, tmp->value))//checker les next et previous
-						{
-							t_list_el *save = tmp;
-							t_list_el *prev = save->previous;
-							tmp->previous = tmp_next;
-							tmp->next = tmp_next->next;
-							tmp_next->previous = save->previous;
-							tmp_next->next = tmp;
-							if (prev)
-								prev->next = tmp_next;
-							if (j == 0)
-								this->first_el = new_first;
-						}
-						else
-						{
-							if (j == 0)
-								this->first_el = new_first;
-						}
-						if (tmp && tmp->next)
-							tmp = tmp->next;
-						j++;
+						if (comp(*it_begin, *tmp))
+							tmp = it_begin;
+						it_begin++;
 					}
-					tmp = new_first;
+					tmp_list.splice(tmp_list.end(), *this, tmp);
 					i++;
 				}
-				this->first_el = new_first;
-				this->first_el->previous = NULL;
-				tmp = this->first_el;
-				i = 0;
-				while (i < this->l_size - 1)
-				{
-					tmp = tmp->next;
-					i++;
-				}
-				tmp->next = NULL;
+				this->first_el = tmp_list.first_el;
+				this->l_size = tmp_list.l_size;
+				tmp_list.first_el = NULL;
+				tmp_list.l_size = 0;
+				// t_list_el *tmp = this->first_el;
+				// t_list_el *tmp_next;
+				// size_type i = 0;
+				// size_type j = 0;
+				// t_list_el *new_first = tmp;
+				// while (i < this->l_size)
+				// {
+				// 	j = 0;
+				// 	while (j < this->l_size && tmp)
+				// 	{
+				// 		tmp_next = tmp->next;
+				// 		if (tmp && tmp_next && comp(tmp_next->value, tmp->value))//checker les next et previous
+				// 		{
+				// 			t_list_el *save = tmp;
+				// 			t_list_el *prev = save->previous;
+				// 			tmp->previous = tmp_next;
+				// 			tmp->next = tmp_next->next;
+				// 			tmp_next->previous = save->previous;
+				// 			tmp_next->next = tmp;
+						// 	if (prev)
+						// 		prev->next = tmp_next;
+						// 	if (j == 0)
+						// 		this->first_el = new_first;
+						// }
+						// else
+						// {
+						// 	if (j == 0)
+						// 		this->first_el = new_first;
+						// }
+						// if (tmp && tmp->next)
+						// 	tmp = tmp->next;
+				// 		j++;
+				// 	}
+				// 	tmp = new_first;
+				// 	i++;
+				// }
+				// this->first_el = new_first;
+				// this->first_el->previous = NULL;
+				// tmp = this->first_el;
+				// i = 0;
+				// while (i < this->l_size - 1)
+				// {
+				// 	tmp = tmp->next;
+				// 	i++;
+				// }
+				// tmp->next = NULL;
 			}
 			void reverse()
 			{
 				t_list_el *tmp = this->first_el;
-				size_type i = 0;
-				while (i < this->l_size)
+				// size_type i = 0;
+				// while (i < this->l_size)
+				while (tmp->next)
 				{
 					tmp = tmp->next;
-					i++;
+					// i++;
 				}
 				t_list_el *new_el = tmp;
-				i = 0;
+				size_type i = 0;
 				while (i < this->l_size)
 				{
 					t_list_el *tmp_next = tmp->next;
@@ -940,8 +1286,9 @@ namespace ft
 			// 	std::cout << "show end" << std::endl;
 			// }
 		private:
-			t_list_el	*first_el;
-			size_t		l_size;
+			t_list_el		*first_el;
+			size_t			l_size;
+			allocator_type	alloc;
 			template <class U, bool>
 			class S
 			{
@@ -955,12 +1302,23 @@ namespace ft
 				public:
 					void operator()(U n, U val, ft::list<T> *ctnr)
 					{
-						U i = 0;
-						while (i < n)
-						{
-							ctnr->push_back(val);
-							i++;
-						}
+						// // while (ctnr->size() > (size_type)n)
+						// // 	ctnr->pop_back();
+						// iterator it_begin = ctnr->begin();
+						// iterator it_end = ctnr->end();
+						// while (it_begin != it_end)
+						// {
+						// 	*it_begin = val;
+						// 	it_begin++;
+						// }
+						// U i = ctnr->size();
+						// while (i < n)
+						// {
+						// 	ctnr->push_back(val);
+						// 	i++;
+						// }
+						// ctnr->resize(n);
+						ctnr->assign((size_type)n, val);
 					}
 			};
 			template <class U>
@@ -969,11 +1327,25 @@ namespace ft
 				public:
 					void operator()(U first, U last, ft::list<T> *ctnr)
 					{
+						iterator it_begin = ctnr->begin();
+						iterator it_end = ctnr->end();
+
+						size_type i = 0;
 						while (first != last)
 						{
-							ctnr->push_back(*first);
+							if (it_begin != it_end)
+							{
+								*it_begin = *first;
+								it_begin++;
+							}
+							else
+								ctnr->push_back(*first);
 							first++;
+							i++;
 						}
+						ctnr->resize(i);
+						// while (i < ctnr->size())
+						// 	ctnr->pop_size();
 					}
 			};
 			template <class U, bool>

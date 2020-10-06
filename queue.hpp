@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 16:50:08 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/02 17:22:00 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/03 15:21:51 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,17 @@ namespace ft
 			explicit queue(const container_type& ctnr = container_type())
 			{
 				this->ctnr = ctnr;
+			}
+			~queue()
+			{}
+			queue(const queue& q)
+			{
+				*this = q;
+			}
+			queue &operator=(const queue& q)
+			{
+				this->ctnr = q.ctnr;
+				return (*this);
 			}
 			bool empty() const
 			{

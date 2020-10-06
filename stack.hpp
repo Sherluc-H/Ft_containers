@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 14:43:37 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/02 17:15:19 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/03 15:19:55 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@ namespace ft
             explicit stack(const container_type& ctnr = container_type())
             {
                 this->ctnr = ctnr;
+            }
+            ~stack()
+            {}
+            stack(const stack& s)
+            {
+                *this = s;
+            }
+            stack &operator=(const stack& s)
+            {
+                this->ctnr = s.ctnr;
+                return (*this);
             }
             bool empty() const
             {

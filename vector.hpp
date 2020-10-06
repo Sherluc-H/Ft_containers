@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 09:33:34 by lhuang            #+#    #+#             */
-/*   Updated: 2020/09/26 12:27:04 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/02 22:41:09 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,34 +70,17 @@ namespace ft
 					{
 						
 					}
-					bool operator==(const iterator& it2)
-					{
-						return (this->operator->() == it2.operator->());
-						// return (&(this->operator*()) == &(it2.operator*()));
-					}
 					bool operator==(const iterator& it2) const
 					{
 						return (this->operator->() == it2.operator->());
-					}
-					bool operator!=(const iterator& it2)
-					{
-						return (!(*this == it2));
 					}
 					bool operator!=(const iterator& it2) const
 					{
 						return (!(*this == it2));
 					}
-					value_type& operator*()
-					{
-						return (this->p[this->crement]);
-					}
 					value_type& operator*() const
 					{
 						return (this->p[this->crement]);
-					}
-					value_type* operator->()
-					{
-						return (&(this->operator*()));
 					}
 					value_type* operator->() const
 					{
@@ -127,23 +110,6 @@ namespace ft
 						this->crement--;
 						return (tmp);
 					}
-					iterator operator+(const difference_type& b)
-					{
-						iterator tmp = *this;
-						difference_type i = 0;
-
-						while (i < b)
-						{
-							tmp++;
-							i++;
-						}
-						while (i > b)
-						{
-							tmp--;
-							i--;
-						}
-						return (tmp);
-					}
 					iterator operator+(const difference_type& b) const
 					{
 						iterator tmp = *this;
@@ -166,49 +132,25 @@ namespace ft
 						iterator tmp = b;
 						return (tmp + a);
 					}
-					iterator operator-(const difference_type& b)
-					{
-						return (*this + -b);
-					}
 					iterator operator-(const difference_type& b) const
 					{
 						return (*this + -b);
-					}
-					difference_type operator-(const iterator& b)
-					{
-						return (this->operator->() - b.operator->());
 					}
 					difference_type operator-(const iterator& b) const
 					{
 						return (this->operator->() - b.operator->());
 					}
-					bool operator<(const iterator& it2)
-					{
-						return (this->operator->() < it2.operator->());
-					}
 					bool operator<(const iterator& it2) const
 					{
 						return (this->operator->() < it2.operator->());
-					}
-					bool operator>(const iterator& it2)
-					{
-						return (this->operator->() > it2.operator->());
 					}
 					bool operator>(const iterator& it2) const
 					{
 						return (this->operator->() > it2.operator->());
 					}
-					bool operator<=(const iterator& it2)
-					{
-						return (!(*this > it2));
-					}
 					bool operator<=(const iterator& it2) const
 					{
 						return (!(*this > it2));
-					}
-					bool operator>=(const iterator& it2)
-					{
-						return (!(*this < it2));
 					}
 					bool operator>=(const iterator& it2) const
 					{
@@ -233,10 +175,6 @@ namespace ft
 					iterator &operator-=(const difference_type& b)
 					{
 						return (*this += -b);
-					}
-					value_type &operator[](size_type idx)
-					{
-						return (this->p[this->crement + idx]);
 					}
 					value_type &operator[](size_type idx) const
 					{
@@ -277,33 +215,17 @@ namespace ft
 					{
 						
 					}
-					bool operator==(const const_iterator& it2)
-					{
-						return (this->it == it2.it);
-					}
 					bool operator==(const const_iterator& it2) const
 					{
 						return (this->it == it2.it);
-					}
-					bool operator!=(const const_iterator& it2)
-					{
-						return (!(*this == it2));
 					}
 					bool operator!=(const const_iterator& it2) const
 					{
 						return (!(*this == it2));
 					}
-					value_type &operator*()
-					{
-						return (*(this->it));
-					}
 					value_type &operator*() const
 					{
 						return (*(this->it));
-					}
-					value_type *operator->()
-					{
-						return (&(this->operator*()));
 					}
 					value_type *operator->() const
 					{
@@ -333,12 +255,6 @@ namespace ft
 						this->it--;
 						return (tmp);
 					}
-					const_iterator operator+(const difference_type& b)
-					{
-						// std::cout << "HEY" << std::endl;
-						const_iterator tmp = this->it + b;
-						return (tmp);
-					}
 					const_iterator operator+(const difference_type& b) const
 					{
 						const_iterator tmp = this->it + b;
@@ -349,51 +265,26 @@ namespace ft
 						const_iterator tmp = b;
 						return (tmp + a);
 					}
-					const_iterator operator-(const difference_type& b)
-					{
-						const_iterator tmp = this->it - b;
-						return (tmp);
-					}
 					const_iterator operator-(const difference_type& b) const
 					{
 						const_iterator tmp = this->it - b;
 						return (tmp);
 					}
-					difference_type operator-(const const_iterator& it2)
-					{
-						return (this->it - it2.it);
-					}
 					difference_type operator-(const const_iterator& it2) const
 					{
 						return (this->it - it2.it);
-					}
-					bool operator<(const const_iterator& it2)
-					{
-						return (this->it < it2.it);
 					}
 					bool operator<(const const_iterator& it2) const
 					{
 						return (this->it < it2.it);
 					}
-					bool operator>(const const_iterator& it2)
-					{
-						return (this->it > it2.it);
-					}
 					bool operator>(const const_iterator& it2) const
 					{
 						return (this->it > it2.it);
 					}
-					bool operator<=(const const_iterator& it2)
-					{
-						return (this->it <= it2.it);
-					}
 					bool operator<=(const const_iterator& it2) const
 					{
 						return (this->it <= it2.it);
-					}
-					bool operator>=(const const_iterator& it2)
-					{
-						return (this->it >= it2.it);
 					}
 					bool operator>=(const const_iterator& it2) const
 					{
@@ -410,10 +301,6 @@ namespace ft
 					const_iterator &operator-=(const difference_type& b)
 					{
 						return (*this += -b);
-					}
-					value_type &operator[](size_type idx)
-					{
-						return (this->it[idx]);
 					}
 					value_type &operator[](size_type idx) const
 					{

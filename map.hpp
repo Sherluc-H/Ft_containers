@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 21:06:30 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/02 14:26:20 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/04 00:02:23 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,35 +93,35 @@ namespace ft
 					}
 					~iterator()
 					{}
-					bool operator==(const iterator& it)
-					{
-						return (ft_get_cremented(*this) == ft_get_cremented(it));
-					}
+					// bool operator==(const iterator& it)
+					// {
+					// 	return (ft_get_cremented(*this) == ft_get_cremented(it));
+					// }
 					bool operator==(const iterator& it) const
 					{
 						return (ft_get_cremented(*this) == ft_get_cremented(it));
 					}
-					bool operator!=(const iterator& it)
-					{
-						return (!(*this == it));
-					}
+					// bool operator!=(const iterator& it)
+					// {
+					// 	return (!(*this == it));
+					// }
 					bool operator!=(const iterator&it) const
 					{
 						return (!(*this == it));
 					}
-					value_type &operator*()
-					{
-						// std::cout << "c:" << this->crement << std::endl;
-						return ((ft_get_cremented(*this)->val));
-					}
+					// value_type &operator*()
+					// {
+					// 	// std::cout << "c:" << this->crement << std::endl;
+					// 	return ((ft_get_cremented(*this)->val));
+					// }
 					value_type &operator*() const
 					{
 						return ((ft_get_cremented(*this)->val));
 					}
-					value_type *operator->()
-					{
-						return (ft_get_cremented(*this)->val);
-					}
+					// value_type *operator->()
+					// {
+					// 	return (ft_get_cremented(*this)->val);
+					// }
 					value_type *operator->() const
 					{
 						return (ft_get_cremented(*this)->val);
@@ -241,34 +241,34 @@ namespace ft
 					}
 					~const_iterator()
 					{}
-					bool operator==(const const_iterator& cit)
-					{
-						return (this->it == cit.it);
-					}
+					// bool operator==(const const_iterator& cit)
+					// {
+					// 	return (this->it == cit.it);
+					// }
 					bool operator==(const const_iterator& cit) const
 					{
 						return (this->it == cit.it);
 					}
-					bool operator!=(const const_iterator& cit)
-					{
-						return (this->it != cit.it);
-					}
+					// bool operator!=(const const_iterator& cit)
+					// {
+					// 	return (this->it != cit.it);
+					// }
 					bool operator!=(const const_iterator& cit) const
 					{
 						return (this->it != cit.it);
 					}
-					value_type &operator*()
-					{
-						return (*(this->it));
-					}
+					// value_type &operator*()
+					// {
+					// 	return (*(this->it));
+					// }
 					value_type &operator*() const
 					{
 						return (*(this->it));
 					}
-					value_type *operator->()
-					{
-						return ((this->it).operator->());
-					}
+					// value_type *operator->()
+					// {
+					// 	return ((this->it).operator->());
+					// }
 					value_type *operator->() const
 					{
 						return ((this->it).operator->());
@@ -329,9 +329,6 @@ namespace ft
 			}
 			~map()
 			{
-				// typename allocator_type::template rebind<t_map_el>::other r;
-				// r.deallocate(this->el, this->map_size);
-				// r.destroy(this->el);
 				this->clear();
 			}
 			map& operator=(const map& x)
@@ -345,8 +342,8 @@ namespace ft
 				// this->map_size = x.map_size;
 				// this->alloc = x.alloc;
 				this->comp = x.comp;
-				this->el = NULL;
-				this->map_size = 0;
+				// this->el = NULL;
+				// this->map_size = 0;
 				const_iterator it_begin = x.begin();
 				const_iterator it_end = x.end();
 				while (it_begin != it_end)
@@ -423,9 +420,6 @@ namespace ft
 				if (this->map_size == 0)
 				{
 					t_map_el *new_el = ft_new_el(val);
-					// value_type* new_val = this->alloc.allocate(1);
-					// this->alloc.construct(new_val, val);
-					// new_el->val = new_val;
 					this->el = new_el;
 					this->map_size = this->map_size + 1;
 					p = value_type(true, true);
@@ -561,8 +555,6 @@ namespace ft
 						tmp->next_left->pos = 2;
 					}
 					ft_deallocate_n_destroy(tmp);
-					// if (!tmp->next_right)
-					// 	tmp_prev->next_left = tmp->next_left;
 				}
 				else if (tmp->next_right)
 				{
@@ -585,67 +577,6 @@ namespace ft
 					}
 					ft_deallocate_n_destroy(tmp);
 				}
-				// (void)tmp;
-				// typename allocator_type::template rebind<t_map_el>::other r;
-				// std::cout << "crement" << crement << std::endl;
-				// r.deallocate(tmp, 1);
-				// r.destroy(tmp);
-				// tmp->~val();
-				// tmp->pos = 3;
-				// t_map_el* tmp = position.operator->();
-				// this->alloc.deallocate(tmp->val, 1);
-				// this->alloc.destroy(tmp->val);
-				// tmp->val = NULL;
-				// this->map_size = this->map_size - 1;
-
-				// this->alloc.deallocate(position.operator->(), 1);
-				// position.operator->() = NULL;
-				// iterator tmp = position;
-				// t_map_el* el = position.operator->();
-				// t_map_el* prev_el = el->previous;
-
-				// if (el->next_left)
-				// {
-				// 	if (el == prev_el->next_left)
-				// 	{
-				// 		prev_el->next_left = el->next_left;
-				// 	}
-				// 	else if (el == prev_el->next_right)
-				// 	{
-				// 		prev_el->next_right = el->next_left;
-				// 	}
-			// 	}
-				// else if (el->next_right)
-				// {
-				// 	if (el == prev_el->next_left)
-				// 		prev_el->next_left = el->next_right;
-				// 	else if (el == prev_el->next_right)
-				// 		prev_el->next_right = el->next_right;
-				// }
-				// else
-				// {
-				// 	if (el == prev_el->next_left)
-				// 		prev_el->next_left = NULL;
-				// 	else if (el == prev_el->next_right)
-				// 		prev_el->next_right = NULL;
-				// }
-
-				// if (prev_el)
-				// {
-
-				// }
-				// // t_map_el* first = this->el;
-			// 	// bool from_right = false;
-
-			// 	// first = ft_get_first_left_from(first);
-			// 	// while (1)
-			// 	// {
-			// 	// 	if (first->next_right && !from_right)
-			// 	// 	{
-			// 	// 		first = first->next_right;
-			// 	// 		first = ft_get_first_left_from(first);
-			// 	// 	}
-			// 	// }
 			}
 			size_type erase(const key_type& k)
 			{
@@ -657,13 +588,6 @@ namespace ft
 					ret = 1;
 				}
 				this->erase(this->find(k));
-				t_map_el* tmp = ft_get_crement_el(this->el, crement);
-				(void)tmp;
-				// this->alloc.deallocate(&tmp->val, 1);
-				// tmp->pos = 3;
-				// this->alloc.deallocate(tmp->val, 1);
-				// this->alloc.destroy(tmp->val);
-				// tmp->val = NULL;
 				return (ret);
 			}
 			void erase(iterator first, iterator last)
@@ -746,100 +670,28 @@ namespace ft
 			}
 			value_compare value_comp() const
 			{
-				// key_compare key_cmp;
-				value_compare valcmp(comp);
+				value_compare valcmp(this->comp);
 				return (valcmp);
 			}
 			key_compare key_comp() const
 			{
-				// key_compare key_cmp;
-				return (comp);
+				return (this->comp);
 			}
 			iterator find(const key_type& k)
 			{
-				t_map_el* first = this->el;
-				bool from_right = false;
-				int crement = 0;
-
-				first = ft_get_first_left_from(first);
-				if (this->comp(first->val.first, k) == false && this->comp(k, first->val.first) == false)
-					return (typename ft::map<key_type, mapped_type>::iterator(this->el));
-				crement++;
-				while (1)
-				{
-					if (first->next_right && !from_right)
-					{
-						first = first->next_right;
-						first = ft_get_first_left_from(first);
-						if (this->comp(first->val.first, k) == false && this->comp(k, first->val.first) == false)
-							return (typename ft::map<key_type, mapped_type>::iterator(this->el, crement));
-						crement++;
-					}
-					else
-					{
-						if (first->pos == 1)
-							from_right = false;
-						else if (first->pos == 2)
-							from_right = true;
-						if (!(first->previous))
-							break;
-						first = first->previous;
-						if (!from_right)
-						{
-							if (this->comp(first->val.first, k) == false && this->comp(k, first->val.first) == false)
-								return (typename ft::map<key_type, mapped_type>::iterator(this->el, crement));
-							crement++;
-						}
-					}
-				}
+				int crement = ft_search_specific(k, ft_comp_for_eq);
 				return (typename ft::map<key_type, mapped_type>::iterator(this->el, crement));
 			}
 			const_iterator find(const key_type& k) const
 			{
-				t_map_el* first = this->el;
-				bool from_right = false;
-				int crement = 0;
-
-				first = ft_get_first_left_from(first);
-				if (this->comp(first->val.first, k) == false && this->comp(k, first->val.first) == false)
-					return (typename ft::map<key_type, mapped_type>::const_iterator(typename ft::map<key_type, mapped_type>::iterator(this->el)));
-				crement++;
-				while (1)
-				{
-					if (first->next_right && !from_right)
-					{
-						first = first->next_right;
-						first = ft_get_first_left_from(first);
-						if (this->comp(first->val.first, k) == false && this->comp(k, first->val.first) == false)
-							return (typename ft::map<key_type, mapped_type>::const_iterator(typename ft::map<key_type, mapped_type>::iterator(this->el, crement)));
-						crement++;
-					}
-					else
-					{
-						if (first->pos == 1)
-							from_right = false;
-						else if (first->pos == 2)
-							from_right = true;
-						if (!(first->previous))
-							break;
-						first = first->previous;
-						if (!from_right)
-						{
-							if (this->comp(first->val.first, k) == false && this->comp(k, first->val.first) == false)
-								return (typename ft::map<key_type, mapped_type>::const_iterator(typename ft::map<key_type, mapped_type>::iterator(this->el, crement)));
-							crement++;
-						}
-					}
-				}
-				// std::cout << "crement:" << crement << std::endl;
+				int crement = ft_search_specific(k, ft_comp_for_eq);
 				return (typename ft::map<key_type, mapped_type>::const_iterator(typename ft::map<key_type, mapped_type>::iterator(this->el, crement)));
 			}
 			size_type count(const key_type& k) const
 			{
-				// std::cout << &(*(this->find(k))) << "|" << &(*(this->end())) << std::endl;
-				return (!(this->find(k) == this->end()));
-					// return (0);
-				// return (1);
+				if (this->find(k) == this->end())
+					return (0);
+				return (1);
 			}
 			iterator lower_bound(const key_type& k)
 			{
@@ -864,12 +716,8 @@ namespace ft
 			std::pair<const_iterator, const_iterator> equal_range(const key_type& k) const
 			{
 				const_iterator one = this->find(k);
-				std::cout << "K:" << k << "|" << (*one).first << std::endl;
 				if (one != this->end())
-				{
-					std::cout << "here" << std::endl;
 					return (std::pair<const_iterator, const_iterator>(one, this->upper_bound(k)));
-				}
 				const_iterator cit_one = this->upper_bound(k);
 				return (std::pair<const_iterator, const_iterator>(cit_one, cit_one));
 			}
@@ -877,10 +725,7 @@ namespace ft
 			{
 				iterator one = this->find(k);
 				if (one != this->end())
-				{
-					std::cout << "here2" << std::endl;
 					return (std::pair<iterator, iterator>(one, this->upper_bound(k)));
-				}
 				iterator it_one = this->upper_bound(k);
 				return (std::pair<iterator, iterator>(it_one, it_one));
 			}
@@ -927,24 +772,16 @@ namespace ft
 
 			t_map_el* ft_new_el(const value_type& val)
 			{
-				(void)val;
 				typename allocator_type::template rebind<t_map_el>::other r;
 				t_map_el el;
 				this->alloc.construct(&(el.val), val);
 				t_map_el* new_el = r.allocate(1);
 
-				new_el->previous = NULL;
-				new_el->pos = 0;
-				// new_el->val = NULL;
-				// new_el->val = std::make_pair(v.first, v.second);
-				// std::cout << "hey1" << std::endl;
-				this->alloc.construct(new_el, el);
-				// std::cout << "hey" << std::endl;
+				r.construct(new_el, el);
 				new_el->previous = NULL;
 				new_el->pos = 0;
 				new_el->next_left = NULL;
 				new_el->next_right = NULL;
-				// std::cout << "hey:" << new_el->val.first << std::endl;
 				return (new_el);
 			}
 			static bool ft_comp_for_lower(key_type a, key_type b)

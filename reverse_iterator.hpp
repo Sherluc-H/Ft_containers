@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 10:12:49 by lhuang            #+#    #+#             */
-/*   Updated: 2020/09/22 11:49:45 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/03 20:14:53 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,17 @@ namespace ft
             {
                 return (this->base_it);
             }
-            bool operator==(const reverse_iterator& it2)
-            {
-                if (this->base_it == it2.base_it)
-                    return (true);
-                return (false);
-            }
-            bool operator!=(const reverse_iterator& it2)
-            {
-                return (!(*this == it2));
-            }
-            reference& operator*() const
+            // bool operator==(const reverse_iterator& it2)
+            // {
+            //     if (this->base_it == it2.base_it)
+            //         return (true);
+            //     return (false);
+            // }
+            // bool operator!=(const reverse_iterator& it2)
+            // {
+            //     return (!(*this == it2));
+            // }
+            reference operator*() const
             {
                 iterator_type tmp = this->base_it;
                 tmp--;
@@ -79,7 +79,7 @@ namespace ft
             }
             reverse_iterator& operator+=(difference_type n)//ici ref a checker
             {
-                this->base_it += n;
+                this->base_it -= n;
                 return (*this);
             }
             reverse_iterator operator-(difference_type n) const//a check avec vector
@@ -100,7 +100,7 @@ namespace ft
             }
             reverse_iterator& operator-=(difference_type n)
             {
-                this->base_it -= n;
+                this->base_it += n;
                 return (*this);
             }
             pointer operator->() const
@@ -118,32 +118,32 @@ namespace ft
     template <class Iterator>
     bool operator==(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
     {
-        return (lhs == rhs);
+        return (lhs.base() == rhs.base());
     }
     template <class Iterator>
     bool operator!=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
     {
-        return (lhs != rhs);
+        return (lhs.base() != rhs.base());
     }
     template <class Iterator>
     bool operator<(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
     {
-        return (lhs < rhs);
+        return (lhs.base() < rhs.base());
     }
     template <class Iterator>
     bool operator<=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
     {
-        return (lhs <= rhs);
+        return (lhs.base() <= rhs.base());
     }
     template <class Iterator>
     bool operator>(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
     {
-        return (lhs > rhs);
+        return (lhs.base() > rhs.base());
     }
     template <class Iterator>
     bool operator>=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
     {
-        return (lhs >= rhs);
+        return (lhs.base() >= rhs.base());
     }
     template <class Iterator>
     reverse_iterator<Iterator> operator+(typename reverse_iterator<Iterator>::difference_type n, const reverse_iterator<Iterator>& rev_it)
