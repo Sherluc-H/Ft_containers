@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/06 22:02:40 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/07 20:36:50 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -513,7 +513,6 @@ void ft_check_stack()
 	T s2;
 	std::cout << s.size() << "|" << s.empty() << std::endl;
 	ft_check_all_comp(s, s2);
-	std::cout << s.top() << std::endl;
 	s.push(2);
 	std::cout << s.top() << std::endl;
 	s.push(5);
@@ -580,6 +579,9 @@ int		main(int argc, char *argv[])
 			ft_data_type_struct_check<ft::list<std::string>>();
 			ft_const_check<ft::list<int>>();
 			ft_list_advanced_check<ft::list<int>>();
+			ft::list<int> a;
+			ft::list<int> b;
+			ft::swap(a, b);
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
@@ -590,6 +592,9 @@ int		main(int argc, char *argv[])
 			ft_data_type_struct_check<std::list<std::string>>();
 			ft_const_check<std::list<int>>();
 			ft_list_advanced_check<std::list<int>>();
+			std::list<int> a;
+			std::list<int> b;
+			std::swap(a, b);
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;
@@ -602,14 +607,14 @@ int		main(int argc, char *argv[])
 		{
 			ft_vector_common_check<ft::vector<int>>();
 			ft_iterator_rand_access_check<ft::vector<int>>();
-			// ft_swap_check<ft::vector<int>>();
+			ft_vector_swap_check<ft::vector<int>>();
 			ft_reverse_iterator_check<ft::vector<int>>();
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
 			ft_vector_common_check<std::vector<int>>();
 			ft_iterator_rand_access_check<std::vector<int>>();
-			// ft_swap_check<std::vector<int>>();
+			ft_vector_swap_check<std::vector<int>>();
 			ft_reverse_iterator_check<std::vector<int>>();
 		}
 		else

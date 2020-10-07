@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:40:53 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/03 22:25:50 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/07 18:53:26 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,219 @@ void	ft_vector_common_check(void)
 	std::cout << vec2.size() << std::endl;
 	std::cout << vec2[1] << std::endl;
 	std::cout << vec2.at(2) << std::endl;
+}
+
+template <class T>
+void ft_vector_swap_check()
+{
+	std::cout << "---swap check---" << std::endl;
+	T one;
+	one.push_back(1);
+	one.push_back(2);
+	one.push_back(3);
+	one.push_back(4);
+	one.push_back(6);
+	T two;
+	two.push_back(10);
+	two.push_back(20);
+	two.push_back(30);
+	two.push_back(40);
+	two.push_back(50);
+	// T three;
+	// three.push_back(100);
+	// three.push_back(200);
+	// typename T::iterator three_it_begin = three.begin();
+	// typename T::iterator three_it_end = three.end();
+	// two.assign(three_it_begin, three_it_end);
+	// three.assign(10, 1000);
+	// two.push_back(6);
+	// const T one1 = one;
+	// const T two2 = two;
+	// const ft::list<int> one1 = one;
+	// const ft::list<int> two1 = two;
+	ft_check_bigger_eq(one, two);
+	typename T::iterator one_it_begin = one.begin();
+	typename T::iterator one_it_begin2 = one.begin();
+	// typename T::const_iterator cit = one_it_begin;//conversion ok
+	// typename T::iterator iit = cit;//conversion pas ok
+	one_it_begin2--;
+	// one_it_begin2--;
+	// std::cout << "begin:" << *one_it_begin << &(*one_it_begin) << std::endl;
+	// std::cout << "begin:" << *one_it_begin2 << &(*one_it_begin2) << std::endl;
+	ft_check_eq(one_it_begin, one_it_begin2);
+	// one_it_begin--;
+	// std::cout << "b" << *one_it_begin << &(*one_it_begin) << std::endl;
+	// one_it_begin--;
+	// std::cout << "b" << *one_it_begin << &(*one_it_begin) << std::endl;
+	// one_it_begin--;
+	// one_it_begin--;
+	// one_it_begin++;
+	std::cout << "b" << *one_it_begin << (*one_it_begin) << std::endl;
+	typename T::iterator two_it_begin = two.begin();
+	// one.insert(one_it_begin, 1, 2);
+	// one.assign(1, 2);
+	// typename T::iterator two_it_end = two.end();
+	// two.clear();
+	// std::swap(one, two);
+	one.swap(two);
+	std::cout << "c" << std::endl;
+	two.push_back(60);//il y avait probleme ici
+	std::cout << "d" << std::endl;
+	typename T::iterator two_it_end = two.end();
+	typename T::iterator one_it_end = one.end();
+	// std::swap(one, two);
+	std::cout << "e" << std::endl;
+	ft_print_it_range(one_it_begin, two_it_end);
+	one_it_end--;
+	std::cout << "end" << *one_it_end << std::endl;
+	ft_print_it_range(two_it_begin, one_it_end);
+	std::cout << "here" << std::endl;
+	one_it_begin = one.begin();
+	one_it_end = one.end();
+	two_it_begin = two.begin();
+	two_it_end = two.end();
+	ft_print_it_range(one_it_begin, one_it_end);
+	std::cout << "here" << std::endl;
+	ft_print_it_range(two_it_begin, two_it_end);
+	std::cout << "hey" << std::endl;
+
+	T three;
+	three.push_back(100);
+	three.push_back(200);
+	typename T::iterator three_it_begin = three.begin();
+	typename T::iterator three_it_end = three.end();
+	two.assign(three_it_begin, three_it_end);
+	ft_print_it_range(three_it_begin, three_it_end);
+	three.assign(10, 1000);
+	two_it_begin = two.begin();
+	two_it_end = two.end();
+	ft_print_it_range(two_it_begin, two_it_end);
+	three_it_begin = three.begin();
+	three_it_end = three.end();
+	ft_print_it_range(three_it_begin, three_it_end);
+
+	three.insert(three_it_begin, 50);
+
+	ft_print_it_range(three.begin(), three.end());
+
+	// std::cout << "here1" << std::endl;
+	three_it_begin = three.insert(three.begin(), 500);
+	// // std::cout << "here2" << std::endl;
+	three_it_end = three.insert(three.end(), 5000);
+	// std::cout << "here3" << std::endl;
+	// three_it_begin = three.begin();
+	// three_it_end = three.end();
+	three.insert(three_it_begin, 2, 2);
+	ft_print_it_range(three_it_begin, three_it_end);
+	ft_print_it_range(three_it_begin, three.end());
+	three_it_begin = three.begin();
+	three_it_end = three.end();
+	ft_print_it_range(three_it_begin, three_it_end);
+	three_it_begin++;
+	three.insert(three_it_begin, two_it_begin, two_it_end);
+	three_it_begin = three.begin();
+	three_it_end = three.end();
+	ft_print_it_range(three_it_begin, three_it_end);
+
+	// three_it_begin = three.begin();
+	std::cout << "in" << *three_it_begin << std::endl;
+	// three_it_begin = three.erase(three_it_begin);
+	std::cout << "in2" << std::endl;
+	std::cout << *three_it_begin << "|" << std::endl;
+	// three_it_begin = three.begin();
+	// three_it_end = three.end();
+	ft_print_it_range(three_it_begin, three_it_end);
+	three_it_begin = three.begin();
+	three_it_end = three.end();
+	// three.erase(three_it_begin, three_it_end);
+	std::cout << three.size() << std::endl;
+
+	one_it_begin = one.begin();
+	one_it_end = one.end();
+	ft_print_it_range(one_it_begin, one_it_end);
+	std::cout << one.size() << std::endl;
+	--one_it_end;
+	std::cout << "i:" << *one_it_end << std::endl;
+	one.erase(++one_it_begin, one_it_end);
+	one_it_begin = one.begin();
+	// one_it_end = one.end();
+	ft_print_it_range(one_it_begin, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	std::cout << one.size() << std::endl;
+
+	one.resize(1);
+	std::cout << one.size() << std::endl;
+	one.resize(20);
+	std::cout << one.size() << std::endl;
+	one_it_begin = one.begin();
+	one_it_end = one.end();
+	ft_print_it_range(one_it_begin, one_it_end);
+
+	// std::cout << one.size() << "|" << one.empty() << std::endl;
+	// one.clear();
+	// std::cout << one.size() << "|" << one.empty() << std::endl;
+
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(two.begin(), two.end());
+	ft_print_it_range(three.begin(), three.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_it_range(two.rbegin(), two.rend());
+	ft_print_it_range(three.rbegin(), three.rend());
+
+	std::cout << one.size() << "|" << one.capacity() << "|" << one.empty() << std::endl;
+	std::cout << two.size() << "|" << two.capacity() << "|" << two.empty() << std::endl;
+	std::cout << three.size() << "|" << three.capacity() << "|" << three.empty() << std::endl;
+
+	one.clear();
+
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(two.begin(), two.end());
+	ft_print_it_range(three.begin(), three.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_it_range(two.rbegin(), two.rend());
+	ft_print_it_range(three.rbegin(), three.rend());
+
+
+	std::cout << one.size() << "|" << one.capacity() << "|" << one.empty() << std::endl;
+	std::cout << two.size() << "|" << two.capacity() << "|" << two.empty() << std::endl;
+	std::cout << three.size() << "|" << three.capacity() << "|" << three.empty() << std::endl;
+
+	ft_check_all_comp(one, two);
+	ft_check_all_comp(two, one);
+	ft_check_all_comp(one, three);
+	ft_check_all_comp(three, one);
+	ft_check_all_comp(two, three);
+	ft_check_all_comp(three, two);
+	
+	T five;
+	five.assign(5,5);
+	five.assign(2, 2);
+
+	ft_print_it_range(five.begin(), five.end());
+	ft_print_it_range(five.rbegin(), five.rend());
+
+	ft_check_all_comp(one.begin(), one.end());
+	ft_check_all_comp(two.begin(), two.end());
+	ft_check_all_comp(three.begin(), three.end());
+	ft_check_all_comp(one.end(), one.begin());
+	ft_check_all_comp(two.end(), two.begin());
+	ft_check_all_comp(three.end(), three.begin());
+	ft_check_all_comp(one.rbegin(), one.rend());
+	ft_check_all_comp(two.rbegin(), two.rend());
+	ft_check_all_comp(three.rbegin(), three.rend());
+	ft_check_all_comp(one.rend(), one.rbegin());
+	ft_check_all_comp(two.rend(), two.rbegin());
+	ft_check_all_comp(three.rend(), three.rbegin());
+
+	typename T::iterator three_it_begin2 = three.begin();
+	typename T::reverse_iterator three_rev_it_begin2 = three.rbegin();
+
+	std::cout << three_it_begin2[0] << std::endl;
+	std::cout << three_it_begin2[2] << std::endl;
+	std::cout << three_it_begin2[10] << std::endl;
+	std::cout << three_rev_it_begin2[0] << std::endl;
+	std::cout << three_rev_it_begin2[2] << std::endl;
+	std::cout << three_rev_it_begin2[10] << std::endl;
 }
 
 #endif

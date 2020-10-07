@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 21:06:30 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/04 00:02:23 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/07 19:04:32 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,35 +93,18 @@ namespace ft
 					}
 					~iterator()
 					{}
-					// bool operator==(const iterator& it)
-					// {
-					// 	return (ft_get_cremented(*this) == ft_get_cremented(it));
-					// }
 					bool operator==(const iterator& it) const
 					{
 						return (ft_get_cremented(*this) == ft_get_cremented(it));
 					}
-					// bool operator!=(const iterator& it)
-					// {
-					// 	return (!(*this == it));
-					// }
-					bool operator!=(const iterator&it) const
+					bool operator!=(const iterator& it) const
 					{
 						return (!(*this == it));
 					}
-					// value_type &operator*()
-					// {
-					// 	// std::cout << "c:" << this->crement << std::endl;
-					// 	return ((ft_get_cremented(*this)->val));
-					// }
 					value_type &operator*() const
 					{
 						return ((ft_get_cremented(*this)->val));
 					}
-					// value_type *operator->()
-					// {
-					// 	return (ft_get_cremented(*this)->val);
-					// }
 					value_type *operator->() const
 					{
 						return (ft_get_cremented(*this)->val);
@@ -241,34 +224,18 @@ namespace ft
 					}
 					~const_iterator()
 					{}
-					// bool operator==(const const_iterator& cit)
-					// {
-					// 	return (this->it == cit.it);
-					// }
 					bool operator==(const const_iterator& cit) const
 					{
 						return (this->it == cit.it);
 					}
-					// bool operator!=(const const_iterator& cit)
-					// {
-					// 	return (this->it != cit.it);
-					// }
 					bool operator!=(const const_iterator& cit) const
 					{
 						return (this->it != cit.it);
 					}
-					// value_type &operator*()
-					// {
-					// 	return (*(this->it));
-					// }
 					value_type &operator*() const
 					{
 						return (*(this->it));
 					}
-					// value_type *operator->()
-					// {
-					// 	return ((this->it).operator->());
-					// }
 					value_type *operator->() const
 					{
 						return ((this->it).operator->());
