@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 21:06:30 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/07 19:04:32 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/08 22:38:46 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,10 @@ namespace ft
 	{
 		typedef struct		s_map_el
 		{
-			// s_map_el(std::pair<const Key, T>):val(val)
-			// {}
 			struct s_map_el*		previous;
-			// struct s_map_el* root;
 			int					pos;//0 == root, 1 == left, 2 == right
 			std::pair<const Key, T>	val;
-			// int					one;
+			// int						pos;
 			struct s_map_el*		next_left;
 			struct s_map_el*		next_right;
 		}					t_map_el;
@@ -36,14 +33,11 @@ namespace ft
 			protected:
 				Value_comp(const Compare& comp)
 				{
-					// std::cout << "hey" << std::endl;
 					this->comp = comp;
 				}
 			public:
 				bool operator()(const std::pair<const Key, T>& x, const std::pair<const Key, T>& y)
 				{
-					// std::cout << "here" << std::endl;
-					// Compare comp;
 					return (this->comp(x.first, y.first));
 				}
 			private:
@@ -75,11 +69,23 @@ namespace ft
 					{
 						this->el = NULL;
 						this->crement = 0;
+						this->before_end = NULL;
 					}
 					iterator(t_map_el* el, int crement = 0)
 					{
 						this->el = el;
 						this->crement = crement;
+						this->before_end = NULL;
+						// std::cout << "start" << std::endl;
+						this->el = ft_get_cremented(*this, &this->before_end);
+						// std::cout << "end" << std::endl;
+						// if (this->el == NULL)
+						// {
+						// 	std::cout << "h" << std::endl;
+						// 	this->before_end = ft_get_first_right(el);
+						// }
+						// if (this->before_end)
+						// 	std::cout << "this->before" << this->before_end->val.first << std::endl;
 					}
 					iterator(const iterator& it)
 					{
@@ -89,13 +95,23 @@ namespace ft
 					{
 						this->el = it.el;
 						this->crement = it.crement;
+						this->before_end = it.before_end;
 						return (*this);
 					}
 					~iterator()
 					{}
 					bool operator==(const iterator& it) const
 					{
-						return (ft_get_cremented(*this) == ft_get_cremented(it));
+						// return (this->el == it.el && this->crement == it.crement);
+						// std::cout << "comp2" << std::endl;
+						// std::cout << this->el->val.first << "|" << it.el->val.first << std::endl;
+						// std::cout << this->crement << "|" << it.crement << std::endl;
+						// ft_get_cremented(*this);
+						// std::cout << "a" << &(this->el->val) << "|" << &(it.el->val) << std::endl;
+						// ft_get_cremented(it);
+						// std::cout << "b" << &(it.el) << std::endl;
+						// return (ft_get_cremented(*this) == ft_get_cremented(it));
+						return (this->el == it.el);
 					}
 					bool operator!=(const iterator& it) const
 					{
@@ -103,46 +119,142 @@ namespace ft
 					}
 					value_type &operator*() const
 					{
-						return ((ft_get_cremented(*this)->val));
+						// std::cout << "a:" << &(*this->el) << std::endl;
+						return (this->el->val);
+						// return ((ft_get_cremented(*this)->val));
 					}
 					value_type *operator->() const
 					{
-						return (ft_get_cremented(*this)->val);
+						return (&(this->operator*()));
 					}
 					iterator &operator++()
 					{
-						this->crement = this->crement + 1;
+						// this->crement = this->crement + 1;
+						this->el = ft_get_next_el(this->el, &this->before_end);
 						return (*this);
 					}
 					iterator operator++(int)
 					{
 						iterator tmp = *this;
 
-						this->crement = this->crement + 1;
+						// this->crement = this->crement + 1;
+						this->el = ft_get_next_el(this->el, &this->before_end);
 						return (tmp);
 					}
 					iterator &operator--()
 					{
-						this->crement = this->crement - 1;
+						// this->crement = this->crement - 1;
+						if (this->el == NULL)
+						{
+							// std::cout << "aaaa" << this->before_end->val.first << std::endl;
+							this->el = this->before_end;
+						}
+						else
+							this->el = ft_get_previous_el(this->el);
 						return (*this);
 					}
 					iterator operator--(int)
 					{
+						// std::cout << "here1" << std::endl;
 						iterator tmp = *this;
 
-						this->crement = this->crement - 1;
+						// this->crement = this->crement - 1;
+						if (this->el == NULL)
+						{
+							// std::cout << "in" << std::endl;
+							// std::cout << this->before_end->val.first << std::endl;
+							this->el = this->before_end;
+						}
+						else
+							this->el = ft_get_previous_el(this->el);
+						// std::cout << "here2" << std::endl;
 						return (tmp);
 					}
 				private:
 					t_map_el* el;
 					int crement;
-					t_map_el* ft_get_cremented(const iterator& it) const
+					t_map_el* before_end;
+					t_map_el* ft_get_first_left(t_map_el* el) const
+					{
+						while (el)
+						{
+							if (!(el->next_left))
+								break;
+							el = el->next_left;
+						}
+						return (el);
+					}
+					t_map_el* ft_get_first_right(t_map_el* el) const
+					{
+						while (el)
+						{
+							if (!(el->next_right))
+								break;
+							el = el->next_right;
+						}
+						return (el);
+					}
+					t_map_el* ft_get_next_el(t_map_el* el, t_map_el** before_end) const
+					{
+						// t_map_el* el = it.el;
+						if (el->next_right)
+							return (ft_get_first_left(el->next_right));
+						else if (el->pos == 1)
+							return (el->previous);
+						else if (el->pos == 2)
+						{
+							while (el->pos == 2)
+								el = el->previous;
+							if (el->pos == 1)
+								return (el->previous);
+							else if (el->pos == 0)
+							{
+								el = ft_get_first_right(el);
+								// std::cout << "HERE" << el->val.first << std::endl;
+								// if (before_end)
+								// 	std::cout << "y" << std::endl;
+								*before_end = el;
+								// if (before_end)
+								// 	std::cout << "z" << std::endl;
+								return (el->next_right);
+							}
+							return (ft_get_first_left(el->next_right));
+						}
+						else
+						{
+							if (el->pos == 0)
+								*before_end = el;
+							return (ft_get_first_left(el->next_right));
+						}
+					}
+					t_map_el* ft_get_previous_el(t_map_el* el) const
+					{
+						if (el->next_left)
+							return (ft_get_first_right(el->next_left));
+						else if (el->pos == 2)
+							return (el->previous);
+						else if (el->pos == 1)
+						{
+							while (el->pos == 1)
+								el = el->previous;
+							if (el->pos == 2)
+								return (el->previous);
+							else if (el->pos == 0)
+							{
+								el = ft_get_first_left(el);
+								return (el->next_left);
+							}
+							return (ft_get_first_right(el->next_left));
+						}
+						else
+							return (ft_get_first_right(el->next_left));
+					}
+					t_map_el* ft_get_cremented(const iterator& it, t_map_el** before_end) const
 					{
 						t_map_el* first = it.el;
 						int crement = it.crement;
 						int i = 0;
-						bool from_right = false;
-						// std::cout << "c:" << crement << std::endl;
+						// bool from_right = false;
 
 						while (first)
 						{
@@ -150,52 +262,56 @@ namespace ft
 								break;
 							first = first->next_left;
 						}
+						// i++;
 						while (i < crement)
 						{
-							if (first->next_right && !from_right)
-							{
-								first = first->next_right;
-								while (first)
-								{
-									if (!(first->next_left))
-										break;
-									first = first->next_left;
-								}
-								if (first)
-								{
-									// std::cout << "a:" << first->val.first << std::endl;
-									i++;
-								}
-							}
-							else
-							{
-								if (first->pos == 1)
-									from_right = false;
-								else if (first->pos == 2)
-									from_right = true;
-								if (!(first->previous))
-								{
-									first = first->next_right;
-									while (first)
-									{
-										if (!(first->next_right))
-											break;
-										first = first->next_right;
-									}
-									first = first->next_right;
-									i++;
-									break;
-								}
-								else
-									first = first->previous;
-								if (first && !from_right)
-								{
-									// std::cout << "a:" << first->val.first << std::endl;
-									i++;
-								}
-							}
+							first = ft_get_next_el(first, before_end);
+							i++;
+							// // std::cout << "a" << std::endl;
+							// if (first->next_right && !from_right)
+							// {
+							// // std::cout << "b" << std::endl;
+							// 	first = first->next_right;
+							// 	while (first)
+							// 	{
+							// 		if (!(first->next_left))
+							// 			break;
+							// 		first = first->next_left;
+							// 	}
+							// 	if (first)
+							// 		i++;
+							// }
+							// else
+							// {
+							// // std::cout << "c" << std::endl;
+							// 	if (first->pos == 1)
+							// 		from_right = false;
+							// 	else if (first->pos == 2)
+							// 		from_right = true;
+							// 	if (!(first->previous))
+							// 	{
+							// // std::cout << "c1" << std::endl;
+							// 		if (first->next_right)
+							// 			first = first->next_right;
+							// 		while (first)
+							// 		{
+							// // std::cout << "c2" << std::endl;
+							// 			if (!(first->next_right))
+							// 				break;
+							// 			first = first->next_right;
+							// 		}
+							// // std::cout << "c3" << std::endl;
+							// 		first = first->next_right;
+							// 		i++;
+							// 		break;
+							// 	}
+							// 	else
+							// 		first = first->previous;
+							// 	if (first && !from_right)
+							// 		i++;
+							// }
 						}
-						// std::cout << &(first->val) << std::endl;
+							// std::cout << "d" << std::endl;
 						return (first);
 					}
 			};
@@ -226,6 +342,7 @@ namespace ft
 					{}
 					bool operator==(const const_iterator& cit) const
 					{
+						// std::cout << "commp" << std::endl;
 						return (this->it == cit.it);
 					}
 					bool operator!=(const const_iterator& cit) const
@@ -287,6 +404,7 @@ namespace ft
 				this->map_size = 0;
 				this->comp = comp;
 				this->alloc = alloc;
+				this->insert(first, last);
 			}
 			map(const map& x)
 			{
@@ -302,15 +420,11 @@ namespace ft
 			{
 				if (this->map_size > 0)
 				{
-					std::cout << this->map_size << std::endl;
+					// std::cout << this->map_size << std::endl;
 					this->clear();
 				}
-				// this->el = x.el;
-				// this->map_size = x.map_size;
 				// this->alloc = x.alloc;
 				this->comp = x.comp;
-				// this->el = NULL;
-				// this->map_size = 0;
 				const_iterator it_begin = x.begin();
 				const_iterator it_end = x.end();
 				while (it_begin != it_end)
@@ -330,29 +444,28 @@ namespace ft
 			}
 			iterator end()
 			{
-				// std::cout << "size1:" << this->map_size << std::endl;
 				return (typename ft::map<key_type, mapped_type>::iterator(this->el, this->map_size));
 			}
 			const_iterator end() const
 			{
-				// std::cout << "size:" << this->map_size << std::endl;
 				return (typename ft::map<key_type, mapped_type>::const_iterator(typename ft::map<key_type, mapped_type>::iterator(this->el, this->map_size)));
 			}
 			reverse_iterator rbegin()
 			{
-				return (ft::map<key_type, mapped_type>::reverse_iterator(ft::map<key_type, mapped_type>::iterator(this->el, this->map_size)));
+				// std::cout << "msize:" << this->map_size << std::endl;
+				return (typename ft::map<key_type, mapped_type>::reverse_iterator(typename ft::map<key_type, mapped_type>::iterator(this->el, this->map_size)));
 			}
-			reverse_iterator rbegin() const
+			const_reverse_iterator rbegin() const
 			{
-				return (ft::map<key_type, mapped_type>::const_reverse_iterator(ft::map<key_type, mapped_type>::const_iterator(ft::map<key_type, mapped_type>::iterator(this->el, this->map_size))));
+				return (typename ft::map<key_type, mapped_type>::const_reverse_iterator(typename ft::map<key_type, mapped_type>::const_iterator(typename ft::map<key_type, mapped_type>::iterator(this->el, this->map_size))));
 			}
 			reverse_iterator rend()
 			{
-				return (ft::map<key_type, mapped_type>::reverse_iterator(ft::map<key_type, mapped_type>::iterator(this->el)));
+				return (typename ft::map<key_type, mapped_type>::reverse_iterator(typename ft::map<key_type, mapped_type>::iterator(this->el)));
 			}
-			reverse_iterator rend() const
+			const_reverse_iterator rend() const
 			{
-				return (ft::map<key_type, mapped_type>::const_reverse_iterator(ft::map<key_type, mapped_type>::const_iterator(ft::map<key_type, mapped_type>::iterator(this->el))));
+				return (typename ft::map<key_type, mapped_type>::const_reverse_iterator(typename ft::map<key_type, mapped_type>::const_iterator(typename ft::map<key_type, mapped_type>::iterator(this->el))));
 			}
 			bool empty() const
 			{
@@ -365,43 +478,48 @@ namespace ft
 			size_type max_size() const
 			{
 				typename allocator_type::template rebind<t_map_el>::other r;
-				// std::cout << this->alloc.max_size() << std::endl;
 				return (r.max_size());
 			}
 			mapped_type& operator[](const key_type& k)
 			{
+				// std::cout << "a" << std::endl;
 				if (this->count(k) == 0)
 				{
+					// std::cout << "aa" << std::endl;
 					this->insert(std::pair<int, int>(k, mapped_type()));
-					// return ();
 				}
+				// std::cout << "b" << std::endl;
 				iterator it = this->find(k);
+				// std::cout << "c" << std::endl;
 				return ((*it).second);
 			}
-			std::pair<bool, bool> insert(const value_type& val)
+			std::pair<iterator, bool> insert(const value_type& val)
 			{
 				(void)val;
-				std::pair<bool, bool> p;
+				std::pair<iterator, bool> p;
 				typename allocator_type::template rebind<t_map_el>::other r;
+				key_compare comp;
 
 				if (this->map_size == 0)
 				{
 					t_map_el *new_el = ft_new_el(val);
 					this->el = new_el;
 					this->map_size = this->map_size + 1;
-					p = value_type(true, true);
+					p = std::make_pair(this->find(val.first), true);
+					// p = value_type(true, true);
 					return (p);
 				}
 				t_map_el* next = this->el;
 				while (next)
 				{
-					if (next->val.first > val.first)
+					// if (next->val.first > val.first)
+					if (comp(val.first, next->val.first))
 					{
 						if (!(next->next_left))
 							break;
 						next = next->next_left;
 					}
-					else if (next->val.first < val.first)
+					else if (comp(next->val.first, val.first))
 					{
 						if (!(next->next_right))
 							break;
@@ -409,9 +527,25 @@ namespace ft
 					}
 					else
 					{
-						// std::cout << "here11" << std::endl;
-						next->val.second = val.second;
-						p = value_type(false, false);
+						t_map_el* new_el = ft_new_el(val);
+						// new_el->previous = next->previous;
+						// new_el->next_left = next->next_left;
+						// new_el->next_right = next->next_right;
+						// new_el->pos = next->pos;
+						// if (next->pos == 1)
+						// 	next->previous->next_left = new_el;
+						// else if (next->pos == 2)
+						// 	next->previous->next_right = new_el;
+						// else if (next->pos == 0)
+						// 	this->el = new_el;
+						// if (next->next_right)
+						// 	next->next_right->previous = new_el;
+						// if (next->next_left)
+						// 	next->next_left->previous = new_el;
+						// next->val.second = val.second;
+						ft_deallocate_n_destroy(new_el);
+						// p = value_type(false, false);
+						p = std::make_pair(this->find(val.first), false);
 						return (p);
 					}
 				}
@@ -428,64 +562,101 @@ namespace ft
 				}
 				this->map_size = this->map_size + 1;
 				new_el->previous = next;
-				// value_type* new_val = this->alloc.allocate(1);
-				// this->alloc.construct(new_el->val, val);
-				// new_el->val = new_val;
-				p = value_type(true, false);
+				// p = value_type(true, false);
+				p = std::make_pair(this->find(val.first), true);
 				return (p);
 			}
 			iterator insert(iterator position, const value_type& val)
 			{
 				(void)position;//a changer ?
-				this->insert(val);
+				// iterator tmp = position;
+				std::pair<iterator, bool> p;
+				if (position != this->end())
+				{
+					iterator tmp = position;
+					tmp++;
+					if (*position < val && (tmp == this->end() || *tmp > val))
+					{
+						// std::cout << "ok" << std::endl;
+						// t_map_el* prev = *position;
+						// value_type *val2 = position.operator->();
+						reference val2 = *position;
+						t_map_el *prev = (t_map_el*)((&((char*)(&val2))[-12]));
+						// std::cout << "size:" << sizeof(int) << "|" << sizeof(std::pair<int, int>) << "|" << sizeof(t_map_el*) << "|" << sizeof(char*) << std::endl;
+						// std::cout << "b:" << &(*prev) << std::endl;
+						// std::cout << &(val2) << std::endl;
+						// std::cout << "hey:" << prev->val.first << std::endl;
+						if (!(prev->next_right))
+						{
+							// std::cout << "here!" << std::endl;
+							t_map_el* new_el = ft_new_el(val);
+							new_el->previous = prev;
+							new_el->pos = 2;
+							prev->next_right = new_el;
+							p = std::make_pair(iterator(new_el), true);
+							this->map_size = this->map_size + 1;
+						}
+						else
+						{
+							p = this->insert(val);
+						}
+						// p = std::make_pair(tmp, true);
+					}
+					else
+					{
+						// std::cout << "pas ok" << std::endl;
+						p = this->insert(val);
+					}
+				}
+				else
+				{
+					p = this->insert(val);
+				}
+				return (p.first);
 			}
 			template <class InputIterator>
 			void insert(InputIterator first, InputIterator last)
 			{
 				while (first != last)
 				{
-					this->insert(*first);
+					if (!(this->count((*first).first)))
+						this->insert(*first);
 					first++;
 				}
 			}
 			void erase(iterator position)
 			{
-				int crement = ft_search_specific((*position).first, ft_comp_for_eq);
 				// std::cout << "a" << std::endl;
+				// std::cout << (*position).first << std::endl;
+				int crement = ft_search_specific((*position).first, ft_comp_for_eq);
+				// std::cout << "a1" << std::endl;
 				if ((size_type)crement < this->map_size)
 					this->map_size = this->map_size - 1;
+				// std::cout << "a2" << std::endl;
 				t_map_el* tmp = ft_get_crement_el(this->el, crement);
+				// std::cout << "a3" << std::endl;
 				t_map_el* tmp_prev = tmp->previous;
-				// std::cout << "b" << &tmp->previous << "|" << tmp->val.first << "|" << tmp->pos << std::endl;
-				// std::cout << "to erase prev:" << tmp_prev->val.first << std::endl;
+				// std::cout << "b" << std::endl;
 				if (tmp->next_left && tmp->next_right)
 				{
-					// std::cout << "here1" << std::endl;
+				// std::cout << "c" << std::endl;
 					t_map_el* tmp_next_right = tmp->next_right;
 					t_map_el* tmp_next_right_left = ft_get_first_left_from(tmp_next_right);
 					tmp->next_left->previous = tmp_next_right_left;
 					tmp_next_right_left->next_left = tmp->next_left;
 					tmp_next_right->previous = tmp_prev;
-					// std::cout << "hey" << tmp_prev->val.first << std::endl;
 					if (tmp->pos == 0)
 					{
 						tmp_next_right->pos = 0;
-						// std::cout << this->el->val.first << std::endl;
 						this->el = tmp_next_right;
-						// std::cout << "here" << std::endl;
 					}
 					else if (tmp->pos == 1)
 					{
-						// std::cout << "a" << std::endl;
 						tmp_prev->next_left = tmp_next_right;
-						// std::cout << "p:" << tmp_next_right->val.first << std::endl;
-						// std::cout << "p:" << tmp_next_right->previous->val.first << std::endl;
-						// std::cout << "a:" << tmp_next_right->next_left->val.first << std::endl;
 						tmp_next_right->pos = 1;
 					}
 					else if (tmp->pos == 2)
 					{
-						// std::cout << "b" << std::endl;
 						tmp_prev->next_right = tmp_next_right;
 						tmp_next_right->pos = 2;
 					}
@@ -493,7 +664,7 @@ namespace ft
 				}
 				else if (!tmp->next_left && !tmp->next_right)
 				{
-					// std::cout << "here2" << std::endl;
+				// std::cout << "d" << std::endl;
 					if (tmp->pos == 0)
 						this->el = NULL;
 					else if (tmp->pos == 1)
@@ -504,7 +675,7 @@ namespace ft
 				}
 				else if (tmp->next_left)
 				{
-					// std::cout << "here3" << std::endl;
+				// std::cout << "e" << std::endl;
 					tmp->next_left->previous = tmp_prev;
 					if (tmp->pos == 0)
 					{
@@ -525,7 +696,7 @@ namespace ft
 				}
 				else if (tmp->next_right)
 				{
-					// std::cout << "here4" << std::endl;
+				// std::cout << "f" << std::endl;
 					tmp->next_right->previous = tmp_prev;
 					if (tmp->pos == 0)
 					{
@@ -544,26 +715,47 @@ namespace ft
 					}
 					ft_deallocate_n_destroy(tmp);
 				}
+				// std::cout << "g" << std::endl;
 			}
 			size_type erase(const key_type& k)
 			{
-				int ret = 0;
+				// int ret = 0;
 				int crement = ft_search_specific(k, ft_comp_for_eq);
 				if ((size_type)crement < this->map_size)
 				{
-					// this->map_size = this->map_size - 1;
-					ret = 1;
+					// ret = 1;
+					this->erase(this->find(k));
+					return (1);
 				}
-				this->erase(this->find(k));
-				return (ret);
+				return (0);
 			}
 			void erase(iterator first, iterator last)
 			{
+				iterator tmp;
 				while (first != last)
 				{
-					this->erase(first);
+					tmp = first;
 					first++;
+					// std::cout << (*tmp).first << std::endl;
+					this->erase((*tmp).first);
+					// std::cout << "here" << std::endl;
 				}
+				// std::cout << "first" << this->el->val.first << std::endl;
+				// int crement = ft_search_specific((*first).first, ft_comp_for_eq);
+				// iterator it = iterator(this->el, crement);
+				// (void)last;
+				// while (it != last)
+				// {
+				// 	std::cout << "here" << std::endl;
+				// 	std::cout << "it:" << (*it).first << "|" << crement << std::endl;
+				// 	std::cout << "here1" << std::endl;
+				// 	this->erase((*it).first);
+				// 	std::cout << "here2" << std::endl;
+				// 	// first++;
+				// 	it = iterator(this->el, crement);
+				// 	std::cout << "here3" << std::endl;
+				// }
+				// std::cout << "here" << std::endl;
 			}
 			void swap(map& x)
 			{
@@ -578,62 +770,62 @@ namespace ft
 			{
 				// iterator it_begin = this->begin();
 				// iterator it_end = this->end();
-				// iterator it_tmp = it_begin;
-
-				// while (it_begin != it_end)
-				// {
-				// 	std::cout << "here" << std::endl;
-				// 	it_begin++;
-				// 	if (it_tmp != it_end)
-				// 		this->erase(it_tmp);
-				// 	std::cout << "size:" << this->map_size << std::endl;
-				// 	it_tmp = it_begin;
-				// }
-				// std::cout << "c" << std::endl;
-				// return;
-				t_map_el* el_tab[this->map_size];
-				int new_old = 0;
-				if (this->map_size == 0)
-					return;
-				t_map_el* first = this->el;
-				first = ft_get_first_left_from(first);
-				el_tab[new_old] = first;
-				new_old++;
-				bool from_right = false;
-				typename allocator_type::template rebind<t_map_el>::other r;
-				while (1)
-				{
-					if (first->next_right && !from_right)
-					{
-						first = first->next_right;
-						first = ft_get_first_left_from(first);
-						el_tab[new_old] = first;
-						new_old++;
-					}
-					else
-					{
-						if (first->pos == 1)
-							from_right = false;
-						else if (first->pos == 2)
-							from_right = true;
-						if (!(first->previous))
-							break;
-						first = first->previous;
-						if (!from_right)
-						{
-							el_tab[new_old] = first;
-							new_old++;
-						}
-					}
-				}
+				// iterator tmp;
 				int i = 0;
-				while (i < new_old)
+				int size = this->size();
+				// while (it_begin != it_end)
+				while (i < size)
 				{
-					r.deallocate(el_tab[i], 1);
-					r.destroy(el_tab[i]);
+					// std::cout << "i:" << i << "|" << (*this->begin()).first << std::endl;
+					// tmp = it_begin;
+					// it_begin++;
+					this->erase((*this->begin()).first);
 					i++;
 				}
-				this->map_size = 0;
+				// t_map_el* el_tab[this->map_size];
+				// int new_old = 0;
+				// if (this->map_size == 0)
+				// 	return;
+				// t_map_el* first = this->el;
+				// first = ft_get_first_left_from(first);
+				// el_tab[new_old] = first;
+				// new_old++;
+				// bool from_right = false;
+				// typename allocator_type::template rebind<t_map_el>::other r;
+				// while (1)
+				// {
+				// 	if (first->next_right && !from_right)
+				// 	{
+				// 		first = first->next_right;
+				// 		first = ft_get_first_left_from(first);
+				// 		el_tab[new_old] = first;
+				// 		new_old++;
+				// 	}
+				// 	else
+				// 	{
+				// 		if (first->pos == 1)
+				// 			from_right = false;
+				// 		else if (first->pos == 2)
+				// 			from_right = true;
+				// 		if (!(first->previous))
+				// 			break;
+				// 		first = first->previous;
+				// 		if (!from_right)
+				// 		{
+				// 			el_tab[new_old] = first;
+				// 			new_old++;
+				// 		}
+				// 	}
+				// }
+				// int i = 0;
+				// while (i < new_old)
+				// {
+				// 	r.destroy(el_tab[1]);
+				// 	r.deallocate(el_tab[i], 1);
+				// 	// r.destroy(el_tab[i]);
+				// 	i++;
+				// }
+				// this->map_size = 0;
 			}
 			value_compare value_comp() const
 			{
@@ -647,17 +839,25 @@ namespace ft
 			iterator find(const key_type& k)
 			{
 				int crement = ft_search_specific(k, ft_comp_for_eq);
+				// std::cout << "here30" << std::endl;
 				return (typename ft::map<key_type, mapped_type>::iterator(this->el, crement));
 			}
 			const_iterator find(const key_type& k) const
 			{
 				int crement = ft_search_specific(k, ft_comp_for_eq);
+				// std::cout << "here35" << std::endl;
+				// const_iterator ct =  const_iterator(iterator(this->el, crement));
+				// std::cout << "herect" << std::endl;
 				return (typename ft::map<key_type, mapped_type>::const_iterator(typename ft::map<key_type, mapped_type>::iterator(this->el, crement)));
 			}
 			size_type count(const key_type& k) const
 			{
 				if (this->find(k) == this->end())
+				{
+					// std::cout << "not found" << std::endl;
 					return (0);
+				}
+				// std::cout << "found" << std::endl;
 				return (1);
 			}
 			iterator lower_bound(const key_type& k)
@@ -696,41 +896,41 @@ namespace ft
 				iterator it_one = this->upper_bound(k);
 				return (std::pair<iterator, iterator>(it_one, it_one));
 			}
-			void ft_show_all()//a enlever
-			{
-				t_map_el* first = this->el;
-				std::cout << "show start" << std::endl;
-				if (first == NULL)
-				{
-					std::cout << "none" << std::endl;
-					return;
-				}
-				first = ft_get_first_left_from(first);
-				std::cout << first->val.first << "|" << first->val.second << std::endl;
-				bool from_right = false;
-				while (1)
-				{
-					if (first->next_right && !from_right)
-					{
-						first = first->next_right;
-						first = ft_get_first_left_from(first);
-						std::cout << "a" << first->val.first << "|" << first->pos << std::endl;
-					}
-					else
-					{
-						if (first->pos == 1)
-							from_right = false;
-						else if (first->pos == 2)
-							from_right = true;
-						if (!(first->previous))
-							break;
-						first = first->previous;
-						if (!from_right)
-							std::cout << "c" << first->val.first << "|" << first->pos << std::endl;
-					}
-				}
-				std::cout << "show end" << std::endl;
-			}
+			// void ft_show_all()//a enlever
+			// {
+			// 	t_map_el* first = this->el;
+				// std::cout << "show start" << std::endl;
+			// 	if (first == NULL)
+			// 	{
+					// std::cout << "none" << std::endl;
+			// 		return;
+			// 	}
+			// 	first = ft_get_first_left_from(first);
+				// std::cout << first->val.first << "|" << first->val.second << std::endl;
+			// 	bool from_right = false;
+			// 	while (1)
+			// 	{
+			// 		if (first->next_right && !from_right)
+			// 		{
+			// 			first = first->next_right;
+			// 			first = ft_get_first_left_from(first);
+			// 			std::cout << "a" << first->val.first << "|" << first->pos << std::endl;
+			// 		}
+			// 		else
+			// 		{
+			// 			if (first->pos == 1)
+			// 				from_right = false;
+			// 			else if (first->pos == 2)
+			// 				from_right = true;
+			// 			if (!(first->previous))
+			// 				break;
+			// 			first = first->previous;
+			// 			if (!from_right)
+			// 				std::cout << "c" << first->val.first << "|" << first->pos << std::endl;
+			// 		}
+			// 	}
+			// 	std::cout << "show end" << std::endl;
+			// }
 		private:
 			t_map_el *el;
 			size_type map_size;
@@ -768,16 +968,22 @@ namespace ft
 			}
 			int ft_search_specific(const key_type& k, bool(*f)(key_type, key_type)) const
 			{
+				// std::cout << "here" << std::endl;
 				t_map_el* first = this->el;
 				bool from_right = false;
 				int crement = 0;
 
+				// std::cout << "here1" << std::endl;
 				first = ft_get_first_left_from(first);
-				if (f(first->val.first, k))
+				// std::cout << "here11" << std::endl;
+				if (!first || f(first->val.first, k))
 					return (crement);
+				// std::cout << "here2" << std::endl;
 				crement++;
+				// std::cout << "here3" << std::endl;
 				while (1)
 				{
+					// std::cout << "val:" << first->val.first << std::endl;
 					if (first->next_right && !from_right)
 					{
 						first = first->next_right;
@@ -788,12 +994,14 @@ namespace ft
 					}
 					else
 					{
+						// std::cout << "hhhhh" << std::endl;
 						if (first->pos == 1)
 							from_right = false;
 						else if (first->pos == 2)
 							from_right = true;
 						if (!(first->previous))
 							break;
+						// std::cout << "p" << std::endl;
 						first = first->previous;
 						if (!from_right)
 						{
@@ -803,6 +1011,8 @@ namespace ft
 						}
 					}
 				}
+				// std::cout << "aaaaa" << std::endl;
+				// std::cout << "crement:" << crement << std::endl;
 				return (crement);
 			}
 			t_map_el* ft_get_crement_el(t_map_el* el, const int& crement) const
@@ -865,8 +1075,9 @@ namespace ft
 			{
 				typename allocator_type::template rebind<t_map_el>::other r;
 
-				r.deallocate(el, 1);
 				r.destroy(el);
+				r.deallocate(el, 1);
+				// r.destroy(el);
 			}
 	};
 }

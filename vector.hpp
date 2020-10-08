@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 09:33:34 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/07 17:32:23 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/07 21:34:15 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,11 @@ namespace ft
 					{
 						this->p = NULL;
 						this->crement = 0;
-						// this->before_end = NULL;
 					}
 					iterator(pointer p, int crement = 0)
 					{
 						this->p = p;
 						this->crement = crement;
-						// int i = 0;
-						
-						// while (i < crement)
-						// {
-						// 	if (this->p->next == NULL)
-						// 		this->before_end = this->p;
-						// 	this->p = this->p->next;
-						// 	i++;
-						// }
 					}
 					iterator(const iterator& it)
 					{
@@ -74,7 +64,6 @@ namespace ft
 					{
 						this->p = it.p;
 						this->crement = it.crement;
-						// this->before_end = it.before_end;
 						return (*this);
 					}
 					~iterator()
@@ -194,7 +183,6 @@ namespace ft
 				private:
 					pointer p;
 					int crement;
-					// pointer before_end;
 			};
 			class const_iterator
 			{
@@ -211,7 +199,6 @@ namespace ft
 					}
 					const_iterator(const iterator& it)
 					{
-						// std::cout << "HERE" << std::endl;
 						this->it = it;
 					}
 					const_iterator(const const_iterator& cit)
@@ -304,9 +291,6 @@ namespace ft
 					}
 					const_iterator &operator+=(const difference_type& b)
 					{
-						// iterator tmp = this->it;
-						// tmp += b;
-						// this->it = tmp;
 						this->it += b;
 						return (*this);
 					}
@@ -331,16 +315,13 @@ namespace ft
 			
 			explicit vector(const allocator_type& alloc = allocator_type())
 			{
-				// std::cout << "1" << std::endl;
 				this->p = NULL;
 				this->vec_size = 0;
-				// (void)alloc;
 				this->alloc = alloc;
 				this->vec_capacity = 0;
 			}
 			explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			{
-				// std::cout << "HERE" << std::endl;
 				(void)val;
 				(void)alloc;
 				this->p = NULL;
@@ -380,11 +361,9 @@ namespace ft
 			{
 				this->clear();
 				this->alloc.deallocate(this->p, this->vec_capacity);
-				// this->alloc.destroy(this->p);
 			}
 			vector &operator=(const vector& x)
 			{
-				// std::cout << this->vec_capacity << std::endl;
 				this->clear();
 				this->alloc.deallocate(this->p, this->vec_capacity);
 				this->p = NULL;
@@ -396,13 +375,10 @@ namespace ft
 				
 				while (i < x.size())
 				{
-					// std::cout << "hey" << std::endl;
-					// this->p[i] = x[i];
 					this->push_back(x[i]);
 					i++;
 				}
 				return (*this);
-				// this->alloc = x.alloc;
 			}
 			iterator begin()
 			{
@@ -448,7 +424,6 @@ namespace ft
 			{
 				if (n < this->vec_size)
 				{
-					// std::cout << n << "|||" << this->size() << std::endl;
 					size_type i = 0;
 					size_type size = this->size();
 
@@ -457,7 +432,6 @@ namespace ft
 						this->pop_back();
 						i++;
 					}
-					// std::cout << this->size() << std::endl;
 				}
 				else if (n > this->vec_size)
 				{
@@ -468,13 +442,9 @@ namespace ft
 						else
 							this->reserve(n);
 					}
-					// size_type i = 0;
 
 					while (this->vec_size < n)
-					{
 						this->push_back(val);
-						// i++;
-					}
 				}
 			}
 			size_type capacity() const
@@ -499,7 +469,6 @@ namespace ft
 					}
 					this->alloc.destroy(this->p);
 					this->alloc.deallocate(this->p, this->vec_capacity);
-					// this->alloc.destroy(this->p);
 					this->p = tmp;
 					this->vec_capacity = n;
 				}
@@ -543,19 +512,15 @@ namespace ft
 			template <class InputIterator>
 			void assign(InputIterator first, InputIterator last)
 			{
-				// this->clear();
 				F<InputIterator, std::numeric_limits<InputIterator>::is_integer> f;
 				f.assign(first, last, this);
 			}
 			void assign(size_type n, const value_type &val)
 			{
-				// std::cout << "cap:" << this->capacity() << std::endl;
-				// this->clear();
 				this->resize(n);
 				iterator it_begin = this->begin();
 				iterator it_end = this->end();
 				size_type i = 0;
-				// this->resize(n);
 
 				while (it_begin != it_end)//&& i < n ?// peut etre pas besoin grace au resize, par contre resize au debut sert pour les capacity
 				{
@@ -568,7 +533,6 @@ namespace ft
 					this->push_back(val);
 					i++;
 				}
-				// this->resize(n);
 			}
 			void push_back(const value_type& val)
 			{
@@ -644,22 +608,12 @@ namespace ft
 				iterator it_begin = position;
 				iterator it_begin_plus = position;
 				iterator it_end = this->end();
-				// value_type value;
 				value_type next_value;
-				// std::cout << "pos:" << *position << std::endl;
 
 				if (it_begin_plus != it_end)
-				{
-					// std::cout << "a" << std::endl;
 					it_begin_plus++;
-				}
-				// else
-					// std::cout << "b" << std::endl;
-				// std::cout << "size:" << this->size() << std::endl;
 				while (it_begin_plus != it_end)
 				{
-					// std::cout << "here" << std::endl;
-					// value = *it_begin;
 					next_value = *it_begin_plus;
 					*it_begin = next_value;
 					it_begin++;
@@ -668,22 +622,15 @@ namespace ft
 				this->pop_back();
 				return (position);
 			}
-			iterator erase(iterator first, iterator last)//a tester
+			iterator erase(iterator first, iterator last)//a tester encore
 			{
 				iterator tmp_first = first;
 				iterator tmp;
 				difference_type d = last - first;
-				// std::cout << "diff:" << d << std::endl;
 				difference_type i = 0;
 				
 				while (i < d)
 				{
-					// std::cout << "e:" << *first << std::endl;
-					// tmp = first;
-					// first++;
-					// this->erase(tmp);
-					// std::cout << "f" << std::endl;
-					// tmp++;
 					first = this->erase(first);
 					i++;
 				}
@@ -691,9 +638,6 @@ namespace ft
 			}
 			void swap(vector& x)
 			{
-				// std::cout << "a" << std::endl;
-				// std::cout << &(x[0]) << "|" << &((*this)[0]) << std::endl;
-				// vector tmp = x;
 				pointer tmp_p = x.p;
 				size_type tmp_vec_size = x.vec_size;
 				size_type tmp_vec_capacity = x.vec_capacity;
@@ -706,20 +650,14 @@ namespace ft
 				this->vec_size = tmp_vec_size;
 				this->vec_capacity = tmp_vec_capacity;
 				this->alloc = tmp_alloc;
-				// std::cout << "b" << std::endl;
 			}
 			void clear()
 			{
-				// this->vec_size = 0;
 				size_type size = this->vec_size;
 				size_type i = 0;
 
-				// std::cout << "size:" << size << std::endl;
-				
 				while (i < size)
 				{
-					// std::cout << "clear" << std::endl;
-					// std::cout << this->vec_size << std::endl;
 					this->pop_back();
 					i++;
 				}
@@ -739,18 +677,6 @@ namespace ft
 					return;
 				}
 				this->reserve(this->vec_capacity * 2);
-				// pointer tmp = this->alloc.allocate(vec_capacity * 2);
-				// vec_capacity = vec_capacity * 2;
-				// size_type i = 0;
-
-				// while (i < this->vec_size)
-				// {
-				// 	tmp[i] = this->p[i];
-				// 	i++;
-				// }
-				// this->alloc.deallocate(this->p, this->vec_size);
-				// this->alloc.destroy(this->p);
-				// this->p = tmp;
 			}
 			template <class InputIterator, bool>
 			class F
@@ -777,13 +703,6 @@ namespace ft
 					void assign(InputIterator first, InputIterator last, ft::vector<T, Alloc> *ctnr)
 					{
 						ctnr->assign((size_type)first, last);
-						// int i = 0;
-
-						// while (i < first)
-						// {
-						// 	ctnr->push_back(last);
-						// 	i++;
-						// }
 					}
 					void insert(iterator position, InputIterator first, InputIterator last, ft::vector<T, Alloc> *ctnr)
 					{
@@ -791,32 +710,9 @@ namespace ft
 						while (i < first)
 						{
 							position = ctnr->insert(position, last);
+							position++;
 							i++;
 						}
-						// iterator it_begin = position;
-						// int i = 0;
-						// while (i < first)
-						// {
-						// 	ctnr->push_back(last);
-						// 	i++;
-						// }
-						// iterator it_end = ctnr->end();
-						// value_type value;
-						// value_type next_value;
-						// i = 0;
-						// while (i < first)
-						// {
-						// 	value = last;
-						// 	while (it_begin != it_end)
-						// 	{
-						// 		next_value = *it_begin;
-						// 		*it_begin = value;
-						// 		value = next_value;
-						// 		it_begin++;
-						// 	}
-						// 	it_begin = position + i;
-						// 	i++;
-						// }
 					}
 			};
 			template <class InputIterator>
@@ -842,63 +738,27 @@ namespace ft
 						iterator it_begin = ctnr->begin();
 						iterator it_end = ctnr->end();
 						size_type i = 0;
-						// while (it_begin != it_end)
-						// {
-						// 	*it_begin = *first;
-						// 	it_begin++;
-						// 	i++;
-						// }
 						while (first != last)
 						{
-							// std::cout << "here" << *first << std::endl;
 							if (it_begin != it_end)
 							{
-								// std::cout << "hey" << std::endl;
 								*it_begin = *first;
 								it_begin++;
 							}
 							else
 								ctnr->push_back(*first);
 							first++;
-							// it_begin++;
 							i++;
 						}
-						// ctnr->resize(i);
-						// std::cout << "size" << i << "|" << ctnr->size()<< std::endl;
 					}
 					void insert(iterator position, InputIterator first, InputIterator last, ft::vector<T, Alloc> *ctnr)
 					{
 						while (first != last)
 						{
-							// std::cout << "here:" << *first << std::endl;
 							position = ctnr->insert(position, *first);
 							position++;
 							first++;
 						}
-						// iterator it_begin = position;
-						// InputIterator tmp_first = first;
-						// while (tmp_first != last)
-						// {
-						// 	ctnr->push_back(*tmp_first);
-						// 	tmp_first++;
-						// }
-						// iterator it_end = ctnr->end();
-						// value_type value;
-						// value_type next_value;
-						// while (first != last)
-						// {
-						// 	value = *first;
-						// 	while (it_begin != it_end)
-						// 	{
-						// 		next_value = *it_begin;
-						// 		*it_begin = value;
-						// 		value = next_value;
-						// 		it_begin++;
-						// 	}
-						// 	position++;
-						// 	it_begin = position;
-						// 	first++;
-						// }
 					}
 			};
 	};

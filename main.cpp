@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/07 20:36:50 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/08 22:51:37 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -627,10 +627,12 @@ int		main(int argc, char *argv[])
 		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
 		{
 			ft_check_map<ft::map<int, int>>();
+			ft_check_map_modifiers<ft::map<int, int>>();
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
 			ft_check_map<std::map<int, int>>();
+			ft_check_map_modifiers<std::map<int, int>>();
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;

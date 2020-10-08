@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:40:53 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/07 18:53:26 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/08 10:37:20 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,63 +160,30 @@ void ft_vector_swap_check()
 	two.push_back(30);
 	two.push_back(40);
 	two.push_back(50);
-	// T three;
-	// three.push_back(100);
-	// three.push_back(200);
-	// typename T::iterator three_it_begin = three.begin();
-	// typename T::iterator three_it_end = three.end();
-	// two.assign(three_it_begin, three_it_end);
-	// three.assign(10, 1000);
-	// two.push_back(6);
-	// const T one1 = one;
-	// const T two2 = two;
-	// const ft::list<int> one1 = one;
-	// const ft::list<int> two1 = two;
+
 	ft_check_bigger_eq(one, two);
 	typename T::iterator one_it_begin = one.begin();
 	typename T::iterator one_it_begin2 = one.begin();
 	// typename T::const_iterator cit = one_it_begin;//conversion ok
 	// typename T::iterator iit = cit;//conversion pas ok
 	one_it_begin2--;
-	// one_it_begin2--;
-	// std::cout << "begin:" << *one_it_begin << &(*one_it_begin) << std::endl;
-	// std::cout << "begin:" << *one_it_begin2 << &(*one_it_begin2) << std::endl;
 	ft_check_eq(one_it_begin, one_it_begin2);
-	// one_it_begin--;
-	// std::cout << "b" << *one_it_begin << &(*one_it_begin) << std::endl;
-	// one_it_begin--;
-	// std::cout << "b" << *one_it_begin << &(*one_it_begin) << std::endl;
-	// one_it_begin--;
-	// one_it_begin--;
-	// one_it_begin++;
-	std::cout << "b" << *one_it_begin << (*one_it_begin) << std::endl;
 	typename T::iterator two_it_begin = two.begin();
-	// one.insert(one_it_begin, 1, 2);
-	// one.assign(1, 2);
-	// typename T::iterator two_it_end = two.end();
-	// two.clear();
 	// std::swap(one, two);
 	one.swap(two);
-	std::cout << "c" << std::endl;
 	two.push_back(60);//il y avait probleme ici
-	std::cout << "d" << std::endl;
+
 	typename T::iterator two_it_end = two.end();
 	typename T::iterator one_it_end = one.end();
-	// std::swap(one, two);
-	std::cout << "e" << std::endl;
 	ft_print_it_range(one_it_begin, two_it_end);
 	one_it_end--;
-	std::cout << "end" << *one_it_end << std::endl;
 	ft_print_it_range(two_it_begin, one_it_end);
-	std::cout << "here" << std::endl;
 	one_it_begin = one.begin();
 	one_it_end = one.end();
 	two_it_begin = two.begin();
 	two_it_end = two.end();
 	ft_print_it_range(one_it_begin, one_it_end);
-	std::cout << "here" << std::endl;
 	ft_print_it_range(two_it_begin, two_it_end);
-	std::cout << "hey" << std::endl;
 
 	T three;
 	three.push_back(100);
@@ -237,16 +204,12 @@ void ft_vector_swap_check()
 
 	ft_print_it_range(three.begin(), three.end());
 
-	// std::cout << "here1" << std::endl;
 	three_it_begin = three.insert(three.begin(), 500);
-	// // std::cout << "here2" << std::endl;
 	three_it_end = three.insert(three.end(), 5000);
-	// std::cout << "here3" << std::endl;
-	// three_it_begin = three.begin();
-	// three_it_end = three.end();
 	three.insert(three_it_begin, 2, 2);
 	ft_print_it_range(three_it_begin, three_it_end);
 	ft_print_it_range(three_it_begin, three.end());
+	ft_print_it_range(three.rbegin(), three.rend());
 	three_it_begin = three.begin();
 	three_it_end = three.end();
 	ft_print_it_range(three_it_begin, three_it_end);
@@ -256,11 +219,6 @@ void ft_vector_swap_check()
 	three_it_end = three.end();
 	ft_print_it_range(three_it_begin, three_it_end);
 
-	// three_it_begin = three.begin();
-	std::cout << "in" << *three_it_begin << std::endl;
-	// three_it_begin = three.erase(three_it_begin);
-	std::cout << "in2" << std::endl;
-	std::cout << *three_it_begin << "|" << std::endl;
 	// three_it_begin = three.begin();
 	// three_it_end = three.end();
 	ft_print_it_range(three_it_begin, three_it_end);
@@ -275,11 +233,12 @@ void ft_vector_swap_check()
 	std::cout << one.size() << std::endl;
 	--one_it_end;
 	std::cout << "i:" << *one_it_end << std::endl;
-	one.erase(++one_it_begin, one_it_end);
-	one_it_begin = one.begin();
+	one_it_begin = one.erase(++one_it_begin, one_it_end);
+	// one_it_begin = one.begin();
 	// one_it_end = one.end();
 	ft_print_it_range(one_it_begin, one.end());
 	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
 	std::cout << one.size() << std::endl;
 
 	one.resize(1);
@@ -355,6 +314,13 @@ void ft_vector_swap_check()
 	std::cout << three_rev_it_begin2[0] << std::endl;
 	std::cout << three_rev_it_begin2[2] << std::endl;
 	std::cout << three_rev_it_begin2[10] << std::endl;
+
+	if (three.end() == three.end())
+	{
+		std::cout << "same" << std::endl;
+	}
+	else
+		std::cout << "not same" << std::endl;
 }
 
 #endif
