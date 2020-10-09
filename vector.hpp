@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 09:33:34 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 13:29:06 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/09 16:31:33 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,7 +364,7 @@ namespace ft
 				this->clear();
 				this->alloc.deallocate(this->p, this->vec_capacity);
 			}
-			vector &operator=(const vector& x)
+			vector& operator=(const vector& x)
 			{
 				this->clear();
 				this->alloc.deallocate(this->p, this->vec_capacity);
@@ -517,7 +517,7 @@ namespace ft
 				F<InputIterator, std::numeric_limits<InputIterator>::is_integer> f;
 				f.assign(first, last, this);
 			}
-			void assign(size_type n, const value_type &val)
+			void assign(size_type n, const value_type& val)
 			{
 				this->resize(n);
 				iterator it_begin = this->begin();

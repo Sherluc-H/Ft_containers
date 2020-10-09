@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 16:50:08 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 13:40:13 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/09 17:46:26 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ namespace ft
 	class queue
 	{
 		public:
-			typedef T value_type;
-			typedef Container container_type;
-			typedef size_t size_type;
+			typedef T			value_type;
+			typedef Container	container_type;
+			typedef size_t		size_type;
 
 			explicit queue(const container_type& ctnr = container_type())
 			{
@@ -33,7 +33,7 @@ namespace ft
 			{
 				*this = q;
 			}
-			queue &operator=(const queue& q)
+			queue& operator=(const queue& q)
 			{
 				this->ctnr = q.ctnr;
 				return (*this);

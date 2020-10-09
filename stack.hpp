@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 14:43:37 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 13:39:53 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/09 17:32:47 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ namespace ft
     class stack
     {
         public:
-            typedef T value_type;
-            typedef Container container_type;
-            typedef size_t size_type;
+            typedef T           value_type;
+            typedef Container   container_type;
+            typedef size_t      size_type;
 
             explicit stack(const container_type& ctnr = container_type())
             {
@@ -34,7 +34,7 @@ namespace ft
             {
                 *this = s;
             }
-            stack &operator=(const stack& s)
+            stack& operator=(const stack& s)
             {
                 this->ctnr = s.ctnr;
                 return (*this);

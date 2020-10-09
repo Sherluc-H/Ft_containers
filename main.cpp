@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/08 22:51:37 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/09 15:04:22 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -572,26 +572,26 @@ int		main(int argc, char *argv[])
 			arg_str = argv[2];
 		if (argc == 1 || argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
 		{
-			ft_list_common_check<ft::list<int>>();
-			ft_iterator_check<ft::list<int>>();
-			ft_swap_check<ft::list<int>>();
-			ft_reverse_iterator_check<ft::list<int>>();
-			ft_data_type_struct_check<ft::list<std::string>>();
-			ft_const_check<ft::list<int>>();
-			ft_list_advanced_check<ft::list<int>>();
+			ft_list_common_check<ft::list<int> >();
+			ft_iterator_check<ft::list<int> >();
+			ft_swap_check<ft::list<int> >();
+			ft_reverse_iterator_check<ft::list<int> >();
+			ft_data_type_struct_check<ft::list<std::string> >();
+			ft_const_check<ft::list<int> >();
+			ft_list_advanced_check<ft::list<int> >();
 			ft::list<int> a;
 			ft::list<int> b;
 			ft::swap(a, b);
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
-			ft_list_common_check<std::list<int>>();
-			ft_iterator_check<std::list<int>>();
-			ft_swap_check<std::list<int>>();
-			ft_reverse_iterator_check<std::list<int>>();
-			ft_data_type_struct_check<std::list<std::string>>();
-			ft_const_check<std::list<int>>();
-			ft_list_advanced_check<std::list<int>>();
+			ft_list_common_check<std::list<int> >();
+			ft_iterator_check<std::list<int> >();
+			ft_swap_check<std::list<int> >();
+			ft_reverse_iterator_check<std::list<int> >();
+			ft_data_type_struct_check<std::list<std::string> >();
+			ft_const_check<std::list<int> >();
+			ft_list_advanced_check<std::list<int> >();
 			std::list<int> a;
 			std::list<int> b;
 			std::swap(a, b);
@@ -605,17 +605,17 @@ int		main(int argc, char *argv[])
 			arg_str = argv[2];
 		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
 		{
-			ft_vector_common_check<ft::vector<int>>();
-			ft_iterator_rand_access_check<ft::vector<int>>();
-			ft_vector_swap_check<ft::vector<int>>();
-			ft_reverse_iterator_check<ft::vector<int>>();
+			ft_vector_common_check<ft::vector<int> >();
+			ft_iterator_rand_access_check<ft::vector<int> >();
+			ft_vector_swap_check<ft::vector<int> >();
+			ft_reverse_iterator_check<ft::vector<int> >();
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
-			ft_vector_common_check<std::vector<int>>();
-			ft_iterator_rand_access_check<std::vector<int>>();
-			ft_vector_swap_check<std::vector<int>>();
-			ft_reverse_iterator_check<std::vector<int>>();
+			ft_vector_common_check<std::vector<int> >();
+			ft_iterator_rand_access_check<std::vector<int> >();
+			ft_vector_swap_check<std::vector<int> >();
+			ft_reverse_iterator_check<std::vector<int> >();
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;
@@ -626,13 +626,13 @@ int		main(int argc, char *argv[])
 			arg_str = argv[2];
 		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
 		{
-			ft_check_map<ft::map<int, int>>();
-			ft_check_map_modifiers<ft::map<int, int>>();
+			ft_check_map<ft::map<int, int> >();
+			ft_check_map_modifiers<ft::map<int, int> >();
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
-			ft_check_map<std::map<int, int>>();
-			ft_check_map_modifiers<std::map<int, int>>();
+			ft_check_map<std::map<int, int> >();
+			ft_check_map_modifiers<std::map<int, int> >();
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;
@@ -643,11 +643,11 @@ int		main(int argc, char *argv[])
 			arg_str = argv[2];
 		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
 		{
-			ft_check_stack<ft::stack<int, ft::list<int>>>();
+			ft_check_stack<ft::stack<int, ft::list<int> > >();
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
-			ft_check_stack<std::stack<int, std::list<int>>>();
+			ft_check_stack<std::stack<int, std::list<int> > >();
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;
@@ -658,11 +658,11 @@ int		main(int argc, char *argv[])
 			arg_str = argv[2];
 		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
 		{
-			ft_check_queue<ft::queue<int, ft::list<int>>>();
+			ft_check_queue<ft::queue<int, ft::list<int> > >();
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
-			ft_check_queue<std::queue<int, std::list<int>>>();
+			ft_check_queue<std::queue<int, std::list<int> > >();
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;

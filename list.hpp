@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:51:24 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 13:32:25 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/09 17:21:22 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ namespace ft
 			typedef size_t										size_type;
 			
 		private:
-			typedef struct	s_list_el
+			typedef struct			s_list_el
 			{
-				struct s_list_el *previous;
-				value_type value;
-				struct s_list_el *next;
-			}				t_list_el;
+				struct s_list_el	*previous;
+				value_type			val;
+				struct s_list_el	*next;
+			}						t_list_el;
 			
 			class iterator
 			{
@@ -60,7 +60,7 @@ namespace ft
 					}
 					~iterator()
 					{
-						std::cout << "it destructor" << std::endl;
+						// std::cout << "it destructor" << std::endl;
 					}
 					iterator(t_list_el* el, int crement = 0)
 					{
@@ -100,7 +100,7 @@ namespace ft
 					}
 					value_type &operator*() const
 					{
-						return (this->el->value);
+						return (this->el->val);
 					}
 					value_type *operator->() const
 					{
@@ -254,17 +254,12 @@ namespace ft
 				}
 			}
 			template <class InputIterator>
-			list(InputIterator start, InputIterator end, const allocator_type& alloc = allocator_type())
+			list(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
 			{
 				this->first_el = NULL;
 				this->l_size = 0;
 				this->alloc = alloc;
-				F<InputIterator, std::numeric_limits<InputIterator>::is_integer>()(start, end, this);
-			}
-			~list()
-			{
-				// std::cout << "list destructor" << std::endl;
-				this->clear();
+				F<InputIterator, std::numeric_limits<InputIterator>::is_integer>()(first, last, this);
 			}
 			list(const list& x)
 			{
@@ -273,7 +268,12 @@ namespace ft
 				this->l_size = 0;
 				*this = x;
 			}
-			list &operator=(const list& x)
+			~list()
+			{
+				// std::cout << "list destructor" << std::endl;
+				this->clear();
+			}
+			list& operator=(const list& x)
 			{
 				t_list_el *el;
 
@@ -286,10 +286,10 @@ namespace ft
 					el = x.first_el;
 					while (el && el->next)
 					{
-						this->push_back(el->value);
+						this->push_back(el->val);
 						el = el->next;
 					}
-					this->push_back(el->value);
+					this->push_back(el->val);
 				}
 				return (*this);
 			}
@@ -349,7 +349,7 @@ namespace ft
 				// 	return (0);
 				if (!this->first_el)
 					return (*t);
-				return (this->first_el->value);
+				return (this->first_el->val);
 			}
 			const_reference front() const
 			{
@@ -358,7 +358,7 @@ namespace ft
 				// 	return (0);
 				if (!this->first_el)
 					return (*t);
-				return (this->first_el->value);
+				return (this->first_el->val);
 			}
 			reference back()
 			{
@@ -375,7 +375,7 @@ namespace ft
 				// 	return (0);
 				while (end_el && end_el->next)
 					end_el = end_el->next;
-				return (end_el->value);
+				return (end_el->val);
 			}
 			const_reference back() const
 			{
@@ -386,7 +386,7 @@ namespace ft
 				// 	return (0);
 				while (end_el && end_el->next)
 					end_el = end_el->next;
-				return(end_el->value);
+				return(end_el->val);
 			}
 			template <class InputIterator>
 			void assign(InputIterator first, InputIterator last)
@@ -418,7 +418,7 @@ namespace ft
 				typename Alloc::template rebind<t_list_el>::other r;
 
 				t_list_el el;
-				this->alloc.construct(&(el.value), val);
+				this->alloc.construct(&(el.val), val);
 				t_list_el *new_el = r.allocate(1);
 				r.construct(new_el, el);
 				new_el->previous = NULL;
@@ -451,14 +451,14 @@ namespace ft
 					return ;
 				}
 				t_list_el el;
-				this->alloc.construct(&(el.value), val);
+				this->alloc.construct(&(el.val), val);
 				new_el = r.allocate(1);
 				r.construct(new_el, el);
 				end_el = this->first_el;
 				while (end_el && end_el->next)
 					end_el = end_el->next;
 				new_el->previous = end_el;
-				new_el->value = val;
+				new_el->val = val;
 				new_el->next = NULL;
 				end_el->next = new_el;
 				this->l_size = this->l_size + 1;
@@ -497,25 +497,25 @@ namespace ft
 					while (pos->next)
 						pos = pos->next;
 					t_list_el el2;
-					this->alloc.construct(&(el2.value), val);
+					this->alloc.construct(&(el2.val), val);
 					t_list_el *new_el = r.allocate(1);
 					r.construct(new_el, el2);
 					new_el->next = pos->next;
 					new_el->previous = pos;
 					pos->next = new_el;
-					new_el->value = val;
+					new_el->val = val;
 					this->l_size = this->l_size + 1;
 					return (--position);
 				}
-				while (el && &(el->value) != &(*position) && el->next)
+				while (el && &(el->val) != &(*position) && el->next)
 					el = el->next;
 				t_list_el *prev_el = el->previous;
 				t_list_el el2;
-				this->alloc.construct(&(el2.value), val);
+				this->alloc.construct(&(el2.val), val);
 				t_list_el *new_el = r.allocate(1);
 				r.construct(new_el, el2);
 				new_el->previous = el->previous;
-				new_el->value = val;
+				new_el->val = val;
 				new_el->next = el;
 				el->previous = new_el;
 				if (el == this->first_el)
@@ -547,7 +547,7 @@ namespace ft
 				t_list_el *tmp = this->first_el;
 				typename Alloc::template rebind<t_list_el>::other r;
 
-				while (tmp && &(tmp->value) != &(*position))
+				while (tmp && &(tmp->val) != &(*position))
 					tmp = tmp->next;
 				if (this->first_el == tmp)
 				{
@@ -613,7 +613,7 @@ namespace ft
 				t_list_el *tmp = this->first_el;
 				if (x.l_size == 0)
 					return;
-				while (tmp && &tmp->value != &(*position))//1 pos de trop loin ?
+				while (tmp && &tmp->val != &(*position))//1 pos de trop loin ?
 					tmp = tmp->next;
 				if (tmp == this->first_el)
 					this->first_el = x.first_el;
@@ -645,10 +645,10 @@ namespace ft
 				t_list_el *tmp = this->first_el;
 				if (x.l_size == 0)
 					return;
-				while (tmp && &tmp->value != &(*position))
+				while (tmp && &tmp->val != &(*position))
 					tmp = tmp->next;
 				t_list_el *to_add_tmp = x.first_el;
-				while (to_add_tmp && &to_add_tmp->value != &(*i))
+				while (to_add_tmp && &to_add_tmp->val != &(*i))
 					to_add_tmp = to_add_tmp->next;
 				if (to_add_tmp == NULL)
 					return;
@@ -743,8 +743,8 @@ namespace ft
 						prev = tmp;
 				}
 			}
-			template <class Predicate>
-			void unique(Predicate pred)
+			template <class BinaryPredicate>
+			void unique(BinaryPredicate binary_pred)
 			{
 				iterator begin = this->begin();
 				iterator end = this->end();
@@ -761,7 +761,7 @@ namespace ft
 					begin++;
 					// fonctionne mais error ici
 					// std::cout << *begin << "|" << *tmp << std::endl;
-					// if (pred(*tmp, *begin))
+					// if (binary_pred(*tmp, *begin))
 					// {
 					// 	// std::cout << "here:" << (int)(*begin) << "|" << (int)(*tmp) << std::endl;
 					// 	this->erase(begin);
@@ -769,7 +769,7 @@ namespace ft
 					// else
 					// 	tmp = begin;
 					// begin++;
-					if (pred(*prev_it, *tmp))
+					if (binary_pred(*prev_it, *tmp))
 						this->erase(tmp);
 					else
 						prev_it = tmp;
@@ -786,7 +786,7 @@ namespace ft
 				size_type x_tmp_size = x.l_size;
 				size_type j = 0;
 				t_list_el *prev;
-				if (x_tmp->value < tmp->value)
+				if (x_tmp->val < tmp->val)
 				{
 					this->first_el = x_tmp;
 					x_tmp = x_tmp->next;
@@ -816,7 +816,7 @@ namespace ft
 						tmp = tmp->next;
 						i++;
 					}
-					else if (x_tmp->value < tmp->value)
+					else if (x_tmp->val < tmp->val)
 					{
 						x_tmp->previous = prev;
 						prev->next = x_tmp;
@@ -851,7 +851,7 @@ namespace ft
 				size_type x_tmp_size = x.l_size;
 				size_type j = 0;
 				t_list_el *prev;
-				if (comp(x_tmp->value, tmp->value))
+				if (comp(x_tmp->val, tmp->val))
 				{
 					this->first_el = x_tmp;
 					x_tmp = x_tmp->next;
@@ -881,7 +881,7 @@ namespace ft
 						tmp = tmp->next;
 						i++;
 					}
-					else if (comp(x_tmp->value, tmp->value))
+					else if (comp(x_tmp->val, tmp->val))
 					{
 						x_tmp->previous = prev;
 						prev->next = x_tmp;
@@ -994,7 +994,7 @@ namespace ft
 			// 	std::cout << "start size = " << this->l_size << std::endl;
 			// 	while (tmp)
 			// 	{
-			// 		std::cout << tmp->value << std::endl;
+			// 		std::cout << tmp->val << std::endl;
 			// 		tmp = tmp->next;
 			// 	}
 			// 	std::cout << "show end" << std::endl;
@@ -1002,7 +1002,7 @@ namespace ft
 		
 		private:
 			t_list_el		*first_el;
-			size_t			l_size;
+			size_type		l_size;
 			allocator_type	alloc;
 
 			template <class U, bool>
@@ -1070,12 +1070,12 @@ namespace ft
 					{
 						(void)f;
 					}
-					void operator()(U start, U end, ft::list<T> *ctnr)
+					void operator()(U first, U last, ft::list<T> *ctnr)
 					{
-						while (start != end)
+						while (first != last)
 						{
-							ctnr->push_back(*start);
-							start++;
+							ctnr->push_back(*first);
+							first++;
 						}
 					}
 					void assign(U first, U last, ft::list<T> *ctnr)

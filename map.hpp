@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 21:06:30 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 13:29:28 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/09 17:13:19 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ namespace ft
 			typedef size_t									size_type;
 		
 		private:
-			typedef struct		s_map_el
+			typedef struct				s_map_el
 			{
 				struct s_map_el*		previous;
-				int					pos;//0 == root, 1 == left, 2 == right
+				int						pos;//0 == root, 1 == left, 2 == right
 				std::pair<const Key, T>	val;
 				struct s_map_el*		next_left;
 				struct s_map_el*		next_right;
-			}					t_map_el;
+			}							t_map_el;
 			
 			class iterator
 			{
@@ -624,14 +624,14 @@ namespace ft
 			{
 				this->erase(this->begin(), this->end());
 			}
+			key_compare key_comp() const
+			{
+				return (this->comp);
+			}
 			value_compare value_comp() const
 			{
 				value_compare valcmp(this->comp);
 				return (valcmp);
-			}
-			key_compare key_comp() const
-			{
-				return (this->comp);
 			}
 			iterator find(const key_type& k)
 			{
