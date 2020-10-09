@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 14:43:37 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/03 15:19:55 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/09 13:39:53 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 namespace ft
 {
 
-    template <class T, class Container = ft::list<T>>
+    template <class T, class Container = ft::list<T> >
     class stack
     {
         public:
@@ -75,6 +75,7 @@ namespace ft
         private:
             container_type ctnr;
     };
+    
     template <class T, class Container>
     bool operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
     {

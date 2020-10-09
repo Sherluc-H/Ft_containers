@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:51:24 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/07 13:16:33 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/09 13:32:25 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ namespace ft
 				value_type value;
 				struct s_list_el *next;
 			}				t_list_el;
+			
 			class iterator
 			{
 				public:
 					typedef value_type value_type;
 					typedef difference_type difference_type;
-					typedef value_type* pointer;
 					typedef value_type& reference;
+					typedef value_type* pointer;
 					typedef ft::bidirectional_iterator_tag iterator_category;
 
 					iterator()
@@ -56,6 +57,10 @@ namespace ft
 						this->crement = 0;
 						this->before_end = NULL;
 					//	std::cout << "it default constructor" << std::endl;
+					}
+					~iterator()
+					{
+						std::cout << "it destructor" << std::endl;
 					}
 					iterator(t_list_el* el, int crement = 0)
 					{
@@ -72,10 +77,6 @@ namespace ft
 						}
 					//	std::cout << "it param constructor" << std::endl;
 					}
-					~iterator()
-					{
-					//	std::cout << "it destructor" << std::endl;
-					}
 					iterator(const iterator& it)
 					{
 					//	std::cout << "it copy constructor" << std::endl;
@@ -89,13 +90,13 @@ namespace ft
 						this->before_end = it.before_end;
 						return (*this);
 					}
-					bool operator==(const iterator& it2) const
+					bool operator==(const iterator& it) const
 					{
-						return (this->el == it2.el);
+						return (this->el == it.el);
 					}
-					bool operator!=(const iterator& it2) const
+					bool operator!=(const iterator& it) const
 					{
-						return (!(*this == it2));
+						return (!(*this == it));
 					}
 					value_type &operator*() const
 					{
@@ -107,18 +108,17 @@ namespace ft
 					}
 					iterator &operator++()
 					{
-						if (this->el->next == NULL)
-							this->before_end = this->el;
+						// if (this->el->next == NULL)
+							// this->before_end = this->el;
 						this->el = this->el->next;
 						return (*this);
 					}
 					iterator operator++(int)
 					{
-						iterator tmp;
+						iterator tmp = *this;
 
-						tmp = *this;
-						if (this->el->next == NULL)
-							this->before_end = this->el;
+						// if (this->el->next == NULL)
+							// this->before_end = this->el;
 						this->el = this->el->next;
 						return (tmp);
 					}
@@ -132,9 +132,8 @@ namespace ft
 					}
 					iterator operator--(int)
 					{
-						iterator tmp;
+						iterator tmp = *this;
 
-						tmp = *this;
 						if (this->el == NULL)
 							this->el = this->before_end;
 						else
@@ -147,13 +146,14 @@ namespace ft
 					t_list_el* before_end;
 					int crement;
 			};
+			
 			class const_iterator
 			{
 				public:
 					typedef const value_type value_type;
 					typedef difference_type difference_type;
-					typedef value_type* pointer;
 					typedef value_type& reference;
+					typedef value_type* pointer;
 					typedef ft::bidirectional_iterator_tag iterator_category;
 
 					const_iterator()
@@ -180,13 +180,13 @@ namespace ft
 						this->it = cit.it;
 						return (*this);
 					}
-					bool operator==(const const_iterator& cit2) const
+					bool operator==(const const_iterator& cit) const
 					{
-						return (this->it == cit2.it);
+						return (this->it == cit.it);
 					}
-					bool operator!=(const const_iterator& cit2) const
+					bool operator!=(const const_iterator& cit) const
 					{
-						return (!(*this == cit2));
+						return (!(*this == cit));
 					}
 					value_type &operator*() const
 					{
@@ -224,11 +224,12 @@ namespace ft
 				private:
 					iterator it;
 			};
+		
 		public:
-			typedef class iterator iterator;
-			typedef class const_iterator const_iterator;
-			typedef class ft::reverse_iterator<iterator> reverse_iterator;
-			typedef class ft::reverse_iterator<const_iterator> const_reverse_iterator;
+			typedef class iterator							iterator;
+			typedef class const_iterator					const_iterator;
+			typedef ft::reverse_iterator<iterator>			reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 			explicit list(const allocator_type& alloc = allocator_type())
 			{
@@ -258,7 +259,7 @@ namespace ft
 				this->first_el = NULL;
 				this->l_size = 0;
 				this->alloc = alloc;
-				Construct<InputIterator, std::numeric_limits<InputIterator>::is_integer>()(start, end, this);
+				F<InputIterator, std::numeric_limits<InputIterator>::is_integer>()(start, end, this);
 			}
 			~list()
 			{
@@ -294,35 +295,35 @@ namespace ft
 			}
 			iterator begin()
 			{
-				return (ft::list<T, Alloc>::iterator(this->first_el));
+				return (iterator(this->first_el));
 			}
 			const_iterator begin() const
 			{
-				return (ft::list<T, Alloc>::const_iterator(ft::list<T, Alloc>::iterator(this->first_el)));
+				return (const_iterator(iterator(this->first_el)));
 			}
 			iterator end()
 			{
-				return (ft::list<T, Alloc>::iterator(this->first_el, this->l_size));
+				return (iterator(this->first_el, this->l_size));
 			}
 			const_iterator end() const
 			{
-				return (ft::list<T, Alloc>::const_iterator(ft::list<T, Alloc>::iterator(this->first_el, this->l_size)));
+				return (const_iterator(iterator(this->first_el, this->l_size)));
 			}
 			reverse_iterator rbegin()
 			{
-				return (ft::list<T, Alloc>::reverse_iterator(this->end()));
+				return (reverse_iterator(this->end()));
 			}
 			const_reverse_iterator rbegin() const
 			{
-				return (ft::list<T, Alloc>::const_reverse_iterator(ft::list<T, Alloc>::const_iterator(this->end())));
+				return (const_reverse_iterator(this->end()));
 			}
 			reverse_iterator rend()
 			{
-				return (ft::list<T, Alloc>::reverse_iterator(this->begin()));
+				return (reverse_iterator(this->begin()));
 			}
 			const_reverse_iterator rend() const
 			{
-				return (ft::list<T, Alloc>::const_reverse_iterator(ft::list<T, Alloc>::const_iterator(this->begin())));
+				return (const_reverse_iterator(this->begin()));
 			}
 			bool empty() const
 			{
@@ -392,7 +393,8 @@ namespace ft
 			{
 				// this->clear();
 				// S<InputIterator, std::numeric_limits<InputIterator>::is_integer> s;
-				S<InputIterator, std::numeric_limits<InputIterator>::is_integer>()(first, last, this);//remplacer par specialization class
+				F<InputIterator, std::numeric_limits<InputIterator>::is_integer> f;
+				f.assign(first, last, this);//remplacer par specialization class
 			}
 			void assign(size_type n, const value_type& val)
 			{
@@ -535,7 +537,8 @@ namespace ft
 			template <class InputIterator>
 			void insert(iterator position, InputIterator first, InputIterator last)//rajouter protection cas n == int
 			{
-				F<InputIterator, std::numeric_limits<InputIterator>::is_integer>()(position, first, last, this);
+				F<InputIterator, std::numeric_limits<InputIterator>::is_integer> f;
+				f.insert(position, first, last, this);
 			}
 			iterator erase(iterator position)
 			{
@@ -544,7 +547,7 @@ namespace ft
 				t_list_el *tmp = this->first_el;
 				typename Alloc::template rebind<t_list_el>::other r;
 
-				while (tmp && &(tmp->value) != &(*position) && tmp->value)
+				while (tmp && &(tmp->value) != &(*position))
 					tmp = tmp->next;
 				if (this->first_el == tmp)
 				{
@@ -567,10 +570,13 @@ namespace ft
 			}
 			iterator erase(iterator first, iterator last)
 			{
+				iterator tmp;
 				while (first != last)
 				{
-					this->erase(first);
+					tmp = first;
 					first++;
+					this->erase(tmp);
+					// first++;
 				}
 				return (last);
 			}
@@ -598,8 +604,9 @@ namespace ft
 			}
 			void clear()
 			{
-				while (this->l_size)
-					this->pop_front();
+				this->erase(this->begin(), this->end());
+				// while (this->l_size)
+					// this->pop_front();
 			}
 			void splice(iterator position, list& x)
 			{
@@ -992,31 +999,86 @@ namespace ft
 			// 	}
 			// 	std::cout << "show end" << std::endl;
 			// }
+		
 		private:
 			t_list_el		*first_el;
 			size_t			l_size;
 			allocator_type	alloc;
+
 			template <class U, bool>
-			class S
+			class F
 			{
 				public:
-					S(){}
-					~S(){}
+					F(){}
+					~F(){}
+					F(const F& f)
+					{
+						*this = f;
+					}
+					F &operator=(const F& f)
+					{
+						(void)f;
+					}
 			};
+			
 			template <class U>
-			class S<U, true>
+			class F<U, true>
 			{
 				public:
+					F(){}
+					~F(){}
+					F(const F& f)
+					{
+						*this = f;
+					}
+					F &operator=(const F& f)
+					{
+						(void)f;
+					}
 					void operator()(U n, U val, ft::list<T> *ctnr)
+					{
+						U i;
+
+						i = 0;
+						while (i < n)
+						{
+							ctnr->push_back(val);
+							i++;
+						}
+					}
+					void assign(U n, U val, ft::list<T> *ctnr)
 					{
 						ctnr->assign((size_type)n, val);
 					}
+					void insert(iterator position, U n, U val, list *ctnr)
+					{
+						ctnr->insert(position, (size_type)n, val);
+					}
 			};
+			
 			template <class U>
-			class S<U, false>
+			class F<U, false>
 			{
 				public:
-					void operator()(U first, U last, ft::list<T> *ctnr)
+					F(){}
+					~F(){}
+					F(const F& f)
+					{
+						*this = f;
+					}
+					F &operator=(const F& f)
+					{
+						(void)f;
+					}
+					void operator()(U start, U end, ft::list<T> *ctnr)
+					{
+						while (start != end)
+						{
+							ctnr->push_back(*start);
+							start++;
+						}
+					}
+					void assign(U first, U last, ft::list<T> *ctnr)
 					{
 						iterator it_begin = ctnr->begin();
 						iterator it_end = ctnr->end();
@@ -1036,33 +1098,7 @@ namespace ft
 						}
 						ctnr->resize(i);
 					}
-			};
-			template <class U, bool>
-			class F
-			{
-				public:
-					F();
-					~F();
-			};
-			template <class U>
-			class F<U, true>
-			{
-				public:
-					void operator()(iterator position, U first, U last, list *ctnr)
-					{
-						U i = 0;
-						while (i < first)
-						{
-							ctnr->insert(position, last);
-							i++;
-						}
-					}
-			};
-			template <class U>
-			class F<U, false>
-			{
-				public:
-					void operator()(iterator position, U first, U last, list *ctnr)
+					void insert(iterator position, U first, U last, list *ctnr)
 					{
 						while (first != last)
 						{
@@ -1071,56 +1107,8 @@ namespace ft
 						}
 					}
 			};
-			template <class U, bool>
-			class Construct
-			{
-				public:
-					Construct(){}
-					~Construct(){}
-				private:
-					Construct(const Construct& c);
-					Construct &operator=(const Construct& c);
-			};
-			template <class U>
-			class Construct<U, true>
-			{
-				public:
-					Construct(){}
-					~Construct(){}
-					void operator()(U n, U val, ft::list<T> *ctnr)
-					{
-						U i;
-
-						i = 0;
-						while (i < n)
-						{
-							ctnr->push_back(val);
-							i++;
-						}
-					}
-				private:
-					Construct(const Construct& c);
-					Construct &operator=(const Construct& c);
-			};
-			template <class U>
-			class Construct<U, false>
-			{
-				public:
-					Construct(){}
-					~Construct(){}
-					void operator()(U start, U end, ft::list<T> *ctnr)
-					{
-						while (start != end)
-						{
-							ctnr->push_back(*start);
-							start++;
-						}
-					}
-				private:
-					Construct(const Construct& c);
-					Construct &operator=(const Construct& c);
-			};
 	};
+	
 	template <class T, class Alloc>
 	bool operator==(const list<T, Alloc>& lhs, const list<T, Alloc>& rhs)
 	{

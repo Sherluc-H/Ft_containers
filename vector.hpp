@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 09:33:34 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/07 21:34:15 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/09 13:29:06 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ namespace ft
 						this->p = NULL;
 						this->crement = 0;
 					}
+					~iterator()
+					{
+
+					}
 					iterator(pointer p, int crement = 0)
 					{
 						this->p = p;
@@ -66,23 +70,19 @@ namespace ft
 						this->crement = it.crement;
 						return (*this);
 					}
-					~iterator()
+					bool operator==(const iterator& it) const
 					{
-						
+						return (this->operator->() == it.operator->());
 					}
-					bool operator==(const iterator& it2) const
+					bool operator!=(const iterator& it) const
 					{
-						return (this->operator->() == it2.operator->());
+						return (!(*this == it));
 					}
-					bool operator!=(const iterator& it2) const
-					{
-						return (!(*this == it2));
-					}
-					value_type& operator*() const
+					value_type &operator*() const
 					{
 						return (this->p[this->crement]);
 					}
-					value_type* operator->() const
+					value_type *operator->() const
 					{
 						return (&(this->operator*()));
 					}
@@ -180,10 +180,12 @@ namespace ft
 					{
 						return (this->p[this->crement + idx]);
 					}
+				
 				private:
 					pointer p;
 					int crement;
 			};
+			
 			class const_iterator
 			{
 				public:
@@ -195,7 +197,11 @@ namespace ft
 
 					const_iterator()
 					{
-						this->it = NULL;
+						this->it = iterator();
+					}
+					~const_iterator()
+					{
+						
 					}
 					const_iterator(const iterator& it)
 					{
@@ -210,17 +216,13 @@ namespace ft
 						this->it = cit.it;
 						return (*this);
 					}
-					~const_iterator()
+					bool operator==(const const_iterator& cit) const
 					{
-						
+						return (this->it == cit.it);
 					}
-					bool operator==(const const_iterator& it2) const
+					bool operator!=(const const_iterator& cit) const
 					{
-						return (this->it == it2.it);
-					}
-					bool operator!=(const const_iterator& it2) const
-					{
-						return (!(*this == it2));
+						return (!(*this == cit));
 					}
 					value_type &operator*() const
 					{
@@ -302,9 +304,9 @@ namespace ft
 					{
 						return (this->it[idx]);
 					}
+				
 				private:
 					iterator it;
-
 			};
 			
 		public:
@@ -382,35 +384,35 @@ namespace ft
 			}
 			iterator begin()
 			{
-				return (ft::vector<T, Alloc>::iterator(this->p));
+				return (iterator(this->p));
 			}
 			const_iterator begin() const
 			{
-				return (ft::vector<T, Alloc>::const_iterator(ft::vector<T, Alloc>::iterator(this->p)));
+				return (const_iterator(iterator(this->p)));
 			}
 			iterator end()
 			{
-				return (ft::vector<T, Alloc>::iterator(this->p, this->vec_size));
+				return (iterator(this->p, this->vec_size));
 			}
 			const_iterator end() const
 			{
-				return (ft::vector<T, Alloc>::const_iterator(ft::vector<T, Alloc>::iterator(this->p, this->vec_size)));
+				return (const_iterator(iterator(this->p, this->vec_size)));
 			}
 			reverse_iterator rbegin()
 			{
-				return (ft::vector<T, Alloc>::reverse_iterator(this->end()));
+				return (reverse_iterator(this->end()));
 			}
 			const_reverse_iterator rbegin() const
 			{
-				return (ft::vector<T, Alloc>::const_reverse_iterator(ft::vector<T, Alloc>::const_iterator(this->end())));
+				return (const_reverse_iterator(this->end()));
 			}
 			reverse_iterator rend()
 			{
-				return (ft::vector<T, Alloc>::reverse_iterator(this->begin()));
+				return (reverse_iterator(this->begin()));
 			}
 			const_reverse_iterator rend() const
 			{
-				return (ft::vector<T, Alloc>::const_reverse_iterator(ft::vector<T, Alloc>::const_iterator(this->begin())));
+				return (const_reverse_iterator(this->begin()));
 			}
 			size_type size() const
 			{
@@ -572,30 +574,38 @@ namespace ft
 			{
 				(void)n;
 				(void)val;
-				iterator it_begin = position;//meilleur insert possible si on est a end pos ?
+				// std::cout << "here" << std::endl;
 				size_type i = 0;
 				while (i < n)
 				{
-					this->push_back(val);//reserve ?
+					position = this->insert(position, val);
+					position++;
 					i++;
 				}
-				iterator it_end = this->end();
-				value_type value;
-				value_type next_value;
-				i = 0;
-				while (i < n)
-				{
-					value = val;
-					while (it_begin != it_end)
-					{
-						next_value = *it_begin;
-						*it_begin = value;
-						value = next_value;
-						it_begin++;
-					}
-					it_begin = position + i;
-					i++;
-				}
+				// iterator it_begin = position;//meilleur insert possible si on est a end pos ?
+				// size_type i = 0;
+				// while (i < n)
+				// {
+				// 	this->push_back(val);//reserve ?
+				// 	i++;
+				// }
+				// iterator it_end = this->end();
+				// value_type value;
+				// value_type next_value;
+				// i = 0;
+				// while (i < n)
+				// {
+				// 	value = val;
+				// 	while (it_begin != it_end)
+				// 	{
+				// 		next_value = *it_begin;
+				// 		*it_begin = value;
+				// 		value = next_value;
+				// 		it_begin++;
+				// 	}
+				// 	it_begin = position + i;
+				// 	i++;
+				// }
 			}
 			template <class InputIterator>
 			void insert(iterator position, InputIterator first, InputIterator last)
@@ -662,6 +672,7 @@ namespace ft
 					i++;
 				}
 			}
+		
 		private:
 			pointer p;
 			size_type vec_size;
@@ -678,9 +689,25 @@ namespace ft
 				}
 				this->reserve(this->vec_capacity * 2);
 			}
+			
 			template <class InputIterator, bool>
 			class F
-			{};
+			{
+				public:
+					F()
+					{}
+					~F()
+					{}
+					F(const F& f)
+					{
+						*this = f;
+					}
+					F &operator=(const F& f)
+					{
+						(void)f;
+					}
+			};
+			
 			template <class InputIterator>
 			class F<InputIterator, true>
 			{
@@ -689,6 +716,14 @@ namespace ft
 					{}
 					~F()
 					{}
+					F(const F& f)
+					{
+						*this = f;
+					}
+					F &operator=(const F& f)
+					{
+						(void)f;
+					}
 					void operator()(InputIterator first, InputIterator last, ft::vector<T, Alloc> *ctnr)
 					{
 						int i = 0;
@@ -704,17 +739,19 @@ namespace ft
 					{
 						ctnr->assign((size_type)first, last);
 					}
-					void insert(iterator position, InputIterator first, InputIterator last, ft::vector<T, Alloc> *ctnr)
+					void insert(iterator position, InputIterator n, InputIterator val, ft::vector<T, Alloc> *ctnr)
 					{
-						int i = 0;
-						while (i < first)
-						{
-							position = ctnr->insert(position, last);
-							position++;
-							i++;
-						}
+						ctnr->insert(position, (size_type)n, val);
+						// int i = 0;
+						// while (i < n)
+						// {
+						// 	position = ctnr->insert(position, val);
+						// 	position++;
+						// 	i++;
+						// }
 					}
 			};
+			
 			template <class InputIterator>
 			class F<InputIterator, false>
 			{
@@ -723,6 +760,14 @@ namespace ft
 					{}
 					~F()
 					{}
+					F(const F& f)
+					{
+						*this = f;
+					}
+					F &operator=(const F& f)
+					{
+						(void)f;
+					}
 					void operator()(InputIterator first, InputIterator last, ft::vector<T, Alloc> *ctnr)
 					{
 						ctnr->reserve(last - first);
@@ -762,6 +807,7 @@ namespace ft
 					}
 			};
 	};
+	
 	template <class T, class Alloc>
 	bool operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
 	{

@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:40:53 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/08 10:37:20 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/09 01:04:05 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ void ft_vector_swap_check()
 	three_it_begin = three.begin();
 	three_it_end = three.end();
 	ft_print_it_range(three_it_begin, three_it_end);
+	three.insert(three.begin(), two.begin(), two.end());
 
 	// three_it_begin = three.begin();
 	// three_it_end = three.end();
