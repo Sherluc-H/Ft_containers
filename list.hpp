@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:51:24 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 17:21:22 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/10 15:27:10 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,9 @@ namespace ft
 						this->el = NULL;
 						this->crement = 0;
 						this->before_end = NULL;
-					//	std::cout << "it default constructor" << std::endl;
 					}
 					~iterator()
-					{
-						// std::cout << "it destructor" << std::endl;
-					}
+					{}
 					iterator(t_list_el* el, int crement = 0)
 					{
 						this->el = el;
@@ -75,16 +72,13 @@ namespace ft
 							this->el = this->el->next;
 							i++;
 						}
-					//	std::cout << "it param constructor" << std::endl;
 					}
 					iterator(const iterator& it)
 					{
-					//	std::cout << "it copy constructor" << std::endl;
 						*this = it;
 					}
 					iterator &operator=(const iterator& it)
 					{
-					//	std::cout << "it op=" << std::endl;
 						this->el = it.el;
 						this->crement = it.crement;
 						this->before_end = it.before_end;
@@ -159,24 +153,19 @@ namespace ft
 					const_iterator()
 					{
 						this->it = iterator();
-					//	std::cout << "it default constructor" << std::endl;
 					}
 					~const_iterator()
-					{
-					//	std::cout << "it destructor" << std::endl;
-					}
+					{}
 					const_iterator(const iterator& it)
 					{
 						this->it = it;
 					}
 					const_iterator(const const_iterator& cit)
 					{
-					//	std::cout << "it copy constructor" << std::endl;
 						*this = cit;
 					}
 					const_iterator &operator=(const const_iterator& cit)
 					{
-					//	std::cout << "it op=" << std::endl;
 						this->it = cit.it;
 						return (*this);
 					}
@@ -233,7 +222,6 @@ namespace ft
 
 			explicit list(const allocator_type& alloc = allocator_type())
 			{
-			//	std::cout << "list default constructor" << std::endl;
 				this->first_el = NULL;
 				this->l_size = 0;
 				this->alloc = alloc;
@@ -243,7 +231,6 @@ namespace ft
 				size_type i;
 				this->alloc = alloc;
 
-			//	std::cout << "list fill constructor" << std::endl;
 				i = 0;
 				this->first_el = NULL;
 				this->l_size = 0;
@@ -263,34 +250,17 @@ namespace ft
 			}
 			list(const list& x)
 			{
-				// std::cout << "list copy constructor" << std::endl;
 				this->first_el = NULL;
 				this->l_size = 0;
 				*this = x;
 			}
 			~list()
 			{
-				// std::cout << "list destructor" << std::endl;
 				this->clear();
 			}
 			list& operator=(const list& x)
 			{
-				t_list_el *el;
-
-				// std::cout << "list op=" << std::endl;
-				this->clear();
-				this->first_el = NULL;
-				this->l_size = 0;
-				if (x.l_size > 0)
-				{
-					el = x.first_el;
-					while (el && el->next)
-					{
-						this->push_back(el->val);
-						el = el->next;
-					}
-					this->push_back(el->val);
-				}
+				this->assign(x.begin(), x.end());
 				return (*this);
 			}
 			iterator begin()
@@ -391,10 +361,8 @@ namespace ft
 			template <class InputIterator>
 			void assign(InputIterator first, InputIterator last)
 			{
-				// this->clear();
-				// S<InputIterator, std::numeric_limits<InputIterator>::is_integer> s;
 				F<InputIterator, std::numeric_limits<InputIterator>::is_integer> f;
-				f.assign(first, last, this);//remplacer par specialization class
+				f.assign(first, last, this);
 			}
 			void assign(size_type n, const value_type& val)
 			{
@@ -458,7 +426,7 @@ namespace ft
 				while (end_el && end_el->next)
 					end_el = end_el->next;
 				new_el->previous = end_el;
-				new_el->val = val;
+				// new_el->val = val;
 				new_el->next = NULL;
 				end_el->next = new_el;
 				this->l_size = this->l_size + 1;
@@ -493,19 +461,31 @@ namespace ft
 				t_list_el *el = this->first_el;
 				if (position == this->end())
 				{
+					// iterator tmp = position;
 					t_list_el *pos = el;
-					while (pos->next)
+					while (pos && pos->next)
 						pos = pos->next;
 					t_list_el el2;
 					this->alloc.construct(&(el2.val), val);
 					t_list_el *new_el = r.allocate(1);
 					r.construct(new_el, el2);
-					new_el->next = pos->next;
-					new_el->previous = pos;
-					pos->next = new_el;
-					new_el->val = val;
+					if (pos)
+						new_el->next = pos->next;
+					else
+						new_el->next = NULL;
+					if (!pos)
+					{
+						new_el->previous = NULL;
+						this->first_el = new_el;
+					}
+					else
+						new_el->previous = pos;
+					if (pos)
+						pos->next = new_el;
+					// new_el->val = val;
 					this->l_size = this->l_size + 1;
-					return (--position);
+					// return (--position);
+					return (iterator(this->first_el, this->l_size - 1));
 				}
 				while (el && &(el->val) != &(*position) && el->next)
 					el = el->next;
@@ -515,7 +495,7 @@ namespace ft
 				t_list_el *new_el = r.allocate(1);
 				r.construct(new_el, el2);
 				new_el->previous = el->previous;
-				new_el->val = val;
+				// new_el->val = val;
 				new_el->next = el;
 				el->previous = new_el;
 				if (el == this->first_el)
@@ -605,40 +585,10 @@ namespace ft
 			void clear()
 			{
 				this->erase(this->begin(), this->end());
-				// while (this->l_size)
-					// this->pop_front();
 			}
 			void splice(iterator position, list& x)
 			{
-				t_list_el *tmp = this->first_el;
-				if (x.l_size == 0)
-					return;
-				while (tmp && &tmp->val != &(*position))//1 pos de trop loin ?
-					tmp = tmp->next;
-				if (tmp == this->first_el)
-					this->first_el = x.first_el;
-				else
-				{
-					if (tmp == NULL)
-					{
-						t_list_el* tmp_first = this->first_el;
-						while (tmp_first->next)
-							tmp_first = tmp_first->next;
-						tmp_first->next = x.first_el;
-					}
-					else
-						tmp->previous->next = x.first_el;
-				}
-				x.first_el->previous = tmp->previous;
-				t_list_el* el = x.first_el;
-				while (el->next)
-					el = el->next;
-				el->next = tmp;
-				if (tmp)
-					tmp->previous = el;
-				this->l_size = this->l_size + x.l_size;
-				x.first_el = NULL;
-				x.l_size = 0;
+				this->splice(position, x, x.begin(), x.end());
 			}
 			void splice(iterator position, list& x, iterator i)
 			{
@@ -777,8 +727,13 @@ namespace ft
 			}
 			void merge(list& x)
 			{
-				if (this->first_el == x.first_el && this->l_size == x.l_size)
+				if (this == &x || x.l_size == 0)//attention pas *this == x sinon compare les valeurs et non les pointers
 					return;
+				if (this->size() == 0)
+				{
+					this->splice(this->begin(), x);
+					return;
+				}
 				t_list_el *tmp = this->first_el;
 				size_type tmp_size = this->l_size;
 				size_type i = 0;
@@ -842,8 +797,13 @@ namespace ft
 			template <class Compare>
 			void merge(list& x, Compare comp)
 			{
-				if (this->first_el == x.first_el && this->l_size == x.l_size)
+				if (this == &x || x.l_size == 0)
 					return;
+				if (this->l_size == 0)
+				{
+					this->splice(this->begin(), x);
+					return;
+				}
 				t_list_el *tmp = this->first_el;
 				size_type tmp_size = this->l_size;
 				size_type i = 0;
@@ -965,7 +925,7 @@ namespace ft
 			void reverse()
 			{
 				t_list_el *tmp = this->first_el;
-				while (tmp->next)
+				while (tmp && tmp->next)
 					tmp = tmp->next;
 				t_list_el *new_el = tmp;
 				size_type i = 0;
@@ -979,26 +939,6 @@ namespace ft
 				}
 				this->first_el = new_el;
 			}
-			// allocator_type get_allocator() const
-			// {
-			// 	std::cout << "in" << std::endl;
-			// 	allocator_type a;
-			// 	int *b = a.allocate(5);
-			// 	a.deallocate(b, 5);
-			// 	return (a);
-			// }
-
-			// void show_all()//a enlever apres
-			// {
-			// 	t_list_el *tmp = this->first_el;
-			// 	std::cout << "start size = " << this->l_size << std::endl;
-			// 	while (tmp)
-			// 	{
-			// 		std::cout << tmp->val << std::endl;
-			// 		tmp = tmp->next;
-			// 	}
-			// 	std::cout << "show end" << std::endl;
-			// }
 		
 		private:
 			t_list_el		*first_el;

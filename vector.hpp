@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 09:33:34 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 16:31:33 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/10 15:33:22 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -459,6 +459,8 @@ namespace ft
 			}
 			void reserve(size_type n)
 			{
+				if (n > this->max_size())
+					throw std::length_error("trying to reserve with n > max_size");
 				if (n > this->vec_capacity)
 				{
 					pointer tmp = this->alloc.allocate(n);
@@ -878,8 +880,7 @@ namespace ft
 	{
 		x.swap(y);
 	}
-	// template <class T, class Alloc>
-	// typename ft::vector<T, Alloc>::iterator operator+(const ptrdiff_t &a, const typename ft::vector<T, Alloc>::iterator &b)
+	// typename ft::vector<int>::iterator operator+(const ptrdiff_t &a, const typename ft::vector<int>::iterator &b)
 	// {
 	// 	return (b + a);
 	// }

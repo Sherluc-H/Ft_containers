@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:40:53 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 01:04:05 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/10 15:31:46 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,14 +176,18 @@ void ft_vector_swap_check()
 	typename T::iterator two_it_end = two.end();
 	typename T::iterator one_it_end = one.end();
 	ft_print_it_range(one_it_begin, two_it_end);
+	ft_print_it_range(one.rbegin(), one.rend());
 	one_it_end--;
 	ft_print_it_range(two_it_begin, one_it_end);
+	ft_print_it_range(one.rbegin(), one.rend());
 	one_it_begin = one.begin();
 	one_it_end = one.end();
 	two_it_begin = two.begin();
 	two_it_end = two.end();
 	ft_print_it_range(one_it_begin, one_it_end);
+	ft_print_it_range(one.rbegin(), one.rend());
 	ft_print_it_range(two_it_begin, two_it_end);
+	ft_print_it_range(two.rbegin(), two.rend());
 
 	T three;
 	three.push_back(100);
@@ -192,10 +196,12 @@ void ft_vector_swap_check()
 	typename T::iterator three_it_end = three.end();
 	two.assign(three_it_begin, three_it_end);
 	ft_print_it_range(three_it_begin, three_it_end);
+	ft_print_it_range(three.rbegin(), three.rend());
 	three.assign(10, 1000);
 	two_it_begin = two.begin();
 	two_it_end = two.end();
 	ft_print_it_range(two_it_begin, two_it_end);
+	ft_print_it_range(two.rbegin(), two.rend());
 	three_it_begin = three.begin();
 	three_it_end = three.end();
 	ft_print_it_range(three_it_begin, three_it_end);
@@ -203,11 +209,13 @@ void ft_vector_swap_check()
 	three.insert(three_it_begin, 50);
 
 	ft_print_it_range(three.begin(), three.end());
+	ft_print_it_range(three.rbegin(), three.rend());
 
 	three_it_begin = three.insert(three.begin(), 500);
 	three_it_end = three.insert(three.end(), 5000);
 	three.insert(three_it_begin, 2, 2);
 	ft_print_it_range(three_it_begin, three_it_end);
+	ft_print_it_range(three.rbegin(), three.rend());
 	ft_print_it_range(three_it_begin, three.end());
 	ft_print_it_range(three.rbegin(), three.rend());
 	three_it_begin = three.begin();
@@ -218,6 +226,7 @@ void ft_vector_swap_check()
 	three_it_begin = three.begin();
 	three_it_end = three.end();
 	ft_print_it_range(three_it_begin, three_it_end);
+	ft_print_it_range(three.rbegin(), three.rend());
 	three.insert(three.begin(), two.begin(), two.end());
 
 	// three_it_begin = three.begin();
@@ -322,6 +331,14 @@ void ft_vector_swap_check()
 	}
 	else
 		std::cout << "not same" << std::endl;
+
+	// T v;
+	// v.reserve(v.max_size());
+	// T v;
+	// std::cout << v.size() << std::endl;
+	// // v.push_back(1);
+	// v.pop_back();
+	// std::cout << v.size() << std::endl;
 }
 
 #endif

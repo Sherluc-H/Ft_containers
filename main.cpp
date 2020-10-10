@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 15:04:22 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/10 15:08:33 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,185 +27,62 @@
 #include "ft_check_map.hpp"
 
 // template <class T>
-// void	ft_iterator_check()
+// void ft_reverse_iterator_check()
 // {
-// 	std::cout << "---iterator check---" << std::endl;
-// 	T ctnr;
-
-// 	ctnr.push_back(1);
-// 	ctnr.push_back(2);
-// 	ctnr.push_back(0);
-// 	ctnr.push_back(3);
-
-// 	// int *p = ctnr.get_allocator().allocate(10);
-// 	// ctnr.get_allocator().deallocate(p, 5);
-
-// 	typename T::iterator ctnr_it = ctnr.begin();
-// 	typename T::iterator ctnr_it_end = ctnr.end();
-
-// 	std::cout << "first: " << *ctnr_it << std::endl;
-// 	std::cout << ctnr.size() << std::endl;
-// 	ctnr.insert(ctnr_it, 100);
-// 	std::cout << ctnr.size() << std::endl;
-// 	std::cout << "first: " << *ctnr_it << std::endl;
-// 	*ctnr_it = 6;
-// 	std::cout << "first: " << *ctnr_it << std::endl;
-
-// 	std::cout << "front: " << ctnr.front() << std::endl;
-// 	std::cout << "back: " << ctnr.back() << std::endl;
-
-// 	T ctnr2(ctnr_it, ctnr_it_end);
-
-// 	std::cout << "size: " << ctnr2.size() << std::endl;
-// 	std::cout << "front: " << ctnr2.front() << std::endl;
-// 	std::cout << "back: " << ctnr2.back() << std::endl;
-
-// 	T ctnr3(ctnr_it, ctnr_it);
-
-// 	std::cout << "size: " << ctnr3.size() << std::endl;
-
-// 	typename T::iterator ctnr_it2 = ctnr.begin();
-// 	// ctnr_it2++;
-// 	T ctnr5(ctnr_it, ++ctnr_it2);
-// 	std::cout << (*ctnr_it) << std::endl;
-// 	std::cout << (*ctnr_it2) << std::endl;
-
-// 	std::cout << "size: " << ctnr5.size() << std::endl;
-// 	std::cout << "front: " << ctnr5.front() << std::endl;
-// 	std::cout << "back: " << ctnr5.back() << std::endl;
-
-// 	std::cout << *ctnr_it << std::endl;
-// 	ctnr_it--;
-// 	std::cout << *ctnr_it << std::endl;
-// 	ft_print_it_range(ctnr_it, ctnr_it_end);
-// 	// typename T::iterator it;
-// 	// std::cout << *it << std::endl;
-// }
-
-// template <class T>
-// void ft_swap_check()
-// {
-// 	std::cout << "---swap check---" << std::endl;
-// 	T one;
-// 	one.push_back(1);
-// 	one.push_back(2);
-// 	one.push_back(3);
-// 	one.push_back(4);
-// 	one.push_back(6);
-// 	T two;
-// 	two.push_back(10);
-// 	two.push_back(20);
-// 	two.push_back(30);
-// 	two.push_back(40);
-// 	two.push_back(50);
-// 	// two.push_back(6);
-// 	// const T one1 = one;
-// 	// const T two2 = two;
-// 	// const ft::list<int> one1 = one;
-// 	// const ft::list<int> two1 = two;
-// 	ft_check_bigger_eq(one, two);
-// 	typename T::iterator one_it_begin = one.begin();
-// 	typename T::iterator one_it_begin2 = one.begin();
-// 	// typename T::const_iterator cit = one_it_begin;//conversion ok
-// 	// typename T::iterator iit = cit;//conversion pas ok
-// 	one_it_begin2--;
-// 	// one_it_begin2--;
-// 	// std::cout << "begin:" << *one_it_begin << &(*one_it_begin) << std::endl;
-// 	// std::cout << "begin:" << *one_it_begin2 << &(*one_it_begin2) << std::endl;
-// 	ft_check_eq(one_it_begin, one_it_begin2);
-	// // one_it_begin--;
-	// // std::cout << "b" << *one_it_begin << &(*one_it_begin) << std::endl;
-	// // one_it_begin--;
-	// // std::cout << "b" << *one_it_begin << &(*one_it_begin) << std::endl;
-	// // one_it_begin--;
-	// // one_it_begin--;
-	// // one_it_begin++;
-	// std::cout << "b" << *one_it_begin << (*one_it_begin) << std::endl;
-	// typename T::iterator two_it_begin = two.begin();
-	// // one.insert(one_it_begin, 1, 2);
-	// // one.assign(1, 2);
-	// // typename T::iterator two_it_end = two.end();
-	// // std::swap(one, two);
-	// one.swap(two);
-	// std::cout << "c" << std::endl;
-	// two.push_back(60);//il y avait probleme ici
-	// std::cout << "d" << std::endl;
-	// typename T::iterator two_it_end = two.end();
-	// typename T::iterator one_it_end = one.end();
-	// // std::swap(one, two);
-	// std::cout << "e" << std::endl;
-	// ft_print_it_range(one_it_begin, two_it_end);
-	// one_it_end--;
-	// std::cout << "end" << *one_it_end << std::endl;
-	// ft_print_it_range(two_it_begin, one_it_end);
-	// std::cout << "here" << std::endl;
-	// one_it_begin = one.begin();
-	// one_it_end = one.end();
-	// two_it_begin = two.begin();
-	// two_it_end = two.end();
-	// ft_print_it_range(one_it_begin, one_it_end);
-// 	std::cout << "here" << std::endl;
-// 	ft_print_it_range(two_it_begin, two_it_end);
+// 	std::cout << "---reverse iterator check---" << std::endl;
+// 	T l;
+// 	l.push_back(1);
+// 	l.push_back(3);
+// 	l.push_back(5);
+// 	l.push_back(2);
+// 	typename T::iterator b = l.begin();
+// 	typename T::iterator e = l.end();
+// 	// std::cout << *e << std::endl;
+// 	e--;
+// 	std::cout << *e << std::endl;
+// 	// T::iterator::iterator_category c;
+// 	// std::bidirectional_iterator_tag btt;
+// 	// std::iterator<std::bidirectional_iterator_tag, T> tt = l.begin;
+// 	std::cout << "a" << std::endl;
+// 	typename T::reverse_iterator d = l.rbegin();
+// 	// ++d;
+// 	std::cout << *d << std::endl;
+// 	typename T::reverse_iterator ddd = l.rbegin();
+// 	std::cout << *ddd << std::endl;
+// 	std::cout << *d << std::endl;
+// 	std::cout << *d << std::endl;
+// 	std::cout << "b" << std::endl;
+// 	// std::cout << "+" << *(d - 3) << std::endl;//a tester avec vector
+// 	// T::reverse_iterator aaa;
+// 	// aaa = 3 + l.rbegin();
+// 	typename T::reverse_iterator f = l.rend();
+// 	std::cout << "hh" << std::endl;
+// 	std::cout << "begin:" << *d << std::endl;
 // 	std::cout << "hey" << std::endl;
+// 	// std::cout << "fend:" << *f << std::endl;
+// 	typename T::iterator dd = d.base();
+// 	std::cout << "here" << std::endl;
+// 	dd--;
+// 	std::cout << *dd << std::endl;
+// 	// std::cout << "base begin:" << *d.base() << std::endl;
+// 	std::cout << "base fend:" << *f.base() << std::endl;
+// 	while (d != f)
+// 	{
+// 		std::cout << *d << "|" << (*d) << std::endl;
+// 		d++;
+// 	}
+// 	// l.sort();//il y avait un soucis ici
+// 	std::cout << l.front() << std::endl;
+// 	// l.pop_front();
+// 	b = l.begin();
+// 	e = l.end();
+// 	std::cout << "start" << std::endl;
+// 	while (b != e)
+// 	{
+// 		std::cout << *b << "||" << (*b) << std::endl;
+// 		b++;
+// 	}
 // }
-
-template <class T>
-void ft_reverse_iterator_check()
-{
-	std::cout << "---reverse iterator check---" << std::endl;
-	T l;
-	l.push_back(1);
-	l.push_back(3);
-	l.push_back(5);
-	l.push_back(2);
-	typename T::iterator b = l.begin();
-	typename T::iterator e = l.end();
-	// std::cout << *e << std::endl;
-	e--;
-	std::cout << *e << std::endl;
-	// T::iterator::iterator_category c;
-	// std::bidirectional_iterator_tag btt;
-	// std::iterator<std::bidirectional_iterator_tag, T> tt = l.begin;
-	std::cout << "a" << std::endl;
-	typename T::reverse_iterator d = l.rbegin();
-	// ++d;
-	std::cout << *d << std::endl;
-	typename T::reverse_iterator ddd = l.rbegin();
-	std::cout << *ddd << std::endl;
-	std::cout << *d << std::endl;
-	std::cout << *d << std::endl;
-	std::cout << "b" << std::endl;
-	// std::cout << "+" << *(d - 3) << std::endl;//a tester avec vector
-	// T::reverse_iterator aaa;
-	// aaa = 3 + l.rbegin();
-	typename T::reverse_iterator f = l.rend();
-	std::cout << "hh" << std::endl;
-	std::cout << "begin:" << *d << std::endl;
-	std::cout << "hey" << std::endl;
-	// std::cout << "fend:" << *f << std::endl;
-	typename T::iterator dd = d.base();
-	std::cout << "here" << std::endl;
-	dd--;
-	std::cout << *dd << std::endl;
-	// std::cout << "base begin:" << *d.base() << std::endl;
-	std::cout << "base fend:" << *f.base() << std::endl;
-	while (d != f)
-	{
-		std::cout << *d << "|" << (*d) << std::endl;
-		d++;
-	}
-	// l.sort();//il y avait un soucis ici
-	std::cout << l.front() << std::endl;
-	// l.pop_front();
-	b = l.begin();
-	e = l.end();
-	std::cout << "start" << std::endl;
-	while (b != e)
-	{
-		std::cout << *b << "||" << (*b) << std::endl;
-		b++;
-	}
-}
 
 // typedef struct	s_data
 // {
@@ -507,6 +384,27 @@ void	ft_iterator_rand_access_check()
 }
 
 template <class T>
+void ft_check_iterator_constructibility()
+{
+	std::cout << std::is_default_constructible<typename T::iterator>::value << std::endl;
+	std::cout << std::is_default_constructible<typename T::const_iterator>::value << std::endl;
+	std::cout << std::is_copy_constructible<typename T::iterator>::value << std::endl;
+	std::cout << std::is_copy_constructible<typename T::const_iterator>::value << std::endl;
+	std::cout << std::is_copy_assignable<typename T::iterator>::value << std::endl;
+	std::cout << std::is_copy_assignable<typename T::const_iterator>::value << std::endl;
+	std::cout << std::is_destructible<typename T::iterator>::value << std::endl;
+	std::cout << std::is_destructible<typename T::const_iterator>::value << std::endl;
+	std::cout << std::is_default_constructible<typename T::reverse_iterator>::value << std::endl;
+	std::cout << std::is_default_constructible<typename T::const_reverse_iterator>::value << std::endl;
+	std::cout << std::is_copy_constructible<typename T::reverse_iterator>::value << std::endl;
+	std::cout << std::is_copy_constructible<typename T::const_reverse_iterator>::value << std::endl;
+	std::cout << std::is_copy_assignable<typename T::reverse_iterator>::value << std::endl;
+	std::cout << std::is_copy_assignable<typename T::const_reverse_iterator>::value << std::endl;
+	std::cout << std::is_destructible<typename T::reverse_iterator>::value << std::endl;
+	std::cout << std::is_destructible<typename T::const_reverse_iterator>::value << std::endl;
+}
+
+template <class T>
 void ft_check_stack()
 {
 	T s;
@@ -572,29 +470,33 @@ int		main(int argc, char *argv[])
 			arg_str = argv[2];
 		if (argc == 1 || argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
 		{
+			ft_check_iterator_constructibility<ft::list<int> >();
 			ft_list_common_check<ft::list<int> >();
-			ft_iterator_check<ft::list<int> >();
-			ft_swap_check<ft::list<int> >();
+			ft_list_iterator_check<ft::list<int> >();
 			ft_reverse_iterator_check<ft::list<int> >();
-			ft_data_type_struct_check<ft::list<std::string> >();
-			ft_const_check<ft::list<int> >();
-			ft_list_advanced_check<ft::list<int> >();
-			ft::list<int> a;
-			ft::list<int> b;
-			ft::swap(a, b);
+			ft_list_modifiers_check<ft::list<int> >();
+			// ft_data_type_struct_check<ft::list<std::string> >();
+			// ft_const_check<ft::list<int> >();
+			ft_list_operations_check<ft::list<int> >();
+			// ft::list<int> a;
+			// ft::list<int> b;
+			// ft::swap(a, b);
+			// std::cout << "ft" << std::endl;
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
+			ft_check_iterator_constructibility<std::list<int> >();
 			ft_list_common_check<std::list<int> >();
-			ft_iterator_check<std::list<int> >();
-			ft_swap_check<std::list<int> >();
+			ft_list_iterator_check<std::list<int> >();
 			ft_reverse_iterator_check<std::list<int> >();
-			ft_data_type_struct_check<std::list<std::string> >();
-			ft_const_check<std::list<int> >();
-			ft_list_advanced_check<std::list<int> >();
-			std::list<int> a;
-			std::list<int> b;
-			std::swap(a, b);
+			ft_list_modifiers_check<std::list<int> >();
+			// ft_data_type_struct_check<std::list<std::string> >();
+			// ft_const_check<std::list<int> >();
+			ft_list_operations_check<std::list<int> >();
+			// std::list<int> a;
+			// std::list<int> b;
+			// std::swap(a, b);
+			// std::cout << "std" << std::endl;
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;
@@ -609,6 +511,7 @@ int		main(int argc, char *argv[])
 			ft_iterator_rand_access_check<ft::vector<int> >();
 			ft_vector_swap_check<ft::vector<int> >();
 			ft_reverse_iterator_check<ft::vector<int> >();
+			// ft_list_iterator_check<ft::vector<int> >();
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
