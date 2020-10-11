@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:40:53 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/10 15:31:46 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/11 11:35:18 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,137 +17,714 @@
 # include "ft_check_utils.hpp"
 
 template <class T>
+void	ft_print_basic2(T &t)
+{
+	if (!t.empty())
+		std::cout << "size: " << t.size() << "|capacity: " << t.capacity() << "| empty: " << t.empty() << "| front: " << t.front() << "| back: " << t.back() << std::endl;
+	else
+		std::cout << "empty" << "|size: " << t.size() << "|capacity: " << t.capacity() << std::endl;
+}
+
+template <class T>
 void	ft_vector_common_check(void)
 {
 	std::cout << "---common check---" << std::endl;
-	T ctnr;
+	T one;
 
-	std::cout << "size: " << ctnr.size() << std::endl;
-    std::cout << "empty: " << ctnr.empty() << std::endl;
-	std::cout << "max_size: " << ctnr.max_size() << std::endl;
+	std::cout << "max_size: " << one.max_size() << std::endl;
+	ft_print_basic2(one);
 
-	T ctnr3 = ctnr;
+	T two(20, 50);
+	ft_print_basic2(two);
 
-	ctnr.push_back(2);
-    std::cout << "empty: " << ctnr.empty() << std::endl;
-	std::cout << "front: " << ctnr.front() << std::endl;
-	std::cout << "back: " << ctnr.back() << std::endl;
+	T three((size_t)20, 1);
+	ft_print_basic2(three);
 
-	ctnr.pop_back();
-	// ctnr.push_front(2);
-	// ctnr.push_front(3);
-	ctnr.push_back(1);
+	T four = one;
 
-	std::cout << "size: " << ctnr.size() << std::endl;
-	std::cout << "max_size: " << ctnr.max_size() << std::endl;
-	std::cout << "front: " << ctnr.front() << std::endl;
-	std::cout << "back: " << ctnr.back() << std::endl;
+	one.push_back(2);
+	ft_print_basic2(one);
+	ft_print_basic2(four);
 
-	T ctnr2 = ctnr;
+	one.pop_back();
+	// one.push_front(2);
+	// one.push_front(3);
+	one.push_back(1);
+	ft_print_basic2(one);
+	ft_print_basic2(four);
 
-	// ctnr2.pop_front();
-	// ctnr2.push_front(2);
-	// ctnr2.push_front(3);
-	// ctnr2.pop_front();
-	ctnr2.push_back(1);
+	T five = one;
 
-	std::cout << "size: " << ctnr2.size() << std::endl;
-	std::cout << "front: " << ctnr2.front() << std::endl;
-	std::cout << "back: " << ctnr2.back() << std::endl;
+	// five.pop_front();
+	// five.push_front(2);
+	// five.push_front(3);
+	// five.pop_front();
+	five.push_back(1);
+	five.push_back(10);
+	five.pop_back();
 
-	std::cout << "size: " << ctnr.size() << std::endl;
-	std::cout << "front: " << ctnr.front() << std::endl;
-	std::cout << "back: " << ctnr.back() << std::endl;
+	ft_print_basic2(one);
+	ft_print_basic2(five);
 
-	T ctnr5(ctnr);
+	T six(one);
+	ft_print_basic2(six);
 
-	std::cout << "size: " << ctnr5.size() << std::endl;
-	std::cout << "front: " << ctnr5.front() << std::endl;
-	std::cout << "back: " << ctnr5.back() << std::endl;
+	T seven;
 
-	T ctnr6;
+	six = five;
+	ft_print_basic2(six);
+	seven = one;
+	ft_print_basic2(seven);
 
-	ctnr6 = ctnr;
+	T eight(3, 5);
+	std::cout << "---here" << std::endl;
+	one.push_back(2);
+	ft_print_basic2(one);
+	ft_print_basic2(eight);
+	eight = one;
+	ft_print_basic2(one);
+	ft_print_basic2(eight);
+	one.assign(1, 1);
+	eight = one;
+	ft_print_basic2(one);
+	ft_print_basic2(eight);
 
-	std::cout << "size: " << ctnr6.size() << std::endl;
-	std::cout << "front: " << ctnr6.front() << std::endl;
-	std::cout << "back: " << ctnr6.back() << std::endl;
+	const T nine(5, 6);
+	ft_print_basic2(nine);
 
-	T ctnr7(3, 5);
+	ft_check_all_comp(one, five);
+	ft_check_all_comp(five, four);
+	ft_check_all_comp(one, six);
+	ft_check_all_comp(six, seven);
+	ft_check_all_comp(eight, nine);
+	ft_check_all_comp(five, five);
 
-	std::cout << "size: " << ctnr7.size() << std::endl;
-	std::cout << "front: " << ctnr7.front() << std::endl;
-	std::cout << "back: " << ctnr7.back() << std::endl;
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(five.begin(), five.end());
+	one = five;
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(five.begin(), five.end());
 
-	const T ctnr8(5, 6);
+	const T c_one = one;
+	int& b1 = one.front();
+	const int& b2 = c_one.front();
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(c_one.begin(), c_one.end());
+	ft_print_basic2(one);
+	ft_print_basic2(c_one);
+	std::cout << "b1:" << b1 << "|" << "b2:" << b2 << std::endl;
+	std::cout << one.at(0) << "|" << one.at(1) << "|" << one[0] << "|" << one[1] << std::endl;
+	std::cout << c_one.at(0) << "|" << c_one.at(1) << "|" << c_one[0] << "|" << c_one[1] << std::endl;
+	b1 = 100;
+	std::cout << one.at(0) << "|" << one.at(1) << "|" << one[0] << "|" << one[1] << std::endl;
+	std::cout << c_one.at(0) << "|" << c_one.at(1) << "|" << c_one[0] << "|" << c_one[1] << std::endl;
+	std::cout << "b1:" << b1 << "|" << "b2:" << b2 << std::endl;
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(c_one.begin(), c_one.end());
+	ft_print_basic2(one);
+	ft_print_basic2(c_one);
 
-	std::cout << "size: " << ctnr8.size() << std::endl;
-	std::cout << "front: " << ctnr8.front() << std::endl;
-	std::cout << "back: " << ctnr8.back() << std::endl;
+	one.at(0) = 1;
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(c_one.begin(), c_one.end());
+	ft_print_basic2(one);
+	ft_print_basic2(c_one);
+	one.at(1) = 2;
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(c_one.begin(), c_one.end());
+	ft_print_basic2(one);
+	ft_print_basic2(c_one);
+	// one.at(2) = 3;
+	// c_one.at(0) = 11;
+	one[0] = 3;
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(c_one.begin(), c_one.end());
+	ft_print_basic2(one);
+	ft_print_basic2(c_one);
+	one[1] = 4;
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(c_one.begin(), c_one.end());
+	ft_print_basic2(one);
+	ft_print_basic2(c_one);
+	// one[2] = 33;
+	// c_one[0] = 111;
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(c_one.begin(), c_one.end());
+	ft_print_basic2(one);
+	ft_print_basic2(c_one);
 
-    ft_check_all_comp(ctnr, ctnr2);
-    ft_check_all_comp(ctnr2, ctnr3);
-    ft_check_all_comp(ctnr, ctnr5);
-    ft_check_all_comp(ctnr5, ctnr6);
-    ft_check_all_comp(ctnr7, ctnr8);
+	std::cout << "-------------------here" << std::endl;
 
 	T vec;
 
 	std::cout << vec.max_size() << std::endl;
+	ft_print_basic2(vec);
 
 	vec.reserve(3);
+	ft_print_basic2(vec);
 	// vec.pop_back();
-	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
 	vec.push_back(1);
+	ft_print_basic2(vec);
 	std::cout << vec[0] << std::endl;
-	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
 	vec.push_back(2);
-	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+	ft_print_basic2(vec);
 	vec.push_back(3);
-	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+	ft_print_basic2(vec);
 	vec.push_back(4);
-	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+	ft_print_basic2(vec);
 	vec.push_back(1);
+	ft_print_basic2(vec);
 	vec.push_back(3);
+	ft_print_basic2(vec);
 	vec.push_back(5);
-	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+	ft_print_basic2(vec);
 	vec.pop_back();
+	ft_print_basic2(vec);
 	vec.pop_back();
+	ft_print_basic2(vec);
 	vec.pop_back();
+	ft_print_basic2(vec);
 	vec.pop_back();
+	ft_print_basic2(vec);
 	vec.pop_back();
+	ft_print_basic2(vec);
 	vec.pop_back();
 	// vec.pop_back();
-    std::cout << vec.capacity() << "|" << vec.size() << std::endl;
+	ft_print_basic2(vec);
 	vec.push_back(1);
+	ft_print_basic2(vec);
 	vec.push_back(2);
+	ft_print_basic2(vec);
 	vec.push_back(3);
+	ft_print_basic2(vec);
 	// vec.pop_back();
 	// vec.clear();
 	std::cout << vec[1] << std::endl;
 	std::cout << vec[2] << std::endl;
+	ft_print_basic2(vec);
 	vec.resize(14);
 	std::cout << vec.at(13) << std::endl;
-	std::cout << vec.capacity() << "|" << vec.size() << std::endl;
-
-	// std::vector<test> v1;
-	// test a;
-	// // v1.push_back(a);
-	// ft::vector<test> v2;
-	// v2.push_back(a);
-	// v2.pop_back();
+	ft_print_basic2(vec);
+	vec.resize(0, 1);
+	ft_print_basic2(vec);
+	vec.resize(3, 8);
+	ft_print_basic2(vec);
+	// vec.resize(-10, 1);
+	ft_print_basic2(vec);
 
 	const T vec2 = vec;
-	std::cout << vec2.capacity() << std::endl;
-	std::cout << vec2.size() << std::endl;
+	ft_print_basic2(vec);
+	ft_print_basic2(vec2);
 	std::cout << vec2[1] << std::endl;
 	std::cout << vec2.at(2) << std::endl;
+
+	ft_print_basic2(vec);
+	vec.reserve(5);
+	ft_print_basic2(vec);
+	vec.reserve(0);
+	ft_print_basic2(vec);
+	vec.reserve(1);
+	ft_print_basic2(vec);
+	vec.reserve(10);
+	ft_print_basic2(vec);
+	vec.reserve(100);
+	ft_print_basic2(vec);
 }
 
 template <class T>
-void ft_vector_swap_check()
+void	ft_vector_iterator_check()
 {
-	std::cout << "---swap check---" << std::endl;
+	std::cout << "---iterator check---" << std::endl;
+
+	T one;
+
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic2(one);
+
+	one.push_back(0);
+	one.push_back(1);
+	one.push_back(2);
+	one.push_back(3);
+
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic2(one);
+
+	typename T::iterator one_it_begin = one.begin();
+	typename T::iterator one_it_end(one.end());
+	ft_print_basic2(one);
+
+	std::cout << *one_it_begin << std::endl;
+	*one_it_begin = 6;
+	std::cout << *one_it_begin << std::endl;
+
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic2(one);
+	
+	T two(one_it_begin, one_it_end);
+
+	ft_print_it_range(two.begin(), two.end());
+	ft_print_it_range(two.rbegin(), two.rend());
+	ft_print_basic2(two);
+
+	T three(one_it_begin, one_it_begin);
+
+	ft_print_it_range(three.begin(), three.end());
+	ft_print_it_range(three.rbegin(), three.rend());
+	ft_print_basic2(three);
+
+	typename T::iterator one_it_begin2 = one_it_begin;
+
+	ft_print_it_range(one_it_begin, one.end());
+	ft_print_it_range(one_it_begin2, one.end());
+
+	ft_check_eq(one_it_begin, one_it_begin2);
+	ft_check_dif(one_it_begin, one_it_begin2);
+
+	one_it_begin2++;
+
+	ft_print_it_range(one_it_begin, one.end());
+	ft_print_it_range(one_it_begin2, one.end());
+
+	ft_check_eq(one_it_begin, one_it_begin2);
+	ft_check_dif(one_it_begin, one_it_begin2);
+
+	T four(one_it_begin, ++one_it_begin2);
+
+	ft_print_it_range(four.begin(), four.end());
+	ft_print_it_range(four.rbegin(), four.rend());
+	ft_print_basic2(four);
+
+	std::cout << (*one_it_begin) << std::endl;
+	std::cout << (*one_it_begin2) << std::endl;
+	std::cout << *one_it_begin++ << std::endl;
+	std::cout << *one_it_begin << std::endl;
+	std::cout << *++one_it_begin << std::endl;
+	std::cout << *one_it_begin << std::endl;
+	std::cout << *++one_it_begin << std::endl;
+	std::cout << *one_it_begin-- << std::endl;
+	std::cout << *--one_it_begin << std::endl;
+	std::cout << *one_it_begin << std::endl;
+	ft_print_it_range(one_it_begin, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic2(one);
+
+	typename T::const_iterator one_cit_begin = one.begin();
+	typename T::const_iterator one_cit_end(one.end());
+	// one_it_begin = one_cit_begin;
+	// one_cit_begin = 0;
+	ft_print_it_range(one_cit_begin, one_cit_end);
+	std::cout << (*one_cit_begin) << std::endl;
+	std::cout << *one_cit_begin++ << std::endl;
+	std::cout << *one_cit_begin << std::endl;
+	std::cout << *++one_cit_begin << std::endl;
+	std::cout << *one_cit_begin << std::endl;
+	std::cout << *++one_cit_begin << std::endl;
+	std::cout << *one_cit_begin-- << std::endl;
+	std::cout << *--one_cit_begin << std::endl;
+	std::cout << *one_cit_begin << std::endl;
+	ft_print_it_range(one_cit_begin, one_cit_end);
+
+	one_cit_begin = one_it_begin;
+	one_cit_end = one_it_end;
+	ft_print_it_range(one_cit_begin, one_cit_end);
+
+	const T c_one = one;
+	ft_print_it_range(c_one.begin(), c_one.end());
+	ft_print_it_range(c_one.rbegin(), c_one.rend());
+	ft_print_basic2(c_one);
+
+	ft_check_all_comp(one.begin(), one.end());
+	ft_check_all_comp(one.begin(), one.begin());
+	ft_check_all_comp(one.begin(), ++one.begin());
+	ft_check_all_comp(one.begin(), --one.end());
+	ft_check_all_comp(one.end(), one.end());
+	ft_check_all_comp(c_one.begin(), c_one.end());
+	ft_check_all_comp(c_one.begin(), c_one.begin());
+	ft_check_all_comp(c_one.begin(), ++c_one.begin());
+	ft_check_all_comp(c_one.begin(), --c_one.end());
+	ft_check_all_comp(c_one.end(), c_one.end());
+
+	//iterator random access
+
+	std::cout << one.begin() - one.end() << std::endl;
+	std::cout << one.begin() - --one.end() << std::endl;
+	std::cout << one.begin() - --(--one.end()) << std::endl;
+	std::cout << ++one.begin() - one.end() << std::endl;
+	std::cout << one.begin()++ - one.end() << std::endl;
+	std::cout << one.end() - one.end() << std::endl;
+	std::cout << one.end() - one.begin() << std::endl;
+	std::cout << one.end() - ++one.begin() << std::endl;
+	std::cout << one.end() - --one.end() << std::endl;
+	std::cout << one.end() - one.end()-- << std::endl;
+
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.begin() + 0, one.end() + -2);
+	ft_print_it_range(one.begin() - -1, one.end() - 1);
+	ft_print_it_range(one.begin() + 2, one.end() - 0);
+	ft_print_it_range(one.begin(), one.end() - 3);
+
+	ft_print_it_range(0 + one.begin(), one.end());
+	ft_print_it_range(1 + one.begin(), one.end());
+	ft_print_it_range(2 + one.begin(), one.end());
+	ft_print_it_range(3 + one.begin(), one.end());
+	ft_print_it_range(one.begin(), 1 + --one.end());
+
+	typename T::iterator one_it_begin3 = one.begin();
+	typename T::iterator one_it_end3 = one.end();
+
+	ft_print_it_range(one_it_begin3, one_it_end3);
+	ft_print_it_range(one_it_begin3 + 1, one_it_end3);
+	ft_print_it_range(one_it_begin3, one_it_end3 - 2);
+	ft_print_it_range(3 + one_it_begin3, one_it_end3);
+	std::cout << one_it_end3 - one_it_begin3 << std::endl;
+
+	ft_print_it_range(one_it_begin3, one_it_end3);
+	one_it_begin3+=2;
+	one_it_end3-=2;
+	ft_print_it_range(one_it_begin3, one_it_end3);
+
+	one_it_begin3 = one.begin();
+	one_it_end3 = one.end();
+	ft_print_it_range(one_it_begin3, one_it_end3);
+	one_it_begin3-=-2;
+	one_it_end3+=-2;
+	ft_print_it_range(one_it_begin3, one_it_end3);
+
+	one_it_begin3 = one.begin();
+	one_it_end3 = one.end();
+	ft_print_it_range(one_it_begin3, one_it_end3);
+	one_it_begin3+=1;
+	one_it_end3+=-2;
+	ft_print_it_range(one_it_begin3, one_it_end3);
+
+	ft_print_it_range(one.begin(), one.end());
+	std::cout << one_it_begin3[0] << std::endl;
+	std::cout << one_it_begin3[1] << std::endl;
+	std::cout << one_it_begin3[2] << std::endl;
+	std::cout << one_it_begin3[-1] << std::endl;
+	// std::cout << one_it_begin3[-2] << std::endl;
+	std::cout << one_it_end3[0] << std::endl;
+	std::cout << one_it_end3[1] << std::endl;
+	// std::cout << one_it_end3[2] << std::endl;
+	std::cout << one_it_end3[-1] << std::endl;
+	std::cout << one_it_end3[-2] << std::endl;
+	ft_print_it_range(one.begin(), one.end());
+	one_it_begin3[0] = 10;
+	one_it_end3[0] = 100;
+	ft_print_it_range(one.begin(), one.end());
+	one_it_begin3[-1] = 20;
+	one_it_end3[1] = 200;
+	ft_print_it_range(one.begin(), one.end());
+
+	//const_iterator random access
+
+	std::cout << c_one.begin() - c_one.end() << std::endl;
+	std::cout << c_one.begin() - --c_one.end() << std::endl;
+	std::cout << c_one.begin() - --(--c_one.end()) << std::endl;
+	std::cout << ++c_one.begin() - c_one.end() << std::endl;
+	std::cout << c_one.begin()++ - c_one.end() << std::endl;
+	std::cout << c_one.end() - c_one.end() << std::endl;
+	std::cout << c_one.end() - c_one.begin() << std::endl;
+	std::cout << c_one.end() - ++c_one.begin() << std::endl;
+	std::cout << c_one.end() - --c_one.end() << std::endl;
+	std::cout << c_one.end() - c_one.end()-- << std::endl;
+
+	ft_print_it_range(c_one.begin(), c_one.end());
+	ft_print_it_range(c_one.begin() + 0, c_one.end() + -2);
+	ft_print_it_range(c_one.begin() - -1, c_one.end() - 1);
+	ft_print_it_range(c_one.begin() + 2, c_one.end() - 0);
+	ft_print_it_range(c_one.begin(), c_one.end() - 3);
+
+	ft_print_it_range(0 + c_one.begin(), c_one.end());
+	ft_print_it_range(1 + c_one.begin(), c_one.end());
+	ft_print_it_range(2 + c_one.begin(), c_one.end());
+	ft_print_it_range(3 + c_one.begin(), c_one.end());
+	ft_print_it_range(c_one.begin(), 1 + --c_one.end());
+
+	typename T::const_iterator c_one_it_begin3 = c_one.begin();
+	typename T::const_iterator c_one_it_end3 = c_one.end();
+
+	ft_print_it_range(c_one_it_begin3, c_one_it_end3);
+	ft_print_it_range(c_one_it_begin3 + 1, c_one_it_end3);
+	ft_print_it_range(c_one_it_begin3, c_one_it_end3 - 2);
+	ft_print_it_range(3 + c_one_it_begin3, c_one_it_end3);
+	std::cout << c_one_it_end3 - c_one_it_begin3 << std::endl;
+
+	ft_print_it_range(c_one_it_begin3, c_one_it_end3);
+	c_one_it_begin3+=2;
+	c_one_it_end3-=2;
+	ft_print_it_range(c_one_it_begin3, c_one_it_end3);
+
+	c_one_it_begin3 = c_one.begin();
+	c_one_it_end3 = c_one.end();
+	ft_print_it_range(c_one_it_begin3, c_one_it_end3);
+	c_one_it_begin3-=-2;
+	c_one_it_end3+=-2;
+	ft_print_it_range(c_one_it_begin3, c_one_it_end3);
+
+	c_one_it_begin3 = c_one.begin();
+	c_one_it_end3 = c_one.end();
+	ft_print_it_range(c_one_it_begin3, c_one_it_end3);
+	c_one_it_begin3+=1;
+	c_one_it_end3+=-2;
+	ft_print_it_range(c_one_it_begin3, c_one_it_end3);
+
+	ft_print_it_range(c_one.begin(), c_one.end());
+	std::cout << c_one_it_begin3[0] << std::endl;
+	std::cout << c_one_it_begin3[1] << std::endl;
+	std::cout << c_one_it_begin3[2] << std::endl;
+	std::cout << c_one_it_begin3[-1] << std::endl;
+	// std::cout << c_one_it_begin3[-2] << std::endl;
+	std::cout << c_one_it_end3[0] << std::endl;
+	std::cout << c_one_it_end3[1] << std::endl;
+	// std::cout << c_one_it_end3[2] << std::endl;
+	std::cout << c_one_it_end3[-1] << std::endl;
+	std::cout << c_one_it_end3[-2] << std::endl;
+	ft_print_it_range(c_one.begin(), c_one.end());
+	// c_one_it_begin3[0] = 10;
+	// c_one_it_end3[0] = 100;
+	ft_print_it_range(c_one.begin(), c_one.end());
+	// c_one_it_begin3[-1] = 20;
+	// c_one_it_end3[1] = 200;
+	ft_print_it_range(c_one.begin(), c_one.end());
+}
+
+template <class T>
+void ft_vector_reverse_iterator_check()
+{
+	std::cout << "---reverse iterator check---" << std::endl;
+
+	T one;
+	one.push_back(0);
+	one.push_back(1);
+	one.push_back(2);
+	one.push_back(3);
+	typename T::iterator one_it_begin;
+	one_it_begin = one.begin();
+	typename T::iterator one_it_end(one.end());
+	typename T::reverse_iterator one_rit_begin;
+	one_rit_begin = one.rbegin();
+	typename T::reverse_iterator one_rit_end(one.rend());
+
+	ft_print_it_range(one_it_begin, one_it_end);
+	ft_print_it_range(one_rit_begin, one_rit_end);
+	ft_print_it_range(one_rit_end, one_rit_end);
+	ft_print_it_range(one_rit_begin.base(), one_it_end);
+	ft_print_it_range(one_rit_end.base(), one_it_end);
+	std::cout << *--one_rit_end << std::endl;
+	std::cout << *one_rit_begin << std::endl;
+	std::cout << *one_rit_begin++ << std::endl;
+	std::cout << *one_rit_begin << std::endl;
+	std::cout << *++one_rit_begin << std::endl;
+	std::cout << *one_rit_begin << std::endl;
+	std::cout << *++one_rit_begin << std::endl;
+	std::cout << *one_rit_begin << std::endl;
+	std::cout << *--one_rit_begin << std::endl;
+	std::cout << *one_rit_begin << std::endl;
+	std::cout << *one_rit_begin-- << std::endl;
+	std::cout << *one_rit_begin << std::endl;
+	ft_print_it_range(one_rit_begin, one_rit_end);
+	ft_print_it_range(one_rit_begin.base(), one_it_end);
+	ft_print_it_range(one_rit_end.base(), one_it_end);
+	ft_print_it_range(one_rit_begin, one_rit_begin);
+	*one_rit_begin = 10;
+	ft_print_it_range(one_rit_begin, one_rit_end);
+	ft_print_it_range(one_rit_begin.base(), one_it_end);
+	ft_print_it_range(one_rit_end.base(), one_it_end);
+	ft_print_it_range(one_rit_begin, one_rit_begin);
+
+	typename T::const_reverse_iterator one_rcit_begin = one.rbegin();
+	typename T::const_reverse_iterator one_rcit_end(one.rend());
+	// *one_rcit_begin = 0;
+	// one_rit_begin = one_rcit_begin;
+	ft_print_it_range(one_rcit_begin, one_rcit_end);
+	std::cout << *--one_rcit_end << std::endl;
+	std::cout << *one_rcit_begin << std::endl;
+	std::cout << *one_rcit_begin++ << std::endl;
+	std::cout << *one_rcit_begin << std::endl;
+	std::cout << *++one_rcit_begin << std::endl;
+	std::cout << *one_rcit_begin << std::endl;
+	std::cout << *++one_rcit_begin << std::endl;
+	std::cout << *one_rcit_begin << std::endl;
+	std::cout << *--one_rcit_begin << std::endl;
+	std::cout << *one_rcit_begin << std::endl;
+	std::cout << *one_rcit_begin-- << std::endl;
+	std::cout << *one_rcit_begin << std::endl;
+	ft_print_it_range(one_rcit_begin, one_rcit_end);
+
+	one_rcit_begin = one_rit_begin;
+	one_rcit_end = one_rit_end;
+	ft_print_it_range(one_rcit_begin, one_rcit_end);
+
+	const T c_one = one;
+	ft_print_it_range(c_one.begin(), c_one.end());
+	ft_print_it_range(c_one.rbegin(), c_one.rend());
+	ft_print_basic(c_one);
+
+	ft_check_all_comp(one.rbegin(), one.rend());
+	ft_check_all_comp(one.rbegin(), one.rbegin());
+	ft_check_all_comp(one.rbegin(), ++one.rbegin());
+	ft_check_all_comp(one.rbegin(), --one.rend());
+	ft_check_all_comp(one.rend(), one.rend());
+	ft_check_all_comp(c_one.rbegin(), c_one.rend());
+	ft_check_all_comp(c_one.rbegin(), c_one.rbegin());
+	ft_check_all_comp(c_one.rbegin(), ++c_one.rbegin());
+	ft_check_all_comp(c_one.rbegin(), --c_one.rend());
+	ft_check_all_comp(c_one.rend(), c_one.rend());
+
+	//reverse random access
+
+	std::cout << one.rbegin() - one.rend() << std::endl;
+	std::cout << one.rbegin() - --one.rend() << std::endl;
+	std::cout << one.rbegin() - --(--one.rend()) << std::endl;
+	std::cout << ++one.rbegin() - one.rend() << std::endl;
+	std::cout << one.rbegin()++ - one.rend() << std::endl;
+	std::cout << one.rend() - one.rend() << std::endl;
+	std::cout << one.rend() - one.rbegin() << std::endl;
+	std::cout << one.rend() - ++one.rbegin() << std::endl;
+	std::cout << one.rend() - --one.rend() << std::endl;
+	std::cout << one.rend() - one.rend()-- << std::endl;
+
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_it_range(one.rbegin() + 0, one.rend() + -2);
+	ft_print_it_range(one.rbegin() - -1, one.rend() - 1);
+	ft_print_it_range(one.rbegin() + 2, one.rend() - 0);
+	ft_print_it_range(one.rbegin(), one.rend() - 3);
+
+	ft_print_it_range(0 + one.rbegin(), one.rend());
+	ft_print_it_range(1 + one.rbegin(), one.rend());
+	ft_print_it_range(2 + one.rbegin(), one.rend());
+	ft_print_it_range(3 + one.rbegin(), one.rend());
+	ft_print_it_range(one.rbegin(), 1 + --one.rend());
+
+	typename T::reverse_iterator one_rit_begin3 = one.rbegin();
+	typename T::reverse_iterator one_rit_end3 = one.rend();
+
+	ft_print_it_range(one_rit_begin3, one_rit_end3);
+	ft_print_it_range(one_rit_begin3 + 1, one_rit_end3);
+	ft_print_it_range(one_rit_begin3, one_rit_end3 - 2);
+	ft_print_it_range(3 + one_rit_begin3, one_rit_end3);
+	std::cout << one_rit_end3 - one_rit_begin3 << std::endl;
+
+	ft_print_it_range(one_rit_begin3, one_rit_end3);
+	one_rit_begin3+=2;
+	one_rit_end3-=2;
+	ft_print_it_range(one_rit_begin3, one_rit_end3);
+
+	one_rit_begin3 = one.rbegin();
+	one_rit_end3 = one.rend();
+	ft_print_it_range(one_rit_begin3, one_rit_end3);
+	one_rit_begin3-=-2;
+	one_rit_end3+=-2;
+	ft_print_it_range(one_rit_begin3, one_rit_end3);
+
+	one_rit_begin3 = one.rbegin();
+	one_rit_end3 = one.rend();
+	ft_print_it_range(one_rit_begin3, one_rit_end3);
+	one_rit_begin3+=1;
+	one_rit_end3+=-2;
+	ft_print_it_range(one_rit_begin3, one_rit_end3);
+
+	ft_print_it_range(one.rbegin(), one.rend());
+	std::cout << one_rit_begin3[0] << std::endl;
+	std::cout << one_rit_begin3[1] << std::endl;
+	std::cout << one_rit_begin3[2] << std::endl;
+	std::cout << one_rit_begin3[-1] << std::endl;
+	// std::cout << one_rit_begin3[-2] << std::endl;
+	std::cout << one_rit_end3[0] << std::endl;
+	std::cout << one_rit_end3[1] << std::endl;
+	// std::cout << one_rit_end3[2] << std::endl;
+	std::cout << one_rit_end3[-1] << std::endl;
+	std::cout << one_rit_end3[-2] << std::endl;
+	ft_print_it_range(one.rbegin(), one.rend());
+	one_rit_begin3[0] = 10;
+	one_rit_end3[0] = 100;
+	ft_print_it_range(one.rbegin(), one.rend());
+	one_rit_begin3[-1] = 20;
+	one_rit_end3[1] = 200;
+	ft_print_it_range(one.rbegin(), one.rend());
+
+	//const reverse random access
+
+	std::cout << c_one.rbegin() - c_one.rend() << std::endl;
+	std::cout << c_one.rbegin() - --c_one.rend() << std::endl;
+	std::cout << c_one.rbegin() - --(--c_one.rend()) << std::endl;
+	std::cout << ++c_one.rbegin() - c_one.rend() << std::endl;
+	std::cout << c_one.rbegin()++ - c_one.rend() << std::endl;
+	std::cout << c_one.rend() - c_one.rend() << std::endl;
+	std::cout << c_one.rend() - c_one.rbegin() << std::endl;
+	std::cout << c_one.rend() - ++c_one.rbegin() << std::endl;
+	std::cout << c_one.rend() - --c_one.rend() << std::endl;
+	std::cout << c_one.rend() - c_one.rend()-- << std::endl;
+
+	ft_print_it_range(c_one.rbegin(), c_one.rend());
+	ft_print_it_range(c_one.rbegin() + 0, c_one.rend() + -2);
+	ft_print_it_range(c_one.rbegin() - -1, c_one.rend() - 1);
+	ft_print_it_range(c_one.rbegin() + 2, c_one.rend() - 0);
+	ft_print_it_range(c_one.rbegin(), c_one.rend() - 3);
+
+	ft_print_it_range(0 + c_one.rbegin(), c_one.rend());
+	ft_print_it_range(1 + c_one.rbegin(), c_one.rend());
+	ft_print_it_range(2 + c_one.rbegin(), c_one.rend());
+	ft_print_it_range(3 + c_one.rbegin(), c_one.rend());
+	ft_print_it_range(c_one.rbegin(), 1 + --c_one.rend());
+
+	typename T::const_reverse_iterator one_crit_begin3 = c_one.rbegin();
+	typename T::const_reverse_iterator one_crit_end3 = c_one.rend();
+
+	ft_print_it_range(one_crit_begin3, one_crit_end3);
+	ft_print_it_range(one_crit_begin3 + 1, one_crit_end3);
+	ft_print_it_range(one_crit_begin3, one_crit_end3 - 2);
+	ft_print_it_range(3 + one_crit_begin3, one_crit_end3);
+	std::cout << one_crit_end3 - one_crit_begin3 << std::endl;
+
+	ft_print_it_range(one_crit_begin3, one_crit_end3);
+	one_crit_begin3+=2;
+	one_crit_end3-=2;
+	ft_print_it_range(one_crit_begin3, one_crit_end3);
+
+	one_crit_begin3 = c_one.rbegin();
+	one_crit_end3 = c_one.rend();
+	ft_print_it_range(one_crit_begin3, one_crit_end3);
+	one_crit_begin3-=-2;
+	one_crit_end3+=-2;
+	ft_print_it_range(one_crit_begin3, one_crit_end3);
+
+	one_crit_begin3 = c_one.rbegin();
+	one_crit_end3 = c_one.rend();
+	ft_print_it_range(one_crit_begin3, one_crit_end3);
+	one_crit_begin3+=1;
+	one_crit_end3+=-2;
+	ft_print_it_range(one_crit_begin3, one_crit_end3);
+
+	ft_print_it_range(c_one.rbegin(), c_one.rend());
+	std::cout << one_crit_begin3[0] << std::endl;
+	std::cout << one_crit_begin3[1] << std::endl;
+	std::cout << one_crit_begin3[2] << std::endl;
+	std::cout << one_crit_begin3[-1] << std::endl;
+	// std::cout << one_crit_begin3[-2] << std::endl;
+	std::cout << one_crit_end3[0] << std::endl;
+	std::cout << one_crit_end3[1] << std::endl;
+	// std::cout << one_crit_end3[2] << std::endl;
+	std::cout << one_crit_end3[-1] << std::endl;
+	std::cout << one_crit_end3[-2] << std::endl;
+	ft_print_it_range(c_one.rbegin(), c_one.rend());
+	// one_crit_begin3[0] = 10;
+	// one_crit_end3[0] = 100;
+	ft_print_it_range(c_one.rbegin(), c_one.rend());
+	// one_crit_begin3[-1] = 20;
+	// one_crit_end3[1] = 200;
+	ft_print_it_range(c_one.rbegin(), c_one.rend());
+}
+
+template <class T>
+void ft_vector_modifiers_check()
+{
+	std::cout << "---modifiers check---" << std::endl;
 	T one;
 	one.push_back(1);
 	one.push_back(2);
@@ -160,185 +737,172 @@ void ft_vector_swap_check()
 	two.push_back(30);
 	two.push_back(40);
 	two.push_back(50);
+	two.push_back(60);
 
-	ft_check_bigger_eq(one, two);
-	typename T::iterator one_it_begin = one.begin();
-	typename T::iterator one_it_begin2 = one.begin();
-	// typename T::const_iterator cit = one_it_begin;//conversion ok
-	// typename T::iterator iit = cit;//conversion pas ok
-	one_it_begin2--;
-	ft_check_eq(one_it_begin, one_it_begin2);
-	typename T::iterator two_it_begin = two.begin();
-	// std::swap(one, two);
-	one.swap(two);
-	two.push_back(60);//il y avait probleme ici
-
-	typename T::iterator two_it_end = two.end();
-	typename T::iterator one_it_end = one.end();
-	ft_print_it_range(one_it_begin, two_it_end);
-	ft_print_it_range(one.rbegin(), one.rend());
-	one_it_end--;
-	ft_print_it_range(two_it_begin, one_it_end);
-	ft_print_it_range(one.rbegin(), one.rend());
-	one_it_begin = one.begin();
-	one_it_end = one.end();
-	two_it_begin = two.begin();
-	two_it_end = two.end();
-	ft_print_it_range(one_it_begin, one_it_end);
-	ft_print_it_range(one.rbegin(), one.rend());
-	ft_print_it_range(two_it_begin, two_it_end);
-	ft_print_it_range(two.rbegin(), two.rend());
-
-	T three;
-	three.push_back(100);
-	three.push_back(200);
-	typename T::iterator three_it_begin = three.begin();
-	typename T::iterator three_it_end = three.end();
-	two.assign(three_it_begin, three_it_end);
-	ft_print_it_range(three_it_begin, three_it_end);
-	ft_print_it_range(three.rbegin(), three.rend());
-	three.assign(10, 1000);
-	two_it_begin = two.begin();
-	two_it_end = two.end();
-	ft_print_it_range(two_it_begin, two_it_end);
-	ft_print_it_range(two.rbegin(), two.rend());
-	three_it_begin = three.begin();
-	three_it_end = three.end();
-	ft_print_it_range(three_it_begin, three_it_end);
-
-	three.insert(three_it_begin, 50);
-
-	ft_print_it_range(three.begin(), three.end());
-	ft_print_it_range(three.rbegin(), three.rend());
-
-	three_it_begin = three.insert(three.begin(), 500);
-	three_it_end = three.insert(three.end(), 5000);
-	three.insert(three_it_begin, 2, 2);
-	ft_print_it_range(three_it_begin, three_it_end);
-	ft_print_it_range(three.rbegin(), three.rend());
-	ft_print_it_range(three_it_begin, three.end());
-	ft_print_it_range(three.rbegin(), three.rend());
-	three_it_begin = three.begin();
-	three_it_end = three.end();
-	ft_print_it_range(three_it_begin, three_it_end);
-	three_it_begin++;
-	three.insert(three_it_begin, two_it_begin, two_it_end);
-	three_it_begin = three.begin();
-	three_it_end = three.end();
-	ft_print_it_range(three_it_begin, three_it_end);
-	ft_print_it_range(three.rbegin(), three.rend());
-	three.insert(three.begin(), two.begin(), two.end());
-
-	// three_it_begin = three.begin();
-	// three_it_end = three.end();
-	ft_print_it_range(three_it_begin, three_it_end);
-	three_it_begin = three.begin();
-	three_it_end = three.end();
-	// three.erase(three_it_begin, three_it_end);
-	std::cout << three.size() << std::endl;
-
-	one_it_begin = one.begin();
-	one_it_end = one.end();
-	ft_print_it_range(one_it_begin, one_it_end);
-	std::cout << one.size() << std::endl;
-	--one_it_end;
-	std::cout << "i:" << *one_it_end << std::endl;
-	one_it_begin = one.erase(++one_it_begin, one_it_end);
-	// one_it_begin = one.begin();
-	// one_it_end = one.end();
-	ft_print_it_range(one_it_begin, one.end());
-	ft_print_it_range(one.begin(), one.end());
-	ft_print_it_range(one.rbegin(), one.rend());
-	std::cout << one.size() << std::endl;
-
-	one.resize(1);
-	std::cout << one.size() << std::endl;
-	one.resize(20);
-	std::cout << one.size() << std::endl;
-	one_it_begin = one.begin();
-	one_it_end = one.end();
-	ft_print_it_range(one_it_begin, one_it_end);
-
-	// std::cout << one.size() << "|" << one.empty() << std::endl;
 	// one.clear();
-	// std::cout << one.size() << "|" << one.empty() << std::endl;
+	// two.clear();
 
 	ft_print_it_range(one.begin(), one.end());
-	ft_print_it_range(two.begin(), two.end());
-	ft_print_it_range(three.begin(), three.end());
 	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_it_range(two.begin(), two.end());
 	ft_print_it_range(two.rbegin(), two.rend());
-	ft_print_it_range(three.rbegin(), three.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
 
-	std::cout << one.size() << "|" << one.capacity() << "|" << one.empty() << std::endl;
-	std::cout << two.size() << "|" << two.capacity() << "|" << two.empty() << std::endl;
-	std::cout << three.size() << "|" << three.capacity() << "|" << three.empty() << std::endl;
-
-	one.clear();
-
+	std::cout << "a" << std::endl;
+	one.assign(one.begin(), --one.end());
 	ft_print_it_range(one.begin(), one.end());
-	ft_print_it_range(two.begin(), two.end());
-	ft_print_it_range(three.begin(), three.end());
 	ft_print_it_range(one.rbegin(), one.rend());
+
+	two.assign(2, 2);
+	ft_print_it_range(two.begin(), two.end());
 	ft_print_it_range(two.rbegin(), two.rend());
-	ft_print_it_range(three.rbegin(), three.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
 
+	two.assign(one.begin(), one.end());
+	ft_print_it_range(two.begin(), two.end());
+	ft_print_it_range(two.rbegin(), two.rend());
 
-	std::cout << one.size() << "|" << one.capacity() << "|" << one.empty() << std::endl;
-	std::cout << two.size() << "|" << two.capacity() << "|" << two.empty() << std::endl;
-	std::cout << three.size() << "|" << three.capacity() << "|" << three.empty() << std::endl;
+	one.assign(8, 8);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
 
-	ft_check_all_comp(one, two);
-	ft_check_all_comp(two, one);
-	ft_check_all_comp(one, three);
-	ft_check_all_comp(three, one);
-	ft_check_all_comp(two, three);
-	ft_check_all_comp(three, two);
+	std::cout << "------------------point----------------" << std::endl;
+	// one.clear();
+	// two.clear();
+	typename T::iterator it;
+	it = one.insert(one.begin(), 10);
+	ft_print_basic2(one);
+	ft_print_basic2(two);
+	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	it = one.insert(one.end(), 11);
+	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	it = one.insert(++one.begin(), 12);
+	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
+
+	one.insert(one.begin(), 1, 1);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	one.insert(one.end(), 2, 2);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	one.insert(++one.begin(), 3, 3);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
+
+	one.insert(one.begin(), (size_t)1, 1);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	one.insert(one.end(), (size_t)2, 2);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	one.insert(++one.begin(), (size_t)3, 3);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
+
+	one.insert(one.begin(), two.begin(), two.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	one.insert(one.end(), two.begin(), two.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	one.insert(++one.begin(), two.begin(), two.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
+
+	one.resize(5, 10);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
+
+	// one.clear();
+	// one.push_back(1);
+	it = one.erase(one.begin());
+	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	it = one.erase(++one.begin());
+	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
+	it = one.erase(++(++one.begin()));
+	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	it = one.erase(--one.end());
+	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
 	
-	T five;
-	five.assign(5,5);
-	five.assign(2, 2);
+	ft_print_it_range(two.begin(), two.end());
+	ft_print_it_range(two.rbegin(), two.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
 
-	ft_print_it_range(five.begin(), five.end());
-	ft_print_it_range(five.rbegin(), five.rend());
+	// one.clear();
+	// two.clear();
 
-	ft_check_all_comp(one.begin(), one.end());
-	ft_check_all_comp(two.begin(), two.end());
-	ft_check_all_comp(three.begin(), three.end());
-	ft_check_all_comp(one.end(), one.begin());
-	ft_check_all_comp(two.end(), two.begin());
-	ft_check_all_comp(three.end(), three.begin());
-	ft_check_all_comp(one.rbegin(), one.rend());
-	ft_check_all_comp(two.rbegin(), two.rend());
-	ft_check_all_comp(three.rbegin(), three.rend());
-	ft_check_all_comp(one.rend(), one.rbegin());
-	ft_check_all_comp(two.rend(), two.rbegin());
-	ft_check_all_comp(three.rend(), three.rbegin());
+	one.swap(two);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_it_range(two.begin(), two.end());
+	ft_print_it_range(two.rbegin(), two.rend());
+	two.swap(one);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_it_range(two.begin(), two.end());
+	ft_print_it_range(two.rbegin(), two.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
 
-	typename T::iterator three_it_begin2 = three.begin();
-	typename T::reverse_iterator three_rev_it_begin2 = three.rbegin();
-
-	std::cout << three_it_begin2[0] << std::endl;
-	std::cout << three_it_begin2[2] << std::endl;
-	std::cout << three_it_begin2[10] << std::endl;
-	std::cout << three_rev_it_begin2[0] << std::endl;
-	std::cout << three_rev_it_begin2[2] << std::endl;
-	std::cout << three_rev_it_begin2[10] << std::endl;
-
-	if (three.end() == three.end())
-	{
-		std::cout << "same" << std::endl;
-	}
-	else
-		std::cout << "not same" << std::endl;
-
-	// T v;
-	// v.reserve(v.max_size());
-	// T v;
-	// std::cout << v.size() << std::endl;
-	// // v.push_back(1);
-	// v.pop_back();
-	// std::cout << v.size() << std::endl;
+	one.resize(0);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic2(one);
+	one.resize(10);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_it_range(two.begin(), two.end());
+	ft_print_it_range(two.rbegin(), two.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
+	one.clear();
+	two.clear();
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_it_range(two.begin(), two.end());
+	ft_print_it_range(two.rbegin(), two.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
+	one.clear();
+	two.clear();
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_it_range(two.begin(), two.end());
+	ft_print_it_range(two.rbegin(), two.rend());
+	ft_print_basic2(one);
+	ft_print_basic2(two);
+	
 }
 
 #endif

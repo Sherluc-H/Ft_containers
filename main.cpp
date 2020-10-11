@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/10 15:08:33 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/11 02:02:24 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -473,7 +473,7 @@ int		main(int argc, char *argv[])
 			ft_check_iterator_constructibility<ft::list<int> >();
 			ft_list_common_check<ft::list<int> >();
 			ft_list_iterator_check<ft::list<int> >();
-			ft_reverse_iterator_check<ft::list<int> >();
+			ft_list_reverse_iterator_check<ft::list<int> >();
 			ft_list_modifiers_check<ft::list<int> >();
 			// ft_data_type_struct_check<ft::list<std::string> >();
 			// ft_const_check<ft::list<int> >();
@@ -488,7 +488,7 @@ int		main(int argc, char *argv[])
 			ft_check_iterator_constructibility<std::list<int> >();
 			ft_list_common_check<std::list<int> >();
 			ft_list_iterator_check<std::list<int> >();
-			ft_reverse_iterator_check<std::list<int> >();
+			ft_list_reverse_iterator_check<std::list<int> >();
 			ft_list_modifiers_check<std::list<int> >();
 			// ft_data_type_struct_check<std::list<std::string> >();
 			// ft_const_check<std::list<int> >();
@@ -507,18 +507,26 @@ int		main(int argc, char *argv[])
 			arg_str = argv[2];
 		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
 		{
+			ft_check_iterator_constructibility<ft::vector<int> >();
 			ft_vector_common_check<ft::vector<int> >();
-			ft_iterator_rand_access_check<ft::vector<int> >();
-			ft_vector_swap_check<ft::vector<int> >();
-			ft_reverse_iterator_check<ft::vector<int> >();
+			ft_vector_iterator_check<ft::vector<int> >();
+			ft_vector_reverse_iterator_check<ft::vector<int> >();
+			ft_vector_modifiers_check<ft::vector<int> >();
+			// ft_iterator_rand_access_check<ft::vector<int> >();
+			// ft_vector_swap_check<ft::vector<int> >();
+			// ft_vector_reverse_iterator_check<ft::vector<int> >();
 			// ft_list_iterator_check<ft::vector<int> >();
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
+			ft_check_iterator_constructibility<std::vector<int> >();
 			ft_vector_common_check<std::vector<int> >();
-			ft_iterator_rand_access_check<std::vector<int> >();
-			ft_vector_swap_check<std::vector<int> >();
-			ft_reverse_iterator_check<std::vector<int> >();
+			ft_vector_iterator_check<std::vector<int> >();
+			ft_vector_reverse_iterator_check<std::vector<int> >();
+			ft_vector_modifiers_check<std::vector<int> >();
+			// ft_iterator_rand_access_check<std::vector<int> >();
+			// ft_vector_swap_check<std::vector<int> >();
+			// ft_vector_reverse_iterator_check<std::vector<int> >();
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;

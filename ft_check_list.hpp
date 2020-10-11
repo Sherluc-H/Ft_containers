@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:36:46 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/10 14:59:55 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/10 23:56:32 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "ft_check_utils.hpp"
 
 template <class T>
-void	ft_print_basic(T t)
+void	ft_print_basic(T &t)
 {
 	if (!t.empty())
 		std::cout << "size: " << t.size() << "| empty: " << t.empty() << "| front: " << t.front() << "| back: " << t.back() << std::endl;
@@ -227,7 +227,7 @@ void	ft_list_iterator_check()
 }
 
 template <class T>
-void ft_reverse_iterator_check()
+void ft_list_reverse_iterator_check()
 {
 	std::cout << "---reverse iterator check---" << std::endl;
 
@@ -405,7 +405,7 @@ void ft_list_modifiers_check()
 	ft_print_basic(one);
 	ft_print_basic(two);
 
-	one.resize(5);
+	one.resize(5, 10);
 	ft_print_it_range(one.begin(), one.end());
 	ft_print_it_range(one.rbegin(), one.rend());
 	ft_print_basic(one);
@@ -453,6 +453,10 @@ void ft_list_modifiers_check()
 	ft_print_basic(one);
 	ft_print_basic(two);
 
+	one.resize(0);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	ft_print_basic(one);
 	one.resize(10);
 	ft_print_it_range(one.begin(), one.end());
 	ft_print_it_range(one.rbegin(), one.rend());

@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:51:24 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/10 15:27:10 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/11 11:39:11 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,6 +252,7 @@ namespace ft
 			{
 				this->first_el = NULL;
 				this->l_size = 0;
+				this->alloc = alloc;
 				*this = x;
 			}
 			~list()
@@ -949,8 +950,10 @@ namespace ft
 			class F
 			{
 				public:
-					F(){}
-					~F(){}
+					F()
+					{}
+					~F()
+					{}
 					F(const F& f)
 					{
 						*this = f;
@@ -965,8 +968,10 @@ namespace ft
 			class F<U, true>
 			{
 				public:
-					F(){}
-					~F(){}
+					F()
+					{}
+					~F()
+					{}
 					F(const F& f)
 					{
 						*this = f;
@@ -975,7 +980,7 @@ namespace ft
 					{
 						(void)f;
 					}
-					void operator()(U n, U val, ft::list<T> *ctnr)
+					void operator()(U n, U val, ft::list<T, Alloc> *ctnr)
 					{
 						U i;
 
@@ -986,11 +991,11 @@ namespace ft
 							i++;
 						}
 					}
-					void assign(U n, U val, ft::list<T> *ctnr)
+					void assign(U n, U val, ft::list<T, Alloc> *ctnr)
 					{
 						ctnr->assign((size_type)n, val);
 					}
-					void insert(iterator position, U n, U val, list *ctnr)
+					void insert(iterator position, U n, U val, ft::list<T, Alloc> *ctnr)
 					{
 						ctnr->insert(position, (size_type)n, val);
 					}
@@ -1000,8 +1005,10 @@ namespace ft
 			class F<U, false>
 			{
 				public:
-					F(){}
-					~F(){}
+					F()
+					{}
+					~F()
+					{}
 					F(const F& f)
 					{
 						*this = f;
@@ -1010,7 +1017,7 @@ namespace ft
 					{
 						(void)f;
 					}
-					void operator()(U first, U last, ft::list<T> *ctnr)
+					void operator()(U first, U last, ft::list<T, Alloc> *ctnr)
 					{
 						while (first != last)
 						{
@@ -1018,7 +1025,7 @@ namespace ft
 							first++;
 						}
 					}
-					void assign(U first, U last, ft::list<T> *ctnr)
+					void assign(U first, U last, ft::list<T, Alloc> *ctnr)
 					{
 						iterator it_begin = ctnr->begin();
 						iterator it_end = ctnr->end();
@@ -1038,7 +1045,7 @@ namespace ft
 						}
 						ctnr->resize(i);
 					}
-					void insert(iterator position, U first, U last, list *ctnr)
+					void insert(iterator position, U first, U last, ft::list<T, Alloc> *ctnr)
 					{
 						while (first != last)
 						{

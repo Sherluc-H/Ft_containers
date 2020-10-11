@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 09:33:34 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/10 15:33:22 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/11 11:58:49 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,8 +324,6 @@ namespace ft
 			}
 			explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			{
-				(void)val;
-				(void)alloc;
 				this->p = NULL;
 				this->vec_size = 0;
 				this->alloc = alloc;
@@ -342,9 +340,6 @@ namespace ft
 			template <class InputIterator>
 			vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
 			{
-				(void)first;
-				(void)last;
-				(void)alloc;
 				this->p = NULL;
 				this->vec_size = 0;
 				this->alloc = alloc;
@@ -366,20 +361,7 @@ namespace ft
 			}
 			vector& operator=(const vector& x)
 			{
-				this->clear();
-				this->alloc.deallocate(this->p, this->vec_capacity);
-				this->p = NULL;
-				this->vec_size = 0;
-				// this->alloc = x.alloc;
-				this->vec_capacity = 0;
-				this->reserve(x.size());
-				size_type i = 0;
-				
-				while (i < x.size())
-				{
-					this->push_back(x[i]);
-					i++;
-				}
+				this->assign(x.begin(), x.end());
 				return (*this);
 			}
 			iterator begin()
@@ -542,17 +524,14 @@ namespace ft
 			{
 				(void)val;
 				if (this->vec_size >= this->vec_capacity)
-				{
 					ft_reallocate();
-				}
 				this->p[this->vec_size] = val;
 				this->vec_size = this->vec_size + 1;
 			}
 			void pop_back()
 			{
 				if (this->vec_size > 0)
-					this->p[this->vec_size - 1].~value_type();
-					// this->p[this->vec_size - 1] = value_type();//destroy if not primitive ?
+					this->alloc.destroy(&(this->p[this->vec_size - 1]));
 				this->vec_size = this->vec_size - 1;
 			}
 			iterator insert(iterator position, const value_type& val)
@@ -562,6 +541,11 @@ namespace ft
 				value_type value = val;
 				value_type next_value;
 
+				iterator it = position;
+				size_t i = 0;
+				while (i < this->size() && &(*it) != &(this->p[i]))
+					i++;
+
 				while (it_begin != it_end)
 				{
 					next_value = *it_begin;
@@ -570,44 +554,28 @@ namespace ft
 					it_begin++;
 				}
 				this->push_back(value);
-				return (position);
+				return (iterator(this->p, i));
 			}
 			void insert(iterator position, size_type n, const value_type& val)
 			{
-				(void)n;
-				(void)val;
-				// std::cout << "here" << std::endl;
 				size_type i = 0;
+				while (i < this->size() && &(*position) != &(this->p[i]))
+					i++;
+				if (this->capacity() < this->size() + n)
+				{
+					if (this->size() * 2 >= this->size() + n)
+						this->reserve(this->size() * 2);
+					else
+						this->reserve(this->size() + n);
+				}
+				position = iterator(this->p, i);
+				i = 0;
 				while (i < n)
 				{
 					position = this->insert(position, val);
 					position++;
 					i++;
 				}
-				// iterator it_begin = position;//meilleur insert possible si on est a end pos ?
-				// size_type i = 0;
-				// while (i < n)
-				// {
-				// 	this->push_back(val);//reserve ?
-				// 	i++;
-				// }
-				// iterator it_end = this->end();
-				// value_type value;
-				// value_type next_value;
-				// i = 0;
-				// while (i < n)
-				// {
-				// 	value = val;
-				// 	while (it_begin != it_end)
-				// 	{
-				// 		next_value = *it_begin;
-				// 		*it_begin = value;
-				// 		value = next_value;
-				// 		it_begin++;
-				// 	}
-				// 	it_begin = position + i;
-				// 	i++;
-				// }
 			}
 			template <class InputIterator>
 			void insert(iterator position, InputIterator first, InputIterator last)
@@ -665,14 +633,7 @@ namespace ft
 			}
 			void clear()
 			{
-				size_type size = this->vec_size;
-				size_type i = 0;
-
-				while (i < size)
-				{
-					this->pop_back();
-					i++;
-				}
+				this->erase(this->begin(), this->end());
 			}
 		
 		private:
@@ -692,7 +653,7 @@ namespace ft
 				this->reserve(this->vec_capacity * 2);
 			}
 			
-			template <class InputIterator, bool>
+			template <class U, bool>
 			class F
 			{
 				public:
@@ -710,8 +671,8 @@ namespace ft
 					}
 			};
 			
-			template <class InputIterator>
-			class F<InputIterator, true>
+			template <class U>
+			class F<U, true>
 			{
 				public:
 					F()
@@ -726,36 +687,29 @@ namespace ft
 					{
 						(void)f;
 					}
-					void operator()(InputIterator first, InputIterator last, ft::vector<T, Alloc> *ctnr)
+					void operator()(U n, U val, ft::vector<T, Alloc> *ctnr)
 					{
 						int i = 0;
 
-						ctnr->reserve(first);
-						while (i < first)
+						ctnr->reserve(n);
+						while (i < n)
 						{
-							ctnr->push_back(last);
+							ctnr->push_back(val);
 							i++;
 						}
 					}
-					void assign(InputIterator first, InputIterator last, ft::vector<T, Alloc> *ctnr)
+					void assign(U n, U val, ft::vector<T, Alloc> *ctnr)
 					{
-						ctnr->assign((size_type)first, last);
+						ctnr->assign((size_type)n, val);
 					}
-					void insert(iterator position, InputIterator n, InputIterator val, ft::vector<T, Alloc> *ctnr)
+					void insert(iterator position, U n, U val, ft::vector<T, Alloc> *ctnr)
 					{
 						ctnr->insert(position, (size_type)n, val);
-						// int i = 0;
-						// while (i < n)
-						// {
-						// 	position = ctnr->insert(position, val);
-						// 	position++;
-						// 	i++;
-						// }
 					}
 			};
 			
-			template <class InputIterator>
-			class F<InputIterator, false>
+			template <class U>
+			class F<U, false>
 			{
 				public:
 					F()
@@ -770,7 +724,7 @@ namespace ft
 					{
 						(void)f;
 					}
-					void operator()(InputIterator first, InputIterator last, ft::vector<T, Alloc> *ctnr)
+					void operator()(U first, U last, ft::vector<T, Alloc> *ctnr)
 					{
 						ctnr->reserve(last - first);
 						while (first != last)
@@ -779,7 +733,7 @@ namespace ft
 							first++;
 						}
 					}
-					void assign(InputIterator first, InputIterator last, ft::vector<T,Alloc> *ctnr)
+					void assign(U first, U last, ft::vector<T,Alloc> *ctnr)
 					{
 						ctnr->resize(last - first);
 						iterator it_begin = ctnr->begin();
@@ -798,8 +752,19 @@ namespace ft
 							i++;
 						}
 					}
-					void insert(iterator position, InputIterator first, InputIterator last, ft::vector<T, Alloc> *ctnr)
+					void insert(iterator position, U first, U last, ft::vector<T, Alloc> *ctnr)
 					{
+						size_type i = 0;
+						while (i < ctnr->size() && &(*position) != &(ctnr->p[i]))
+							i++;
+						if (ctnr->capacity() < ctnr->size() + (last - first))
+						{
+							if (ctnr->size() * 2 >= ctnr->size() + (last - first))
+								ctnr->reserve(ctnr->size() * 2);
+							else
+								ctnr->reserve(ctnr->size() + (last - first));
+						}
+						position = iterator(ctnr->p, i);
 						while (first != last)
 						{
 							position = ctnr->insert(position, *first);
