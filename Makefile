@@ -6,7 +6,7 @@
 #    By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/25 14:56:25 by lhuang            #+#    #+#              #
-#    Updated: 2020/10/06 22:04:50 by lhuang           ###   ########.fr        #
+#    Updated: 2020/10/11 20:57:03 by lhuang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC= clang++
 CFLAGS= -Wall -Wextra -Werror
 RM= rm -f
 SRCS=	main.cpp
-HEADERS=	list.hpp vector.hpp map.hpp stack.hpp queue.hpp reverse_iterator.hpp\
+HEADERS=	list.hpp vector.hpp map.hpp stack.hpp queue.hpp deque.hpp reverse_iterator.hpp\
 			ft_check_utils.hpp\
 			ft_check_list.hpp\
 			ft_check_vector.hpp\

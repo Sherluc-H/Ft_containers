@@ -6,17 +6,19 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 14:43:37 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 17:32:47 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/11 21:24:13 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STACK_HPP
 # define STACK_HPP
 
+# include "deque.hpp"
+
 namespace ft
 {
 
-    template <class T, class Container = ft::list<T> >
+    template <class T, class Container = ft::deque<T> >
     class stack
     {
         public:

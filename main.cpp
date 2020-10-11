@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/11 20:30:15 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/11 22:49:27 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,73 +16,17 @@
 #include "map.hpp"
 #include "stack.hpp"
 #include "queue.hpp"
+#include "deque.hpp"
 #include <list>
 #include <vector>
 #include <map>
 #include <stack>
 #include <queue>
+#include <deque>
 #include "ft_check_utils.hpp"
 #include "ft_check_list.hpp"
 #include "ft_check_vector.hpp"
 #include "ft_check_map.hpp"
-
-// template <class T>
-// void ft_reverse_iterator_check()
-// {
-// 	std::cout << "---reverse iterator check---" << std::endl;
-// 	T l;
-// 	l.push_back(1);
-// 	l.push_back(3);
-// 	l.push_back(5);
-// 	l.push_back(2);
-// 	typename T::iterator b = l.begin();
-// 	typename T::iterator e = l.end();
-// 	// std::cout << *e << std::endl;
-// 	e--;
-// 	std::cout << *e << std::endl;
-// 	// T::iterator::iterator_category c;
-// 	// std::bidirectional_iterator_tag btt;
-// 	// std::iterator<std::bidirectional_iterator_tag, T> tt = l.begin;
-// 	std::cout << "a" << std::endl;
-// 	typename T::reverse_iterator d = l.rbegin();
-// 	// ++d;
-// 	std::cout << *d << std::endl;
-// 	typename T::reverse_iterator ddd = l.rbegin();
-// 	std::cout << *ddd << std::endl;
-// 	std::cout << *d << std::endl;
-// 	std::cout << *d << std::endl;
-// 	std::cout << "b" << std::endl;
-// 	// std::cout << "+" << *(d - 3) << std::endl;//a tester avec vector
-// 	// T::reverse_iterator aaa;
-// 	// aaa = 3 + l.rbegin();
-// 	typename T::reverse_iterator f = l.rend();
-// 	std::cout << "hh" << std::endl;
-// 	std::cout << "begin:" << *d << std::endl;
-// 	std::cout << "hey" << std::endl;
-// 	// std::cout << "fend:" << *f << std::endl;
-// 	typename T::iterator dd = d.base();
-// 	std::cout << "here" << std::endl;
-// 	dd--;
-// 	std::cout << *dd << std::endl;
-// 	// std::cout << "base begin:" << *d.base() << std::endl;
-// 	std::cout << "base fend:" << *f.base() << std::endl;
-// 	while (d != f)
-// 	{
-// 		std::cout << *d << "|" << (*d) << std::endl;
-// 		d++;
-// 	}
-// 	// l.sort();//il y avait un soucis ici
-// 	std::cout << l.front() << std::endl;
-// 	// l.pop_front();
-// 	b = l.begin();
-// 	e = l.end();
-// 	std::cout << "start" << std::endl;
-// 	while (b != e)
-// 	{
-// 		std::cout << *b << "||" << (*b) << std::endl;
-// 		b++;
-// 	}
-// }
 
 // typedef struct	s_data
 // {
@@ -187,201 +131,6 @@ class test
 	private:
 		int *p;
 };
-
-template <class T>
-void	ft_iterator_rand_access_check()
-{
-	std::cout << "---iterator check---" << std::endl;
-	T ctnr;
-
-	ctnr.push_back(1);
-	ctnr.push_back(2);
-	ctnr.push_back(0);
-	ctnr.push_back(3);
-
-	// int *p = ctnr.get_allocator().allocate(10);
-	// ctnr.get_allocator().deallocate(p, 5);
-
-	typename T::iterator ctnr_it = ctnr.begin();
-	typename T::iterator ctnr_it_end = ctnr.end();
-
-	typename T::const_iterator ccit = ctnr_it;
-	typename T::const_iterator ccit_end = ctnr_it_end;
-	typename T::reverse_iterator rcit = ctnr.rend();
-	typename T::const_reverse_iterator crcit = ctnr.rend();
-
-	if (crcit == crcit)
-		std::cout << "eq" << std::endl;
-	if (rcit == rcit)
-		std::cout << "eq" << std::endl;
-	// rcit = ccit;
-	// ccit = rcit;
-	// if (rcit == ccit)
-	// 	std::cout << "eq" << std::endl;
-	// else
-	// 	std::cout << "not eq" << std::endl;
-
-	// typename T::iterator iit = ccit;
-
-	std::cout << *(ccit + 1) << std::endl;
-	std::cout << *(1 + ccit) << std::endl;
-	std::cout << *(ccit) << std::endl;
-	// if (ctnr_it == ccit)
-	// {
-	// 	std::cout << "eq" << std::endl;
-	// }
-	// else
-	// 	std::cout << "not eq" << std::endl;
-	if (ccit == ctnr_it)
-	{
-		std::cout << "bigger" << std::endl;
-	}
-	else
-		std::cout << "smaller" << std::endl;
-	if (ccit == ccit_end)
-	{
-		std::cout << "bigger" << std::endl;
-	}
-	else
-		std::cout << "smaller" << std::endl;
-	// std::cout << ccit - ccit_end << std::endl;
-	// std::cout << ccit - ctnr_it_end << std::endl;
-	// std::cout << ctnr_it - ccit_end << std::endl;
-
-	ctnr_it++;
-
-	std::cout << *ctnr_it << std::endl;
-	std::cout << ctnr_it[0] << std::endl;
-	std::cout << ctnr_it[1] << std::endl;
-	std::cout << *ctnr_it_end << std::endl;
-	std::cout << ctnr_it_end[-1] << std::endl;
-	std::cout << ctnr_it_end[-2] << std::endl;
-
-	ctnr_it--;
-
-	const typename T::iterator cit = ctnr_it;
-	const typename T::iterator cit_end = ctnr_it_end;
-
-	std::cout << "const" << std::endl;
-	std::cout << *(cit) << std::endl;
-	std::cout << *(cit +2) << std::endl;
-	// ++cit;
-
-	if (cit > cit_end)
-	{
-		std::cout << "bigger" << std::endl;
-	}
-	else
-		std::cout << "not bigger" << std::endl;
-	if (cit == cit_end)
-	{
-		std::cout << "equal" << std::endl;
-	}
-	else
-		std::cout << "not equal" << std::endl;
-	
-	if (ctnr_it > ctnr_it)
-		std::cout << "bigger" << std::endl;
-	else
-		std::cout << "not bigger" << std::endl;
-
-	// std::cout << (--ctnr_it) << std::endl;
-	// std::cout << (ctnr_it++2) << std::endl;
-
-	std::cout << cit_end - cit << std::endl;
-	std::cout << ctnr_it_end - cit << std::endl;
-	std::cout << cit - ctnr_it << std::endl;
-	// cit++;
-
-	std::cout << "here" << std::endl;
-	std::cout << *cit << std::endl;
-	// cit+=1;
-	std::cout << *cit << std::endl;
-	*cit = 5;
-
-	std::cout << "hey" << std::endl;
-	std::cout << *ctnr_it << std::endl;
-	ctnr_it+=-1;
-	std::cout << *(ctnr_it-=-1) << std::endl;
-	// std::cout << &(ctnr_it+=1) << std::endl;
-	// ctnr_it+=1;
-	std::cout << *ctnr_it << std::endl;
-	// ctnr_it-=2;
-	std::cout << *(ctnr_it + 1) << std::endl;
-	std::cout << *(1 + ctnr_it - -1) << std::endl;
-	// std::cout << &(ctnr_it + 1) << std::endl;
-	*(ctnr_it + 1) = 8;
-	std::cout << *(1 + ctnr_it) << std::endl;
-	std::cout << *(3 + ctnr_it - 2) << std::endl;
-	std::cout << ctnr_it_end - ctnr_it << std::endl;
-	std::cout << ctnr_it_end - (ctnr_it + 2) << std::endl;
-
-	typename T::const_iterator cc(ctnr_it);
-	// typename T::iterator ccc(cc);
-
-	// ft_iterator_check<T>();
-	std::cout << "first: " << (*ctnr_it) << std::endl;
-	std::cout << ctnr.size() << std::endl;
-	ctnr.insert(ctnr_it, 100);
-	ctnr_it = ctnr.begin();//pour vector les iterator sont invalides apres une reallocation
-	ctnr_it_end = ctnr.end();
-	std::cout << ctnr.size() << std::endl;
-	std::cout << "first: " << (*ctnr_it) << std::endl;
-	*ctnr_it = 6;
-	std::cout << "first: " << *ctnr_it << std::endl;
-
-	std::cout << "front: " << ctnr.front() << std::endl;
-	std::cout << "back: " << ctnr.back() << std::endl;
-
-	std::cout << "A" << std::endl;
-	std::cout << *ctnr_it << "|" << *ctnr_it_end << std::endl;
-	typename T::iterator ctnr_it22 = ctnr_it;
-	typename T::iterator ctnr_it_end22 = ctnr_it_end;
-	while (ctnr_it22 != ctnr_it_end22)
-	{
-		std::cout << "h:" << *ctnr_it22 << std::endl;
-		ctnr_it22++;
-	}
-	// ctnr_it++;
-	T ctnr2(ctnr_it, ctnr_it_end);
-	// ctnr2.ft_show_all();
-	size_t i = 0;
-	while (i < ctnr2.size())
-	{
-		std::cout << ctnr2[i] << std::endl;
-		i++;
-	}
-	std::cout << "B" << std::endl;
-
-	std::cout << "size: " << ctnr2.size() << std::endl;
-	std::cout << "front: " << ctnr2.front() << std::endl;
-	std::cout << "back: " << ctnr2.back() << std::endl;
-
-	T ctnr3(ctnr_it, ctnr_it);
-
-	std::cout << "size: " << ctnr3.size() << std::endl;
-
-	typename T::iterator ctnr_it2 = ctnr.begin();
-	// ctnr_it2++;
-	T ctnr5(ctnr_it, ++ctnr_it2);
-	std::cout << (*ctnr_it) << std::endl;
-	std::cout << (*ctnr_it2) << std::endl;
-
-	std::cout << "size: " << ctnr5.size() << std::endl;
-	std::cout << "front: " << ctnr5.front() << std::endl;
-	std::cout << "back: " << ctnr5.back() << std::endl;
-
-	std::cout << *ctnr_it << std::endl;
-	ctnr_it--;
-	std::cout << *ctnr_it << std::endl;
-	while (ctnr_it != ctnr_it_end)
-	{
-		std::cout << *ctnr_it << std::endl;
-		ctnr_it++;
-	}
-	// typename T::iterator it;
-	// std::cout << *it << std::endl;
-}
 
 template <class T>
 void ft_check_iterator_constructibility()
@@ -578,10 +327,12 @@ int		main(int argc, char *argv[])
 		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
 		{
 			ft_check_stack<ft::stack<int, ft::list<int> > >();
+			// ft_check_stack<ft::stack<int, ft::deque<int> > >();
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
 			ft_check_stack<std::stack<int, std::list<int> > >();
+			// ft_check_stack<std::stack<int, std::deque<int> > >();
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;
@@ -593,10 +344,37 @@ int		main(int argc, char *argv[])
 		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
 		{
 			ft_check_queue<ft::queue<int, ft::list<int> > >();
+			// ft_check_queue<ft::queue<int, ft::deque<int> > >();
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
 			ft_check_queue<std::queue<int, std::list<int> > >();
+			// ft_check_queue<std::queue<int, std::deque<int> > >();
+		}
+		else
+			std::cout << "namespace not recognized" << std::endl;
+	}
+	else if ((argc == 2 && arg_str.compare("deque") == 0) || (argc == 3 && arg_str.compare("deque") == 0))
+	{
+		if (argc == 3)
+			arg_str = argv[2];
+		if (argc == 2 || (argc == 3 && arg_str.compare("ft") == 0))
+		{
+			ft_check_iterator_constructibility<ft::deque<int> >();
+			ft_list_common_check<ft::deque<int> >();
+			// ft_vector_common_check<ft::deque<int> >();
+			// ft_vector_iterator_check<ft::deque<int> >();
+			// ft_vector_reverse_iterator_check<ft::deque<int> >();
+			// ft_vector_modifiers_check<ft::deque<int> >();
+		}
+		else if (argc == 3 && arg_str.compare("std") == 0)
+		{
+			ft_check_iterator_constructibility<std::deque<int> >();
+			ft_list_common_check<std::deque<int> >();
+			// ft_vector_common_check<std::deque<int> >();
+			// ft_vector_iterator_check<std::deque<int> >();
+			// ft_vector_reverse_iterator_check<std::deque<int> >();
+			// ft_vector_modifiers_check<std::deque<int> >();
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;

@@ -6,16 +6,18 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 16:50:08 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 17:46:26 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/11 21:23:49 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef QUEUE_HPP
 # define QUEUE_HPP
 
+# include "deque.hpp"
+
 namespace ft
 {
-	template <class T, class Container = ft::list<T> >
+	template <class T, class Container = ft::deque<T> >
 	class queue
 	{
 		public:

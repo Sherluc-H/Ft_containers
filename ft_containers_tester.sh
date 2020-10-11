@@ -7,6 +7,7 @@ ctnr[1]="vector"
 ctnr[2]="map"
 ctnr[3]="stack"
 ctnr[4]="queue"
+ctnr[5]="deque"
 
 i=0;
 
@@ -16,7 +17,7 @@ none="\033[0m"
 
 cmd="diff <(./ft_containers ${ctnr[$i]} ft) <(./ft_containers ${ctnr[$i]} std)"
 
-while [ "$i" -lt 5 ]
+while [ "$i" -lt 6 ]
 do
     c=$(echo ${ctnr[$i]} | wc -c | tr -d ' ')
     # echo $c
