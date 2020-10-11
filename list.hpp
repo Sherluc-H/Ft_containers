@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:51:24 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/11 11:39:11 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/11 14:06:26 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,7 @@ namespace ft
 			{
 				this->first_el = NULL;
 				this->l_size = 0;
-				this->alloc = alloc;
+				this->alloc = x.alloc;
 				*this = x;
 			}
 			~list()

@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 09:33:34 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/11 11:58:49 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/11 20:06:17 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,7 +350,7 @@ namespace ft
 			{
 				this->p = NULL;
 				this->vec_size = 0;
-				this->alloc = alloc;
+				this->alloc = x.alloc;
 				this->vec_capacity = 0;
 				*this = x;
 			}
@@ -621,15 +621,12 @@ namespace ft
 				pointer tmp_p = x.p;
 				size_type tmp_vec_size = x.vec_size;
 				size_type tmp_vec_capacity = x.vec_capacity;
-				Alloc tmp_alloc = x.alloc;
 				x.p = this->p;
 				x.vec_size = this->vec_size;
 				x.vec_capacity = this->vec_capacity;
-				x.alloc = this->alloc;
 				this->p = tmp_p;
 				this->vec_size = tmp_vec_size;
 				this->vec_capacity = tmp_vec_capacity;
-				this->alloc = tmp_alloc;
 			}
 			void clear()
 			{

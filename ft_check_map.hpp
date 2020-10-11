@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:45:28 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/08 22:59:46 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/11 20:28:38 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,354 +17,806 @@
 # include <map>
 
 template <class T>
-void ft_check_map()
+void	ft_print_basic3(T &t)
 {
-	T valcmp;
-	std::cout << valcmp.value_comp()(std::pair<const int, int>(1, 2), std::pair<const int, int>(2, 3)) << std::endl;
-	typename T::value_compare valc = valcmp.value_comp();
-	std::cout << valc(std::pair<const int, int>(1, 1), std::pair<const int, int>(1, 2)) << std::endl;
-	// std::cout << valcmp.value_comp() << std::endl;
-	// ft::map<int, int> fvalcmp;
-	// std::cout << fvalcmp.value_comp()(std::pair<const int, int>(1, 2), std::pair<const int, int>(2, 3)) << std::endl;
-	// ft::map<int, int>::value_compare fvalc = fvalcmp.value_comp();
-	// std::cout << fvalc(std::pair<const int, int>(1, 1), std::pair<const int, int>(1, 2)) << std::endl;
-
-	// std::cout << std::map<int, int>::value_compare()(std::pair<const int, int>(1, 1), std::pair<const int, int>(1, 1)) << std::endl;
-	// std::cout << ft::map<int, int>::value_compare()(std::pair<const int, int>(1, 1), std::pair<const int, int>(1, 1)) << std::endl;
-	// std::pair<const int, int> a(1, 2);
-	// std::pair<const int, int> b(2, 2);
-	// std::less<int> ls;
-	// ft::map<int, int>::value_compare test(ls);
-	// std::cout << test(a, b) << std::endl;
-	// std::map<int, int>::value_compare test2(ls);
-	// std::cout << test2(a, b) << std::endl;
-	typename T::value_compare::first_argument_type f(10, 2);
-	// f = a;
-	std::cout << f.first << std::endl;
-	
-	std::map<int, int> m;
-    m[1] = 2;
-	m[2] = 3;
-	std::cout << m.size() << "|" << m[1] << std::endl;
-	std::map<int, int> m2;
-	m2 = m;
-	std::cout << m2.size() << "|" << m2[1] << "|" << m.size() << "|" << (m[1]) << std::endl;
-
-	std::cout << valcmp.max_size() << std::endl;
-	// std::cout << fvalcmp.max_size() << std::endl;
-
-	T mm;
-	std::pair<const int, int> p(1, 2);
-	std::pair<const int, int> p2(2, 2);
-	// mm.ft_show_all();
-	std::cout << mm.size() << std::endl;
-	mm.insert(p2);
-	// mm.insert(p2);
-	// mm.insert(p2);
-	// mm.ft_show_all();
-	std::cout << mm.size() << std::endl;
-	// mm.insert(p);
-	mm.insert(p);
-	std::cout << mm.size() << std::endl;
-	// mm.insert(p);
-	std::cout << mm.size() << std::endl;
-	std::pair<const int, int> p3(3, 3);
-	mm.insert(p3);
-	std::cout << mm.size() << std::endl;
-	// mm.ft_show_all();
-	// std::pair<const int, int> p2(2, 2);
-	// p = p2;
-
-	T map_test;
-	map_test.insert(std::pair<const int, int>(11, 11));
-	// map_test.insert(std::pair<const int, int>(11, 11));
-	map_test.insert(std::pair<const int, int>(5, 5));
-	map_test.insert(std::pair<const int, int>(8, 8));
-	map_test.insert(std::pair<const int, int>(3, 3));
-	map_test.insert(std::pair<const int, int>(1, 1));
-	map_test.insert(std::pair<const int, int>(4, 4));
-	map_test.insert(std::pair<const int, int>(2, 2));
-	map_test.insert(std::pair<const int, int>(9, 9));
-	map_test.insert(std::pair<const int, int>(6, 6));
-	map_test.insert(std::pair<const int, int>(10, 10));
-	map_test.insert(std::pair<const int, int>(20, 20));
-	map_test.insert(std::pair<const int, int>(15, 15));
-	map_test.insert(std::pair<const int, int>(25, 25));
-	map_test.insert(std::pair<const int, int>(30, 30));
-	map_test.insert(std::pair<const int, int>(31, 31));
-	map_test.insert(std::pair<const int, int>(12, 12));
-	ft_print_it_range_pair(map_test.begin(), map_test.end());
-	std::cout << "size:" << map_test.size() << std::endl;
-	typename T::iterator it_begin = map_test.begin();
-	++it_begin;
-	++it_begin;
-	map_test.erase(it_begin);
-	std::cout << map_test[3] << std::endl;
-	ft_print_it_range_pair(map_test.begin(), map_test.end());
-	std::cout << "size:" << map_test.size() << std::endl;
-	// map_test.ft_show_all();
-	// map_test.insert(std::pair<const int, int>(12, 12));
-	std::cout << map_test.size() << std::endl;
-	std::cout << "here1" << std::endl;
-	const T mapc = map_test;
-	std::cout << "here:" << (*(mapc.find(1))).first << std::endl;
-	std::cout << mapc.count(10) << std::endl;
-	std::cout << (*(mapc.lower_bound(2))).first << std::endl;
-	std::cout << (*(mapc.upper_bound(3))).first << std::endl;
-	// T::ft_comp_lower(2, 3);
-	// map_test.ft_show_all();
-	std::pair<typename T::const_iterator, typename T::const_iterator> its = mapc.equal_range(25);
-	std::cout << (*(its.first)).first << std::endl;
-	std::cout << (*(its.second)).first << std::endl;
-
-	it_begin = map_test.begin();
-	typename T::iterator it_end = map_test.end();
-	const typename T::iterator cit_begin = it_begin;
-	std::cout << (*cit_begin).first << std::endl;
-	// cit_begin++;
-	// --cit_begin;
-	while (it_begin != it_end)
-	{
-		// std::cout << "c" << std::endl;
-		std::cout << "|" << (*it_begin).first << "|" << (*it_begin).second << std::endl;
-		// std::cout << "d" << std::endl;
-		it_begin++;
-	}
-	it_end--;
-	std::cout << (*it_end).first << std::endl;
-	it_begin--;
-	it_begin--;
-	std::cout << "e:" << (*it_begin).first << std::endl;
-	// map_test.erase(it_begin);
-	std::cout << "e:" << (*it_begin).first << std::endl;
-	it_begin = map_test.begin();
-	it_end = map_test.end();
-	it_begin++;
-	it_begin++;
-	it_begin++;
-	it_begin++;
-	it_begin++;
-	it_begin++;
-	it_begin++;
-	it_begin++;
-	it_begin++;
-    std::cout << "BEGIN" << (*it_begin).first << std::endl;
-	std::cout << map_test.size() << std::endl;
-	std::cout << map_test.count(3) << std::endl;
-	// std::cout << map_test[3] << std::endl;
-	typename T::iterator it_begin_next = it_begin;
-	it_begin_next++;
-	map_test.erase(3);
-	// map_test.insert(std::pair<const int, int>(11, 11));
-	// map_test.ft_show_all();
-	// map_test.insert(std::pair<const int, int>(11, 11));
-	// std::cout << "first" << map_test.front() << std::endl;
-	// map_test.erase(++it_begin);
-	// std::cout << map_test[3] << std::endl;
-	std::cout << map_test.count(3) << std::endl;
-	// std::cout << "B:" << (*it_begin).first << std::endl;
-	// std::cout << "HERE" << (*it_begin_next).first << std::endl;//probleme ici
-	std::cout << map_test.size() << std::endl;
-	// map_test.erase(it_begin);
-	// map_test[10] = 100;
-	// map_test[22] = 9;
-	// map_test[22] = 22;
-	// std::cout << map_test[1] << std::endl;
-	// map_test.insert(std::pair<int, int>(1, 1));
-	// map_test.insert(std::pair<int, int>(1, 1));
-	// map_test.insert(std::pair<int, int>(1, 1));
-	it_begin = map_test.begin();
-	it_end = map_test.end();
-	while (it_begin != it_end)
-	{
-		std::cout << (*it_begin).first << std::endl;
-		it_begin++;
-	}
-	// std::cout << "hh:" << &(*it_begin) << "|" << (*it_end).first << std::endl;
+	if (!t.empty())
+		std::cout << "size: " << t.size() << "| empty: " << t.empty() << std::endl;
+	else
+		std::cout << "empty" << std::endl;
 }
 
 template <class T>
-void ft_check_map_modifiers()
+void	ft_map_common_check(void)
+{
+	std::cout << "---common check---" << std::endl;
+	T one;
+
+	std::cout << "max_size: " << one.max_size() << std::endl;
+	ft_print_basic3(one);
+
+	// T two(20, 50);
+	// ft_print_basic3(two);
+
+	T two(one);
+	ft_print_basic3(one);
+	ft_print_basic3(two);
+
+	// T three((size_t)20, 1);
+	// ft_print_basic3(three);
+
+	T four = one;
+
+	// one.push_back(2);
+	ft_print_basic3(one);
+	ft_print_basic3(four);
+
+	// one.pop_back();
+	// one.push_front(2);
+	// one.push_front(3);
+	// one.push_back(1);
+
+	one.insert(std::pair<int, int>(10, 10));
+
+	ft_print_basic3(one);
+	ft_print_basic3(four);
+
+	T five = one;
+
+	// five.pop_front();
+	// five.push_front(2);
+	// five.push_front(3);
+	// five.pop_front();
+	// five.push_back(1);
+	// five.push_back(10);
+	// five.pop_back();
+	five.insert(std::pair<int, int>(2, 2));
+	five.insert(std::pair<int, int>(3, 3));
+	five.insert(std::pair<int, int>(1, 1));
+	five.insert(std::pair<int, int>(10, 10));
+	five.insert(std::pair<int, int>(10, 10));
+	five.insert(std::pair<int, int>(10, 10));
+
+	ft_print_basic3(one);
+	ft_print_basic3(five);
+
+	T six(one);
+	ft_print_basic3(one);
+	ft_print_basic3(six);
+
+	T seven;
+
+	six = five;
+	ft_print_basic3(six);
+	seven = one;
+	ft_print_basic3(seven);
+
+	std::cout << "----------------------here" << std::endl;
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(six.begin(), six.end());
+	ft_print_basic3(one);
+	ft_print_basic3(six);
+	six = one;
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(six.begin(), six.end());
+	ft_print_basic3(one);
+	ft_print_basic3(six);
+
+	// T eight(3, 5);
+	ft_print_basic3(one);
+	// ft_print_basic3(eight);
+	// eight = one;
+	ft_print_basic3(one);
+	// ft_print_basic3(eight);
+	// one.assign(1, 1);
+	// eight = one;
+	ft_print_basic3(one);
+	// ft_print_basic3(eight);
+
+	// const T nine(5, 6);
+	// ft_print_basic3(nine);
+
+	// ft_check_all_comp(one, five);
+	// ft_check_all_comp(five, four);
+	// ft_check_all_comp(one, six);
+	// ft_check_all_comp(six, seven);
+	// ft_check_all_comp(eight, nine);
+	// ft_check_all_comp(five, five);
+
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(five.begin(), five.end());
+	one = five;
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(five.begin(), five.end());
+
+	five = seven;
+	ft_print_it_range_pair(five.begin(), five.end());
+
+	const T c_one = one;
+	// int& b1 = one.front();
+	// const int& b2 = c_one.front();
+	std::pair<const int, int>& b1 = *(one.begin());
+	const std::pair<const int, int>& b2 = *(c_one.begin());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(c_one.begin(), c_one.end());
+	ft_print_basic3(one);
+	ft_print_basic3(c_one);
+	std::cout << (*one.begin()).first << (*one.begin()).second << std::endl;
+	std::cout << (*c_one.begin()).first << (*c_one.begin()).second << std::endl;
+	std::cout << "b1:" << b1.first << "|" << b1.second << "|" << "b2:" << b2.first << "|" << b2.second << std::endl;
+	// b1 = 100;
+	// b1.first = 1;
+	b1.second = 100;
+	std::cout << (*one.begin()).first << (*one.begin()).second << std::endl;
+	std::cout << (*c_one.begin()).first << (*c_one.begin()).second << std::endl;
+	std::cout << "b1:" << b1.first << "|" << b1.second << "|" << "b2:" << b2.first << "|" << b2.second << std::endl;
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(c_one.begin(), c_one.end());
+	ft_print_basic3(one);
+	ft_print_basic3(c_one);
+}
+
+template <class T, class T1, class T2>
+void ft_map_common_check2()
+{
+	T mp;
+	T1 mpb;
+	T2 mps;
+
+	mp[0] = 0;
+	mp[1] = 1;
+	mp[2] = 2;
+	mp[3] = 3;
+
+	mpb[0] = 0;
+	mpb[1] = 1;
+	mpb[2] = 2;
+	mpb[3] = 3;
+
+	mps[0] = 0;
+	mps[1] = 1;
+	mps[2] = 2;
+	mps[3] = 3;
+
+	ft_print_it_range_pair(mp.begin(), mp.end());
+	ft_print_it_range_pair(mpb.begin(), mpb.end());
+	ft_print_it_range_pair(mps.begin(), mps.end());
+	ft_print_it_range_pair(mp.rbegin(), mp.rend());
+	ft_print_it_range_pair(mpb.rbegin(), mpb.rend());
+	ft_print_it_range_pair(mps.rbegin(), mps.rend());
+
+	T1 mb2 = mpb;
+	T2 ms2 = mps;
+	ft_print_it_range_pair(mpb.begin(), mpb.end());
+	ft_print_it_range_pair(mps.begin(), mps.end());
+	ft_print_it_range_pair(mb2.begin(), mb2.end());
+	ft_print_it_range_pair(ms2.begin(), ms2.end());
+	ft_print_it_range_pair(mpb.rbegin(), mpb.rend());
+	ft_print_it_range_pair(mps.rbegin(), mps.rend());
+	ft_print_it_range_pair(mb2.rbegin(), mb2.rend());
+	ft_print_it_range_pair(ms2.rbegin(), ms2.rend());
+	mpb[5] = 5;
+	ms2[5] = 5;
+	ft_print_it_range_pair(mpb.begin(), mpb.end());
+	ft_print_it_range_pair(mps.begin(), mps.end());
+	ft_print_it_range_pair(mb2.begin(), mb2.end());
+	ft_print_it_range_pair(ms2.begin(), ms2.end());
+	ft_print_it_range_pair(mpb.rbegin(), mpb.rend());
+	ft_print_it_range_pair(mps.rbegin(), mps.rend());
+	ft_print_it_range_pair(mb2.rbegin(), mb2.rend());
+	ft_print_it_range_pair(ms2.rbegin(), ms2.rend());
+
+	T t;
+	T1 t1;
+	T2 t2;
+	typename T::value_compare tvalue_comp = t.value_comp();
+	typename T1::value_compare t1value_comp = t1.value_comp();
+	typename T2::value_compare t2value_comp = t2.value_comp();
+	typename T::key_compare tkey_comp = t.key_comp();
+	typename T1::key_compare t1key_comp = t1.key_comp();
+	typename T2::key_compare t2key_comp = t2.key_comp();
+
+	std::cout << tvalue_comp(std::pair<int, int>(1, 1), std::pair<int, int>(1, 1)) << std::endl;
+	std::cout << t1value_comp(std::pair<int, int>(1, 1), std::pair<int, int>(1, 1)) << std::endl;
+	std::cout << t2value_comp(std::pair<int, int>(1, 1), std::pair<int, int>(1, 1)) << std::endl;
+	std::cout << tkey_comp(1, 1) << std::endl;
+	std::cout << t1key_comp(1, 1) << std::endl;
+	std::cout << t2key_comp(1, 1) << std::endl;
+	std::cout << tvalue_comp(std::pair<int, int>(0, 1), std::pair<int, int>(0, 1)) << std::endl;
+	std::cout << t1value_comp(std::pair<int, int>(0, 1), std::pair<int, int>(0, 1)) << std::endl;
+	std::cout << t2value_comp(std::pair<int, int>(0, 1), std::pair<int, int>(0, 1)) << std::endl;
+	std::cout << tkey_comp(0, 1) << std::endl;
+	std::cout << t1key_comp(0, 1) << std::endl;
+	std::cout << t2key_comp(0, 1) << std::endl;
+	std::cout << tvalue_comp(std::pair<int, int>(1, 0), std::pair<int, int>(1, 0)) << std::endl;
+	std::cout << t1value_comp(std::pair<int, int>(1, 0), std::pair<int, int>(1, 0)) << std::endl;
+	std::cout << t2value_comp(std::pair<int, int>(1, 0), std::pair<int, int>(1, 0)) << std::endl;
+	std::cout << tkey_comp(1, 0) << std::endl;
+	std::cout << t1key_comp(1, 0) << std::endl;
+	std::cout << t2key_comp(1, 0) << std::endl;
+	std::cout << tvalue_comp(std::pair<int, int>(0, 1), std::pair<int, int>(1, 1)) << std::endl;
+	std::cout << t1value_comp(std::pair<int, int>(0, 1), std::pair<int, int>(1, 1)) << std::endl;
+	std::cout << t2value_comp(std::pair<int, int>(0, 1), std::pair<int, int>(1, 1)) << std::endl;
+	std::cout << tvalue_comp(std::pair<int, int>(1, 1), std::pair<int, int>(0, 1)) << std::endl;
+	std::cout << t1value_comp(std::pair<int, int>(1, 1), std::pair<int, int>(0, 1)) << std::endl;
+	std::cout << t2value_comp(std::pair<int, int>(1, 1), std::pair<int, int>(0, 1)) << std::endl;
+	
+
+	std::cout << t.value_comp()(std::pair<const int, int>(1, 2), std::pair<const int, int>(2, 3)) << std::endl;
+	std::cout << t1.value_comp()(std::pair<const int, int>(1, 2), std::pair<const int, int>(2, 3)) << std::endl;
+	std::cout << t2.value_comp()(std::pair<const int, int>(1, 2), std::pair<const int, int>(2, 3)) << std::endl;
+	typename T1::value_compare::first_argument_type f1(10, 2);
+	std::cout << f1.first << std::endl;
+
+}
+
+template <class T>
+void	ft_map_iterator_check()
+{
+	std::cout << "---iterator check---" << std::endl;
+
+	T one;
+
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_basic3(one);
+
+	one[0] = 1;
+	one[1] = 1;
+	one[2] = 2;
+	one[0] = 0;
+	one[3] = 3;
+
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_basic3(one);
+
+	typename T::iterator one_it_begin = one.begin();
+	typename T::iterator one_it_end(one.end());
+	ft_print_basic3(one);
+
+	std::cout << (*one_it_begin).first << std::endl;
+	(*one_it_begin).second = 6;
+	std::cout << (*one_it_begin).first << std::endl;
+
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_basic3(one);
+	
+	T two(one_it_begin, one_it_end);
+
+	ft_print_it_range_pair(two.begin(), two.end());
+	ft_print_it_range_pair(two.rbegin(), two.rend());
+	ft_print_basic3(two);
+
+	T three(one_it_begin, one_it_begin);
+
+	ft_print_it_range_pair(three.begin(), three.end());
+	ft_print_it_range_pair(three.rbegin(), three.rend());
+	ft_print_basic3(three);
+
+	typename T::iterator one_it_begin2 = one_it_begin;
+
+	ft_print_it_range_pair(one_it_begin, one.end());
+	ft_print_it_range_pair(one_it_begin2, one.end());
+
+	ft_check_eq(one_it_begin, one_it_begin2);
+	ft_check_dif(one_it_begin, one_it_begin2);
+
+	one_it_begin2++;
+
+	ft_print_it_range_pair(one_it_begin, one.end());
+	ft_print_it_range_pair(one_it_begin2, one.end());
+
+	ft_check_eq(one_it_begin, one_it_begin2);
+	ft_check_dif(one_it_begin, one_it_begin2);
+
+	T four(one_it_begin, ++one_it_begin2);
+
+	ft_print_it_range_pair(four.begin(), four.end());
+	ft_print_it_range_pair(four.rbegin(), four.rend());
+	ft_print_basic3(four);
+
+	std::cout << ((*one_it_begin)).first << std::endl;
+	std::cout << ((*one_it_begin2)).first << std::endl;
+	std::cout << (*one_it_begin++).first << std::endl;
+	std::cout << (*one_it_begin).first << std::endl;
+	std::cout << (*++one_it_begin).first << std::endl;
+	std::cout << (*one_it_begin).first << std::endl;
+	std::cout << (*++one_it_begin).first << std::endl;
+	std::cout << (*one_it_begin--).first << std::endl;
+	std::cout << (*--one_it_begin).first << std::endl;
+	std::cout << (*one_it_begin).first << std::endl;
+	ft_print_it_range_pair(one_it_begin, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_basic3(one);
+
+	typename T::const_iterator one_cit_begin = one.begin();
+	typename T::const_iterator one_cit_end(one.end());
+	// one_it_begin = one_cit_begin;
+	// one_cit_begin = 0;
+	ft_print_it_range_pair(one_cit_begin, one_cit_end);
+	std::cout << ((*one_cit_begin)).first << std::endl;
+	std::cout << (*one_cit_begin++).first << std::endl;
+	std::cout << (*one_cit_begin).first << std::endl;
+	std::cout << (*++one_cit_begin).first << std::endl;
+	std::cout << (*one_cit_begin).first << std::endl;
+	std::cout << (*++one_cit_begin).first << std::endl;
+	std::cout << (*one_cit_begin--).first << std::endl;
+	std::cout << (*--one_cit_begin).first << std::endl;
+	std::cout << (*one_cit_begin).first << std::endl;
+	ft_print_it_range_pair(one_cit_begin, one_cit_end);
+
+	one_cit_begin = one_it_begin;
+	one_cit_end = one_it_end;
+	ft_print_it_range_pair(one_cit_begin, one_cit_end);
+
+	const T c_one = one;
+	ft_print_it_range_pair(c_one.begin(), c_one.end());
+	ft_print_it_range_pair(c_one.rbegin(), c_one.rend());
+	ft_print_basic3(c_one);
+}
+
+template <class T>
+void ft_map_reverse_iterator_check()
+{
+	std::cout << "---reverse iterator check---" << std::endl;
+
+	T one;
+	one[0] = 0;
+	one[1] = 1;
+	one[2] = 2;
+	one[3] = 3;
+	typename T::iterator one_it_begin;
+	one_it_begin = one.begin();
+	typename T::iterator one_it_end(one.end());
+	typename T::reverse_iterator one_rit_begin;
+	one_rit_begin = one.rbegin();
+	typename T::reverse_iterator one_rit_end(one.rend());
+
+	typename T::reverse_iterator one_rit_begin2(one.end());
+	typename T::reverse_iterator one_rit_end2(one.begin());
+	ft_print_it_range_pair(one_rit_begin2, one_rit_end2);
+
+	ft_print_it_range_pair(one_it_begin, one_it_end);
+	ft_print_it_range_pair(one_rit_begin, one_rit_end);
+	ft_print_it_range_pair(one_rit_end, one_rit_end);
+	ft_print_it_range_pair(one_rit_begin.base(), one_it_end);
+	ft_print_it_range_pair(one_rit_end.base(), one_it_end);
+	std::cout << (*--one_rit_end).first << std::endl;
+	std::cout << (*one_rit_begin).first << std::endl;
+	std::cout << (*one_rit_begin++).first << std::endl;
+	std::cout << (*one_rit_begin).first << std::endl;
+	std::cout << (*++one_rit_begin).first << std::endl;
+	std::cout << (*one_rit_begin).first << std::endl;
+	std::cout << (*++one_rit_begin).first << std::endl;
+	std::cout << (*one_rit_begin).first << std::endl;
+	std::cout << (*--one_rit_begin).first << std::endl;
+	std::cout << (*one_rit_begin).first << std::endl;
+	std::cout << (*one_rit_begin--).first << std::endl;
+	std::cout << (*one_rit_begin).first << std::endl;
+	ft_print_it_range_pair(one_rit_begin, one_rit_end);
+	ft_print_it_range_pair(one_rit_begin.base(), one_it_end);
+	ft_print_it_range_pair(one_rit_end.base(), one_it_end);
+	ft_print_it_range_pair(one_rit_begin, one_rit_begin);
+	(*one_rit_begin).second = 10;
+	ft_print_it_range_pair(one_rit_begin, one_rit_end);
+	ft_print_it_range_pair(one_rit_begin.base(), one_it_end);
+	ft_print_it_range_pair(one_rit_end.base(), one_it_end);
+	ft_print_it_range_pair(one_rit_begin, one_rit_begin);
+
+	typename T::const_reverse_iterator one_rcit_begin = one.rbegin();
+	typename T::const_reverse_iterator one_rcit_end(one.rend());
+	// *one_rcit_begin = 0;
+	// one_rit_begin = one_rcit_begin;
+	ft_print_it_range_pair(one_rcit_begin, one_rcit_end);
+	std::cout << (*--one_rcit_end).first << std::endl;
+	std::cout << (*one_rcit_begin).first << std::endl;
+	std::cout << (*one_rcit_begin++).first << std::endl;
+	std::cout << (*one_rcit_begin).first << std::endl;
+	std::cout << (*++one_rcit_begin).first << std::endl;
+	std::cout << (*one_rcit_begin).first << std::endl;
+	std::cout << (*++one_rcit_begin).first << std::endl;
+	std::cout << (*one_rcit_begin).first << std::endl;
+	std::cout << (*--one_rcit_begin).first << std::endl;
+	std::cout << (*one_rcit_begin).first << std::endl;
+	std::cout << (*one_rcit_begin--).first << std::endl;
+	std::cout << (*one_rcit_begin).first << std::endl;
+	ft_print_it_range_pair(one_rcit_begin, one_rcit_end);
+
+	one_rcit_begin = one_rit_begin;
+	one_rcit_end = one_rit_end;
+	ft_print_it_range_pair(one_rcit_begin, one_rcit_end);
+
+	const T c_one = one;
+	ft_print_it_range_pair(c_one.begin(), c_one.end());
+	ft_print_it_range_pair(c_one.rbegin(), c_one.rend());
+	ft_print_basic3(c_one);
+}
+
+template <class T>
+void ft_map_modifiers_check()
+{
+	std::cout << "---modifiers check---" << std::endl;
+	T one;
+	one[1] = 1;
+	one[2] = 2;
+	one[3] = 3;
+	one[4] = 4;
+	one[6] = 6;
+	T two;
+	two[10] = 10;
+	two[20] = 20;
+	two[30] = 30;
+	two[40] = 40;
+	two[50] = 50;
+	two[60] = 60;
+
+	// one.clear();
+	// two.clear();
+
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_it_range_pair(two.begin(), two.end());
+	ft_print_it_range_pair(two.rbegin(), two.rend());
+	ft_print_basic3(one);
+	ft_print_basic3(two);
+
+	// std::cout << "a" << std::endl;
+	// one.assign(one.begin(), --one.end());
+	// ft_print_it_range_pair(one.begin(), one.end());
+	// ft_print_it_range_pair(one.rbegin(), one.rend());
+
+	// two.assign(2, 2);
+	// ft_print_it_range_pair(two.begin(), two.end());
+	// ft_print_it_range_pair(two.rbegin(), two.rend());
+	// ft_print_basic3(one);
+	// ft_print_basic3(two);
+
+	// two.assign(one.begin(), one.end());
+	// ft_print_it_range_pair(two.begin(), two.end());
+	// ft_print_it_range_pair(two.rbegin(), two.rend());
+
+	// one.assign(8, 8);
+	// ft_print_it_range_pair(one.begin(), one.end());
+	// ft_print_it_range_pair(one.rbegin(), one.rend());
+	// ft_print_basic3(one);
+	// ft_print_basic3(two);
+
+	std::cout << "------------------point----------------" << std::endl;
+
+	std::pair<typename T::iterator, bool> pit;
+
+	pit = one.insert(std::pair<int, int>(2, 2));
+	ft_print_basic3(one);
+	if (pit.second)
+		ft_print_it_range_pair(pit.first, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	pit = one.insert(std::pair<int, int>(9, 9));
+	ft_print_basic3(one);
+	if (pit.second)
+		ft_print_it_range_pair(pit.first, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	pit = one.insert(std::pair<int, int>(6, 6));
+	ft_print_basic3(one);
+	if (pit.second)
+		ft_print_it_range_pair(pit.first, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	pit = one.insert(std::pair<int, int>(10, 10));
+	ft_print_basic3(one);
+	if (pit.second)
+		ft_print_it_range_pair(pit.first, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	pit = one.insert(std::pair<int, int>(20, 20));
+	ft_print_basic3(one);
+	if (pit.second)
+		ft_print_it_range_pair(pit.first, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+
+	// one.clear();
+	// two.clear();
+	typename T::iterator it;
+	it = one.insert(one.begin(), std::pair<int, int>(10, 10));
+	ft_print_basic3(one);
+	ft_print_basic3(two);
+	ft_print_it_range_pair(it, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	it = one.insert(one.end(), std::pair<int, int>(11, 11));
+	ft_print_it_range_pair(it, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	it = one.insert(++one.begin(), std::pair<int, int>(12, 12));
+	ft_print_it_range_pair(it, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_basic3(one);
+	ft_print_basic3(two);
+
+	// one.insert(one.begin(), 1, 1);
+	// ft_print_it_range_pair(one.begin(), one.end());
+	// ft_print_it_range_pair(one.rbegin(), one.rend());
+	// one.insert(one.end(), 2, 2);
+	// ft_print_it_range_pair(one.begin(), one.end());
+	// ft_print_it_range_pair(one.rbegin(), one.rend());
+	// one.insert(++one.begin(), 3, 3);
+	// ft_print_it_range_pair(one.begin(), one.end());
+	// ft_print_it_range_pair(one.rbegin(), one.rend());
+	// ft_print_basic3(one);
+	// ft_print_basic3(two);
+
+	// one.insert(one.begin(), (size_t)1, 1);
+	// ft_print_it_range_pair(one.begin(), one.end());
+	// ft_print_it_range_pair(one.rbegin(), one.rend());
+	// one.insert(one.end(), (size_t)2, 2);
+	// ft_print_it_range_pair(one.begin(), one.end());
+	// ft_print_it_range_pair(one.rbegin(), one.rend());
+	// one.insert(++one.begin(), (size_t)3, 3);
+	// ft_print_it_range_pair(one.begin(), one.end());
+	// ft_print_it_range_pair(one.rbegin(), one.rend());
+	// ft_print_basic3(one);
+	// ft_print_basic3(two);
+
+	one.insert(two.begin(), two.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	one.insert(two.begin(), two.begin());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	one.insert(two.begin(), --two.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_basic3(one);
+	ft_print_basic3(two);
+
+	// one.resize(5, 10);
+	// ft_print_it_range_pair(one.begin(), one.end());
+	// ft_print_it_range_pair(one.rbegin(), one.rend());
+	// ft_print_basic3(one);
+	// ft_print_basic3(two);
+
+	// one.clear();
+	// one.push_back(1);
+	one.erase(one.begin());
+	ft_print_it_range_pair(it, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	one.erase(++one.begin());
+	ft_print_it_range_pair(it, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_basic3(one);
+	ft_print_basic3(two);
+	one.erase(++(++one.begin()));
+	ft_print_it_range_pair(it, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	one.erase(--one.end());
+	ft_print_it_range_pair(it, one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+
+	one[1] = 1;
+	one[5] = 5;
+	one[2] = 2;
+	one[9] = 9;
+	one[8] = 8;
+	one[2] = 2;
+	one[5] = 5;
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+
+	one.erase(1000);
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	one.erase(1);
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	one.erase(0);
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+
+	one.erase(one.begin(), one.begin());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	one.erase(one.begin(), ++one.begin());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	one.erase(one.begin(), ++one.begin());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	one.erase(++one.begin(), --one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	one.erase(one.begin(), one.end());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+
+	one[1] = 1;
+	one[2] = 2;
+	one[10] = 10;
+	one[20] = 20;
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	
+	ft_print_it_range_pair(two.begin(), two.end());
+	ft_print_it_range_pair(two.rbegin(), two.rend());
+	ft_print_basic3(one);
+	ft_print_basic3(two);
+	
+	// one.clear();
+	// two.clear();
+
+	one.swap(two);
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_it_range_pair(two.begin(), two.end());
+	ft_print_it_range_pair(two.rbegin(), two.rend());
+	two.swap(one);
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_it_range_pair(two.begin(), two.end());
+	ft_print_it_range_pair(two.rbegin(), two.rend());
+	ft_print_basic3(one);
+	ft_print_basic3(two);
+
+	// one.resize(0);
+	// ft_print_it_range_pair(one.begin(), one.end());
+	// ft_print_it_range_pair(one.rbegin(), one.rend());
+	// ft_print_basic3(one);
+	// one.resize(10);
+	// ft_print_it_range_pair(one.begin(), one.end());
+	// ft_print_it_range_pair(one.rbegin(), one.rend());
+	// ft_print_it_range_pair(two.begin(), two.end());
+	// ft_print_it_range_pair(two.rbegin(), two.rend());
+	// ft_print_basic3(one);
+	// ft_print_basic3(two);
+	one.clear();
+	two.clear();
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_it_range_pair(two.begin(), two.end());
+	ft_print_it_range_pair(two.rbegin(), two.rend());
+	ft_print_basic3(one);
+	ft_print_basic3(two);
+	one.clear();
+	two.clear();
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_it_range_pair(two.begin(), two.end());
+	ft_print_it_range_pair(two.rbegin(), two.rend());
+	ft_print_basic3(one);
+	ft_print_basic3(two);
+	
+}
+
+template <class T>
+void ft_map_operations_check()
 {
 	T one;
 
-	std::cout << one.empty() << "|" << one.size() << "|" << one.max_size() << std::endl;
-	one[50] = 50;
-	one[40] = 40;
-	one[60] = 60;
+	one[0] = 0;
+	one.insert(std::pair<int, int>(15, 15));
 	one[10] = 10;
-	std::cout << one.empty() << "|" << one.size() << "|" << one.max_size() << std::endl;
-	std::pair<typename T::iterator, bool> p1 = one.insert(std::pair<int, int>(5, 5));
-	std::cout << p1.second << std::endl;
-	ft_print_it_range_pair(p1.first, one.end());
-	one.insert(std::pair<int, int>(11, 11));
-	one.insert(std::pair<int, int>(22, 22));
-	one.insert(std::pair<int, int>(33, 33));
-	one.insert(std::pair<int, int>(55, 55));
-	std::cout << one.empty() << "|" << one.size() << "|" << one.max_size() << std::endl;
-	one[33] = 33;
-	one[40] = 40;
-	one[60] = 61;
+	one.insert(std::pair<int, int>(5, 5));
 	one[25] = 25;
-	one[5] = 6;
+	one.insert(std::pair<int, int>(10, 10));
+	one[100] = 100;
+	one.insert(std::pair<int, int>(20, 20));
+	one[30] = 30;
+	one[2] = 2;
+	one[3] = 3;
+	one[4] = 4;
+	one[5] = 5;
+	one[6] = 6;
+	one[7] = 7;
+	one[8] = 8;
+	one[9] = 9;
+	one[10] = 10;
 	one[11] = 11;
-	p1 = one.insert(std::pair<int, int>(6, 6));
-	std::cout << p1.second << std::endl;
-	ft_print_it_range_pair(p1.first, one.end());
-	p1 = one.insert(std::pair<int, int>(55, 55));
-	std::cout << p1.second << std::endl;
-	ft_print_it_range_pair(p1.first, one.end());
-	one.insert(std::pair<int, int>(22, 23));
-	p1 = one.insert(std::pair<int, int>(60, 60));
-	std::cout << p1.second << std::endl;
-	ft_print_it_range_pair(p1.first, one.end());
-	one.insert(std::pair<int, int>(50, 51));
-	std::cout << one.empty() << "|" << one.size() << "|" << one.max_size() << std::endl;
+	one[10] = 10;
 
-	ft_print_it_range_pair(one.find(10), one.end());
-	ft_print_it_range_pair(one.find(10000), one.find(20000));
-	ft_print_it_range_pair(one.find(60), one.find(50000));
+	const T c_one = one;
 
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+	ft_print_it_range_pair(one.begin(), one.end());
+	ft_print_it_range_pair(one.rbegin(), one.rend());
+
+	ft_print_it_range_pair(one.find(1), one.end());
+	ft_print_it_range_pair(one.find(10000), one.end());
+	ft_print_it_range_pair(one.find(9), one.end());
+	ft_print_it_range_pair(one.find(20), one.end());
+	ft_print_it_range_pair(one.find(30), one.end());
+	
+	ft_print_it_range_pair(c_one.find(1), c_one.end());
+	ft_print_it_range_pair(c_one.find(10000), c_one.end());
+	ft_print_it_range_pair(c_one.find(9), c_one.end());
+	ft_print_it_range_pair(c_one.find(20), c_one.end());
+	ft_print_it_range_pair(c_one.find(30), c_one.end());
+
+	std::cout << one.count(1) << std::endl;
+	std::cout << one.count(10000) << std::endl;
+	std::cout << one.count(9) << std::endl;
+	std::cout << one.count(20) << std::endl;
+	std::cout << one.count(30) << std::endl;
+
+	std::cout << c_one.count(1) << std::endl;
+	std::cout << c_one.count(10000) << std::endl;
+	std::cout << c_one.count(9) << std::endl;
+	std::cout << c_one.count(20) << std::endl;
+	std::cout << c_one.count(30) << std::endl;
+
+	ft_print_it_range_pair(one.lower_bound(1), one.end());
+	ft_print_it_range_pair(one.lower_bound(10000), one.end());
+	ft_print_it_range_pair(one.lower_bound(9), one.end());
 	ft_print_it_range_pair(one.lower_bound(20), one.end());
-	ft_print_it_range_pair(one.lower_bound(2000), one.end());
-	ft_print_it_range_pair(one.lower_bound(10), one.lower_bound(20));
+	ft_print_it_range_pair(one.lower_bound(30), one.end());
+	
+	ft_print_it_range_pair(c_one.lower_bound(1), c_one.end());
+	ft_print_it_range_pair(c_one.lower_bound(10000), c_one.end());
+	ft_print_it_range_pair(c_one.lower_bound(9), c_one.end());
+	ft_print_it_range_pair(c_one.lower_bound(20), c_one.end());
+	ft_print_it_range_pair(c_one.lower_bound(30), c_one.end());
 
+	ft_print_it_range_pair(one.upper_bound(1), one.end());
+	ft_print_it_range_pair(one.upper_bound(10000), one.end());
+	ft_print_it_range_pair(one.upper_bound(9), one.end());
 	ft_print_it_range_pair(one.upper_bound(20), one.end());
-	ft_print_it_range_pair(one.upper_bound(2000), one.end());
-	ft_print_it_range_pair(one.upper_bound(10), one.upper_bound(20));
+	ft_print_it_range_pair(one.upper_bound(30), one.end());
+	
+	ft_print_it_range_pair(c_one.upper_bound(1), c_one.end());
+	ft_print_it_range_pair(c_one.upper_bound(10000), c_one.end());
+	ft_print_it_range_pair(c_one.upper_bound(9), c_one.end());
+	ft_print_it_range_pair(c_one.upper_bound(20), c_one.end());
+	ft_print_it_range_pair(c_one.upper_bound(30), c_one.end());
 
-	std::pair<typename T::iterator, typename T::iterator> p_eq = one.equal_range(60);
-	std::pair<typename T::iterator, typename T::iterator> p_eq2 = one.equal_range(1000);
-	ft_print_it_range_pair(p_eq.first, p_eq.second);
-	ft_print_it_range_pair(p_eq2.first, p_eq2.second);
+	std::pair<typename T::iterator, typename T::iterator> pit = one.equal_range(1);
+	ft_print_it_range_pair(pit.first, pit.second);
+	ft_print_it_range_pair(pit.first, one.end());
+	ft_print_it_range_pair(pit.second, one.end());
+	pit = one.equal_range(10000);
+	ft_print_it_range_pair(pit.first, pit.second);
+	ft_print_it_range_pair(pit.first, one.end());
+	ft_print_it_range_pair(pit.second, one.end());
+	pit = one.equal_range(9);
+	ft_print_it_range_pair(pit.first, pit.second);
+	ft_print_it_range_pair(pit.first, one.end());
+	ft_print_it_range_pair(pit.second, one.end());
+	pit = one.equal_range(20);
+	ft_print_it_range_pair(pit.first, pit.second);
+	ft_print_it_range_pair(pit.first, one.end());
+	ft_print_it_range_pair(pit.second, one.end());
+	pit = one.equal_range(30);
+	ft_print_it_range_pair(pit.first, pit.second);
+	ft_print_it_range_pair(pit.first, one.end());
+	ft_print_it_range_pair(pit.second, one.end());
 
-	ft_print_it_range_pair(one.begin(), one.end());
-	ft_print_it_range_pair(one.rbegin(), one.rend());
-	one.erase(++(one.begin()));
-	ft_print_it_range_pair(one.begin(), one.end());
-	ft_print_it_range_pair(one.rbegin(), one.rend());
-	one.erase((one.begin()));
-	ft_print_it_range_pair(one.begin(), one.end());
-	ft_print_it_range_pair(one.rbegin(), one.rend());
-	one.erase(--(one.end()));
-	ft_print_it_range_pair(one.begin(), one.end());
-	ft_print_it_range_pair(one.rbegin(), one.rend());
-	// one.erase((one.end()));
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-
-	// one.erase(one.end());
-	std::cout << "a" << std::endl;
-	std::cout << one.erase(1) << std::endl;
-	std::cout << "a1" << std::endl;
-	std::cout << one.erase(2) << std::endl;
-	std::cout << "a2" << std::endl;
-	std::cout << one.erase(3) << std::endl;
-	std::cout << "a3" << std::endl;
-	std::cout << one.erase(10) << std::endl;
-	std::cout << "a4" << std::endl;
-	std::cout << one.erase(20) << std::endl;
-	std::cout << "a5" << std::endl;
-	std::cout << one.erase(60) << std::endl;
-	std::cout << "a6" << std::endl;
-	std::cout << one.erase(33) << std::endl;
-	std::cout << "b" << std::endl;
-	ft_print_it_range_pair(one.begin(), one.end());
-	ft_print_it_range_pair(one.rbegin(), one.rend());
-
-	std::cout << "----------size:" << one.size() << std::endl;
-	// one.erase(one.begin(), one.end());
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-
-	T two = one;
-	ft_print_it_range_pair(two.begin(), two.end());
-	ft_print_it_range_pair(two.rbegin(), two.rend());
-	T three = T(one.begin(), one.end());
-	ft_print_it_range_pair(three.begin(), three.end());
-	ft_print_it_range_pair(three.rbegin(), three.rend());
-	T five = T(one);
-	ft_print_it_range_pair(five.begin(), five.end());
-	ft_print_it_range_pair(five.rbegin(), five.rend());
-	const T six = one;
-	ft_print_it_range_pair(six.begin(), six.end());
-	ft_print_it_range_pair(six.rbegin(), six.rend());
-	const T seven = T(one.begin(), one.end());
-	ft_print_it_range_pair(seven.begin(), seven.end());
-	ft_print_it_range_pair(seven.rbegin(), seven.rend());
-	const T eight = T(one);
-	ft_print_it_range_pair(eight.begin(), eight.end());
-	ft_print_it_range_pair(eight.rbegin(), eight.rend());
-	const T nine = one;
-	ft_print_it_range_pair(nine.begin(), nine.end());
-	ft_print_it_range_pair(nine.rbegin(), nine.rend());
-	T ten = six;
-	ft_print_it_range_pair(ten.begin(), ten.end());
-	ft_print_it_range_pair(ten.rbegin(), ten.rend());
-
-	typename T::iterator it_b = one.begin();
-	typename T::iterator it_e = one.end();
-	typename T::const_iterator cit_b = it_b;
-	typename T::const_iterator cit_e = it_e;
-	// it_b = cit_b;
-	// it_e = cit_e;
-	ft_print_it_range_pair(it_b, it_e);
-	// *it_b = std::pair<int, int>(10000, 10000);
-	// ft_print_it_range_pair(it_b, it_e);
-	ft_print_it_range_pair(cit_b, cit_e);
-	// *cit_b = 1000000;
-
-	T eleven;
-	eleven[11] = 11;
-	ft_print_it_range_pair(one.begin(), one.end());
-	ft_print_it_range_pair(one.rbegin(), one.rend());
-	ft_print_it_range_pair(eleven.begin(), eleven.end());
-	ft_print_it_range_pair(eleven.rbegin(), eleven.rend());
-	one.swap(eleven);
-	ft_print_it_range_pair(one.begin(), one.end());
-	ft_print_it_range_pair(one.rbegin(), one.rend());
-	ft_print_it_range_pair(eleven.begin(), eleven.end());
-	ft_print_it_range_pair(eleven.rbegin(), eleven.rend());
-	eleven.swap(one);
-	ft_print_it_range_pair(one.begin(), one.end());
-	ft_print_it_range_pair(one.rbegin(), one.rend());
-	ft_print_it_range_pair(eleven.begin(), eleven.end());
-	ft_print_it_range_pair(eleven.rbegin(), eleven.rend());
-
-	eleven.clear();
-	ft_print_it_range_pair(one.begin(), one.end());
-	ft_print_it_range_pair(one.rbegin(), one.rend());
-	ft_print_it_range_pair(eleven.begin(), eleven.end());
-	ft_print_it_range_pair(eleven.rbegin(), eleven.rend());
-
-	one.swap(eleven);
-	ft_print_it_range_pair(one.begin(), one.end());
-	ft_print_it_range_pair(one.rbegin(), one.rend());
-	ft_print_it_range_pair(eleven.begin(), eleven.end());
-	ft_print_it_range_pair(eleven.rbegin(), eleven.rend());
-	eleven.swap(one);
-	ft_print_it_range_pair(one.begin(), one.end());
-	ft_print_it_range_pair(one.rbegin(), one.rend());
-	ft_print_it_range_pair(eleven.begin(), eleven.end());
-	ft_print_it_range_pair(eleven.rbegin(), eleven.rend());
-
-	std::cout << two.size() << std::endl;
-	std::cout << "hey2:" << (*(--(--two.end()))).first << std::endl;
-	typename T::iterator iit = two.insert((--two.end()), std::pair<int, int>(58, 58));
-	typename T::iterator iit2 = two.insert((--two.end()), std::pair<int, int>(55, 55));
-	ft_print_it_range_pair(iit, two.end());
-	ft_print_it_range_pair(iit2, two.end());
-	std::cout << two.size() << std::endl;
-	two.insert(two.end(), std::pair<int, int>(55, 55));
-	std::cout << two.size() << std::endl;
-	ft_print_it_range_pair(two.begin(), two.end());
-	ft_print_it_range_pair(two.rbegin(), two.rend());
-
-	std::cout << "s:" << two.size() << "|" << three.size() << std::endl;
-	three.insert(two.begin(), two.end());
-	std::cout << "s:" << two.size() << "|" << three.size() << std::endl;
-	ft_print_it_range_pair(three.begin(), three.end());
-	ft_print_it_range_pair(three.rbegin(), three.rend());
+	std::pair<typename T::const_iterator, typename T::const_iterator> cpit = c_one.equal_range(1);
+	ft_print_it_range_pair(cpit.first, cpit.second);
+	ft_print_it_range_pair(cpit.first, c_one.end());
+	ft_print_it_range_pair(cpit.second, c_one.end());
+	cpit = c_one.equal_range(10000);
+	ft_print_it_range_pair(cpit.first, cpit.second);
+	ft_print_it_range_pair(cpit.first, c_one.end());
+	ft_print_it_range_pair(cpit.second, c_one.end());
+	cpit = c_one.equal_range(9);
+	ft_print_it_range_pair(cpit.first, cpit.second);
+	ft_print_it_range_pair(cpit.first, c_one.end());
+	ft_print_it_range_pair(cpit.second, c_one.end());
+	cpit = c_one.equal_range(20);
+	ft_print_it_range_pair(cpit.first, cpit.second);
+	ft_print_it_range_pair(cpit.first, c_one.end());
+	ft_print_it_range_pair(cpit.second, c_one.end());
+	cpit = c_one.equal_range(30);
+	ft_print_it_range_pair(cpit.first, cpit.second);
+	ft_print_it_range_pair(cpit.first, c_one.end());
+	ft_print_it_range_pair(cpit.second, c_one.end());
 }
 
 #endif

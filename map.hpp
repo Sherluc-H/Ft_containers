@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 21:06:30 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 17:13:19 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/11 18:44:37 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ namespace ft
 			class const_iterator
 			{
 				public:
-					typedef value_type value_type;
+					typedef const value_type value_type;
 					typedef difference_type difference_type;
 					typedef value_type& reference;
 					typedef value_type* pointer;
@@ -329,8 +329,6 @@ namespace ft
 			template <class InputIterator>
 			map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
 			{
-				(void)first;
-				(void)last;
 				this->el = NULL;
 				this->map_size = 0;
 				this->comp = comp;
@@ -341,6 +339,8 @@ namespace ft
 			{
 				this->el = NULL;
 				this->map_size = 0;
+				this->comp = x.comp;
+				this->alloc = x.alloc;
 				*this = x;
 			}
 			~map()
@@ -349,17 +349,23 @@ namespace ft
 			}
 			map& operator=(const map& x)
 			{
-				if (this->map_size > 0)
-					this->clear();
-				// this->alloc = x.alloc;
 				this->comp = x.comp;
-				const_iterator it_begin = x.begin();
-				const_iterator it_end = x.end();
-				while (it_begin != it_end)
+				iterator it_begin = this->begin();
+				iterator it_end = this->end();
+				const_iterator first = x.begin();
+				const_iterator last = x.end();
+				while (first != last)
 				{
-					this->insert(*it_begin);
-					it_begin++;
+					if (it_begin != it_end)
+					{
+						this->alloc.construct(&(*it_begin), *first);
+						it_begin++;
+					}
+					else
+						this->insert(*first);
+					first++;
 				}
+				this->erase(it_begin, it_end);
 				return (*this);
 			}
 			iterator begin()
@@ -419,7 +425,6 @@ namespace ft
 				(void)val;
 				std::pair<iterator, bool> p;
 				typename allocator_type::template rebind<t_map_el>::other r;
-				key_compare comp;
 
 				if (this->map_size == 0)
 				{
@@ -432,13 +437,13 @@ namespace ft
 				t_map_el* next = this->el;
 				while (next)
 				{
-					if (comp(val.first, next->val.first))
+					if (this->comp(val.first, next->val.first))
 					{
 						if (!(next->next_left))
 							break;
 						next = next->next_left;
 					}
-					else if (comp(next->val.first, val.first))
+					else if (this->comp(next->val.first, val.first))
 					{
 						if (!(next->next_right))
 							break;
@@ -453,7 +458,7 @@ namespace ft
 					}
 				}
 				t_map_el* new_el = ft_new_el(val);
-				if (next->val.first > val.first)
+				if (this->comp(val.first, next->val.first))
 				{
 					next->next_left = new_el;
 					new_el->pos = 1;
@@ -470,13 +475,12 @@ namespace ft
 			}
 			iterator insert(iterator position, const value_type& val)
 			{
-				(void)position;//a changer ?
 				std::pair<iterator, bool> p;
 				if (position != this->end())
 				{
 					iterator tmp = position;
 					tmp++;
-					if (*position < val && (tmp == this->end() || *tmp > val))
+					if (this->value_comp()(*position, val) && (tmp == this->end() || this->value_comp()(val, *tmp)))
 					{
 						reference val2 = *position;
 						t_map_el *prev = (t_map_el*)((&((char*)(&val2))[-12]));
@@ -706,29 +710,26 @@ namespace ft
 				new_el->next_right = NULL;
 				return (new_el);
 			}
-			static bool ft_comp_for_lower(key_type a, key_type b)
+			static bool ft_comp_for_lower(key_type a, key_type b, key_compare comp)
 			{
-				key_compare comp;
 				return (!(comp(a, b)));
 			}
-			static bool ft_comp_for_upper(key_type a, key_type b)
+			static bool ft_comp_for_upper(key_type a, key_type b, key_compare comp)
 			{
-				key_compare comp;
 				return (comp(b, a));
 			}
-			static bool ft_comp_for_eq(key_type a, key_type b)
+			static bool ft_comp_for_eq(key_type a, key_type b, key_compare comp)
 			{
-				key_compare comp;
 				return (comp(a, b) == false && comp(b, a) == false);
 			}
-			int ft_search_specific(const key_type& k, bool(*f)(key_type, key_type)) const
+			int ft_search_specific(const key_type& k, bool(*f)(key_type, key_type, key_compare)) const
 			{
 				t_map_el* first = this->el;
 				bool from_right = false;
 				int crement = 0;
 
 				first = ft_get_first_left_from(first);
-				if (!first || f(first->val.first, k))
+				if (!first || f(first->val.first, k, this->comp))
 					return (crement);
 				crement++;
 				while (1)
@@ -737,7 +738,7 @@ namespace ft
 					{
 						first = first->next_right;
 						first = ft_get_first_left_from(first);
-						if (f(first->val.first, k))
+						if (f(first->val.first, k, this->comp))
 							return (crement);
 						crement++;
 					}
@@ -752,7 +753,7 @@ namespace ft
 						first = first->previous;
 						if (!from_right)
 						{
-							if (f(first->val.first, k))
+							if (f(first->val.first, k, this->comp))
 								return (crement);
 							crement++;
 						}

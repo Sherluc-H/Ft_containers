@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:36:46 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/10 23:56:32 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/11 19:05:48 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,10 @@ void ft_list_reverse_iterator_check()
 	one_rit_begin = one.rbegin();
 	typename T::reverse_iterator one_rit_end(one.rend());
 
+	typename T::reverse_iterator one_rit_begin2(one.end());
+	typename T::reverse_iterator one_rit_end2(one.begin());
+	ft_print_it_range(one_rit_begin2, one_rit_end2);
+
 	ft_print_it_range(one_it_begin, one_it_end);
 	ft_print_it_range(one_rit_begin, one_rit_end);
 	ft_print_it_range(one_rit_end, one_rit_end);
@@ -429,6 +433,44 @@ void ft_list_modifiers_check()
 	ft_print_it_range(one.rbegin(), one.rend());
 	it = one.erase(--one.end());
 	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+
+	one.push_back(1);
+	one.push_back(5);
+	one.push_back(2);
+	one.push_back(9);
+	one.push_back(8);
+	one.push_back(2);
+	one.push_back(5);
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+
+	it = one.erase(one.begin(), one.begin());
+	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	it = one.erase(one.begin(), ++one.begin());
+	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	it = one.erase(one.begin(), ++one.begin());
+	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	it = one.erase(++one.begin(), --one.end());
+	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+	it = one.erase(one.begin(), one.end());
+	ft_print_it_range(it, one.end());
+	ft_print_it_range(one.begin(), one.end());
+	ft_print_it_range(one.rbegin(), one.rend());
+
+	one.push_back(1);
+	one.push_back(2);
+	one.push_back(10);
+	one.push_back(20);
 	ft_print_it_range(one.begin(), one.end());
 	ft_print_it_range(one.rbegin(), one.rend());
 	
