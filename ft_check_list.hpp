@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:36:46 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/11 19:05:48 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/12 19:42:10 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,9 +321,6 @@ void ft_list_modifiers_check()
 	two.push_back(50);
 	two.push_back(60);
 
-	// one.clear();
-	// two.clear();
-
 	ft_print_it_range(one.begin(), one.end());
 	ft_print_it_range(one.rbegin(), one.rend());
 	ft_print_it_range(two.begin(), two.end());
@@ -353,8 +350,6 @@ void ft_list_modifiers_check()
 	ft_print_basic(two);
 
 	std::cout << "------------------point----------------" << std::endl;
-	// one.clear();
-	// two.clear();
 	typename T::iterator it;
 	it = one.insert(one.begin(), 10);
 	ft_print_basic(one);
@@ -415,8 +410,6 @@ void ft_list_modifiers_check()
 	ft_print_basic(one);
 	ft_print_basic(two);
 
-	// one.clear();
-	// one.push_back(1);
 	it = one.erase(one.begin());
 	ft_print_it_range(it, one.end());
 	ft_print_it_range(one.begin(), one.end());
@@ -479,9 +472,6 @@ void ft_list_modifiers_check()
 	ft_print_basic(one);
 	ft_print_basic(two);
 	
-	// one.clear();
-	// two.clear();
-
 	one.swap(two);
 	ft_print_it_range(one.begin(), one.end());
 	ft_print_it_range(one.rbegin(), one.rend());
@@ -564,9 +554,6 @@ void ft_list_operations_check()
 	ft_print_basic(one);
 	ft_print_basic(two);
 	ft_print_basic(three);
-
-	// two.clear();
-	// one.clear();
 
 	one.splice(one.begin(), two);
 	ft_print_it_range(one.begin(), one.end());
@@ -688,10 +675,6 @@ void ft_list_operations_check()
 	ft_print_it_range(three.rbegin(), three.rend());
 	ft_print_basic(three);
 	three.remove(7);
-	// ft_print_it_range(one.begin(), one.end());
-	// ft_print_it_range(one.rbegin(), one.rend());
-	// ft_print_it_range(two.begin(), two.end());
-	// ft_print_it_range(two.rbegin(), two.rend());
 	ft_print_it_range(three.begin(), three.end());
 	ft_print_it_range(three.rbegin(), three.rend());
 	ft_print_basic(three);
@@ -713,11 +696,7 @@ void ft_list_operations_check()
 	ft_print_it_range(three.begin(), three.end());
 	ft_print_it_range(three.rbegin(), three.rend());
 	ft_print_basic(three);
-	// ft_print_basic(one);
-	// ft_print_basic(two);
-	// ft_print_basic(three);
 
-	// one.clear();
 	ft_print_it_range(one.begin(), one.end());
 	ft_print_it_range(one.rbegin(), one.rend());
 	ft_print_basic(one);
@@ -798,7 +777,6 @@ void ft_list_operations_check()
 	ft_print_basic(two);
 	ft_print_basic(three);
 	three.clear();
-	// one.clear();
 	one.push_back(1);
 	three.push_back(2);
 	one.merge(three);
@@ -826,8 +804,6 @@ void ft_list_operations_check()
 	ft_print_it_range(one.rbegin(), one.rend());
 	ft_print_it_range(two.begin(), two.end());
 	ft_print_it_range(two.rbegin(), two.rend());
-	// two.clear();
-	// one.clear();
 	two.sort(ft_is_bigger<int>);
 	one.sort(ft_is_bigger<int>);
 	ft_print_it_range(one.begin(), one.end());

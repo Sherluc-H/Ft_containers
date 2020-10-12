@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:45:28 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/11 20:28:38 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/12 19:42:06 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,14 @@ void	ft_map_common_check(void)
 	std::cout << "max_size: " << one.max_size() << std::endl;
 	ft_print_basic3(one);
 
-	// T two(20, 50);
-	// ft_print_basic3(two);
-
 	T two(one);
 	ft_print_basic3(one);
 	ft_print_basic3(two);
 
-	// T three((size_t)20, 1);
-	// ft_print_basic3(three);
-
 	T four = one;
 
-	// one.push_back(2);
 	ft_print_basic3(one);
 	ft_print_basic3(four);
-
-	// one.pop_back();
-	// one.push_front(2);
-	// one.push_front(3);
-	// one.push_back(1);
 
 	one.insert(std::pair<int, int>(10, 10));
 
@@ -62,13 +50,6 @@ void	ft_map_common_check(void)
 
 	T five = one;
 
-	// five.pop_front();
-	// five.push_front(2);
-	// five.push_front(3);
-	// five.pop_front();
-	// five.push_back(1);
-	// five.push_back(10);
-	// five.pop_back();
 	five.insert(std::pair<int, int>(2, 2));
 	five.insert(std::pair<int, int>(3, 3));
 	five.insert(std::pair<int, int>(1, 1));
@@ -101,26 +82,7 @@ void	ft_map_common_check(void)
 	ft_print_basic3(one);
 	ft_print_basic3(six);
 
-	// T eight(3, 5);
 	ft_print_basic3(one);
-	// ft_print_basic3(eight);
-	// eight = one;
-	ft_print_basic3(one);
-	// ft_print_basic3(eight);
-	// one.assign(1, 1);
-	// eight = one;
-	ft_print_basic3(one);
-	// ft_print_basic3(eight);
-
-	// const T nine(5, 6);
-	// ft_print_basic3(nine);
-
-	// ft_check_all_comp(one, five);
-	// ft_check_all_comp(five, four);
-	// ft_check_all_comp(one, six);
-	// ft_check_all_comp(six, seven);
-	// ft_check_all_comp(eight, nine);
-	// ft_check_all_comp(five, five);
 
 	ft_print_it_range_pair(one.begin(), one.end());
 	ft_print_it_range_pair(five.begin(), five.end());
@@ -132,8 +94,6 @@ void	ft_map_common_check(void)
 	ft_print_it_range_pair(five.begin(), five.end());
 
 	const T c_one = one;
-	// int& b1 = one.front();
-	// const int& b2 = c_one.front();
 	std::pair<const int, int>& b1 = *(one.begin());
 	const std::pair<const int, int>& b2 = *(c_one.begin());
 	ft_print_it_range_pair(one.begin(), one.end());
@@ -143,7 +103,6 @@ void	ft_map_common_check(void)
 	std::cout << (*one.begin()).first << (*one.begin()).second << std::endl;
 	std::cout << (*c_one.begin()).first << (*c_one.begin()).second << std::endl;
 	std::cout << "b1:" << b1.first << "|" << b1.second << "|" << "b2:" << b2.first << "|" << b2.second << std::endl;
-	// b1 = 100;
 	// b1.first = 1;
 	b1.second = 100;
 	std::cout << (*one.begin()).first << (*one.begin()).second << std::endl;
@@ -452,36 +411,12 @@ void ft_map_modifiers_check()
 	two[50] = 50;
 	two[60] = 60;
 
-	// one.clear();
-	// two.clear();
-
 	ft_print_it_range_pair(one.begin(), one.end());
 	ft_print_it_range_pair(one.rbegin(), one.rend());
 	ft_print_it_range_pair(two.begin(), two.end());
 	ft_print_it_range_pair(two.rbegin(), two.rend());
 	ft_print_basic3(one);
 	ft_print_basic3(two);
-
-	// std::cout << "a" << std::endl;
-	// one.assign(one.begin(), --one.end());
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-
-	// two.assign(2, 2);
-	// ft_print_it_range_pair(two.begin(), two.end());
-	// ft_print_it_range_pair(two.rbegin(), two.rend());
-	// ft_print_basic3(one);
-	// ft_print_basic3(two);
-
-	// two.assign(one.begin(), one.end());
-	// ft_print_it_range_pair(two.begin(), two.end());
-	// ft_print_it_range_pair(two.rbegin(), two.rend());
-
-	// one.assign(8, 8);
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-	// ft_print_basic3(one);
-	// ft_print_basic3(two);
 
 	std::cout << "------------------point----------------" << std::endl;
 
@@ -518,8 +453,6 @@ void ft_map_modifiers_check()
 	ft_print_it_range_pair(one.begin(), one.end());
 	ft_print_it_range_pair(one.rbegin(), one.rend());
 
-	// one.clear();
-	// two.clear();
 	typename T::iterator it;
 	it = one.insert(one.begin(), std::pair<int, int>(10, 10));
 	ft_print_basic3(one);
@@ -538,30 +471,6 @@ void ft_map_modifiers_check()
 	ft_print_basic3(one);
 	ft_print_basic3(two);
 
-	// one.insert(one.begin(), 1, 1);
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-	// one.insert(one.end(), 2, 2);
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-	// one.insert(++one.begin(), 3, 3);
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-	// ft_print_basic3(one);
-	// ft_print_basic3(two);
-
-	// one.insert(one.begin(), (size_t)1, 1);
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-	// one.insert(one.end(), (size_t)2, 2);
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-	// one.insert(++one.begin(), (size_t)3, 3);
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-	// ft_print_basic3(one);
-	// ft_print_basic3(two);
-
 	one.insert(two.begin(), two.end());
 	ft_print_it_range_pair(one.begin(), one.end());
 	ft_print_it_range_pair(one.rbegin(), one.rend());
@@ -574,14 +483,6 @@ void ft_map_modifiers_check()
 	ft_print_basic3(one);
 	ft_print_basic3(two);
 
-	// one.resize(5, 10);
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-	// ft_print_basic3(one);
-	// ft_print_basic3(two);
-
-	// one.clear();
-	// one.push_back(1);
 	one.erase(one.begin());
 	ft_print_it_range_pair(it, one.end());
 	ft_print_it_range_pair(one.begin(), one.end());
@@ -649,9 +550,6 @@ void ft_map_modifiers_check()
 	ft_print_basic3(one);
 	ft_print_basic3(two);
 	
-	// one.clear();
-	// two.clear();
-
 	one.swap(two);
 	ft_print_it_range_pair(one.begin(), one.end());
 	ft_print_it_range_pair(one.rbegin(), one.rend());
@@ -665,17 +563,6 @@ void ft_map_modifiers_check()
 	ft_print_basic3(one);
 	ft_print_basic3(two);
 
-	// one.resize(0);
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-	// ft_print_basic3(one);
-	// one.resize(10);
-	// ft_print_it_range_pair(one.begin(), one.end());
-	// ft_print_it_range_pair(one.rbegin(), one.rend());
-	// ft_print_it_range_pair(two.begin(), two.end());
-	// ft_print_it_range_pair(two.rbegin(), two.rend());
-	// ft_print_basic3(one);
-	// ft_print_basic3(two);
 	one.clear();
 	two.clear();
 	ft_print_it_range_pair(one.begin(), one.end());

@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:40:53 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/11 19:06:12 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/12 19:57:31 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,12 @@ void	ft_vector_common_check(void)
 	ft_print_basic2(four);
 
 	one.pop_back();
-	// one.push_front(2);
-	// one.push_front(3);
 	one.push_back(1);
 	ft_print_basic2(one);
 	ft_print_basic2(four);
 
 	T five = one;
 
-	// five.pop_front();
-	// five.push_front(2);
-	// five.push_front(3);
-	// five.pop_front();
 	five.push_back(1);
 	five.push_back(10);
 	five.pop_back();
@@ -162,7 +156,6 @@ void	ft_vector_common_check(void)
 
 	vec.reserve(3);
 	ft_print_basic2(vec);
-	// vec.pop_back();
 	vec.push_back(1);
 	ft_print_basic2(vec);
 	std::cout << vec[0] << std::endl;
@@ -189,7 +182,6 @@ void	ft_vector_common_check(void)
 	vec.pop_back();
 	ft_print_basic2(vec);
 	vec.pop_back();
-	// vec.pop_back();
 	ft_print_basic2(vec);
 	vec.push_back(1);
 	ft_print_basic2(vec);
@@ -197,8 +189,6 @@ void	ft_vector_common_check(void)
 	ft_print_basic2(vec);
 	vec.push_back(3);
 	ft_print_basic2(vec);
-	// vec.pop_back();
-	// vec.clear();
 	std::cout << vec[1] << std::endl;
 	std::cout << vec[2] << std::endl;
 	ft_print_basic2(vec);
@@ -209,7 +199,6 @@ void	ft_vector_common_check(void)
 	ft_print_basic2(vec);
 	vec.resize(3, 8);
 	ft_print_basic2(vec);
-	// vec.resize(-10, 1);
 	ft_print_basic2(vec);
 
 	const T vec2 = vec;
@@ -406,10 +395,8 @@ void	ft_vector_iterator_check()
 	std::cout << one_it_begin3[1] << std::endl;
 	std::cout << one_it_begin3[2] << std::endl;
 	std::cout << one_it_begin3[-1] << std::endl;
-	// std::cout << one_it_begin3[-2] << std::endl;
 	std::cout << one_it_end3[0] << std::endl;
 	std::cout << one_it_end3[1] << std::endl;
-	// std::cout << one_it_end3[2] << std::endl;
 	std::cout << one_it_end3[-1] << std::endl;
 	std::cout << one_it_end3[-2] << std::endl;
 	ft_print_it_range(one.begin(), one.end());
@@ -478,10 +465,8 @@ void	ft_vector_iterator_check()
 	std::cout << c_one_it_begin3[1] << std::endl;
 	std::cout << c_one_it_begin3[2] << std::endl;
 	std::cout << c_one_it_begin3[-1] << std::endl;
-	// std::cout << c_one_it_begin3[-2] << std::endl;
 	std::cout << c_one_it_end3[0] << std::endl;
 	std::cout << c_one_it_end3[1] << std::endl;
-	// std::cout << c_one_it_end3[2] << std::endl;
 	std::cout << c_one_it_end3[-1] << std::endl;
 	std::cout << c_one_it_end3[-2] << std::endl;
 	ft_print_it_range(c_one.begin(), c_one.end());
@@ -638,10 +623,8 @@ void ft_vector_reverse_iterator_check()
 	std::cout << one_rit_begin3[1] << std::endl;
 	std::cout << one_rit_begin3[2] << std::endl;
 	std::cout << one_rit_begin3[-1] << std::endl;
-	// std::cout << one_rit_begin3[-2] << std::endl;
 	std::cout << one_rit_end3[0] << std::endl;
 	std::cout << one_rit_end3[1] << std::endl;
-	// std::cout << one_rit_end3[2] << std::endl;
 	std::cout << one_rit_end3[-1] << std::endl;
 	std::cout << one_rit_end3[-2] << std::endl;
 	ft_print_it_range(one.rbegin(), one.rend());
@@ -710,10 +693,8 @@ void ft_vector_reverse_iterator_check()
 	std::cout << one_crit_begin3[1] << std::endl;
 	std::cout << one_crit_begin3[2] << std::endl;
 	std::cout << one_crit_begin3[-1] << std::endl;
-	// std::cout << one_crit_begin3[-2] << std::endl;
 	std::cout << one_crit_end3[0] << std::endl;
 	std::cout << one_crit_end3[1] << std::endl;
-	// std::cout << one_crit_end3[2] << std::endl;
 	std::cout << one_crit_end3[-1] << std::endl;
 	std::cout << one_crit_end3[-2] << std::endl;
 	ft_print_it_range(c_one.rbegin(), c_one.rend());
@@ -742,9 +723,6 @@ void ft_vector_modifiers_check()
 	two.push_back(40);
 	two.push_back(50);
 	two.push_back(60);
-
-	// one.clear();
-	// two.clear();
 
 	ft_print_it_range(one.begin(), one.end());
 	ft_print_it_range(one.rbegin(), one.rend());
@@ -775,8 +753,6 @@ void ft_vector_modifiers_check()
 	ft_print_basic2(two);
 
 	std::cout << "------------------point----------------" << std::endl;
-	// one.clear();
-	// two.clear();
 	typename T::iterator it;
 	it = one.insert(one.begin(), 10);
 	ft_print_basic2(one);
@@ -837,8 +813,6 @@ void ft_vector_modifiers_check()
 	ft_print_basic2(one);
 	ft_print_basic2(two);
 
-	// one.clear();
-	// one.push_back(1);
 	it = one.erase(one.begin());
 	ft_print_it_range(it, one.end());
 	ft_print_it_range(one.begin(), one.end());
@@ -900,9 +874,6 @@ void ft_vector_modifiers_check()
 	ft_print_it_range(two.rbegin(), two.rend());
 	ft_print_basic2(one);
 	ft_print_basic2(two);
-
-	// one.clear();
-	// two.clear();
 
 	one.swap(two);
 	ft_print_it_range(one.begin(), one.end());

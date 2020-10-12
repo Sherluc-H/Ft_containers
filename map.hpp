@@ -6,12 +6,15 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 21:06:30 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/11 18:44:37 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/12 01:03:00 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 # define MAP_HPP
+
+# include <memory>
+# include <functional>
 
 namespace ft
 {
@@ -27,11 +30,24 @@ namespace ft
 					this->comp = comp;
 				}
 			public:
+				~Value_comp()
+				{}
+				Value_comp(const Value_comp& v)
+				{
+					*this = v;
+				}
+				Value_comp& operator=(const Value_comp& v)
+				{
+					this->comp = v.comp;
+					return (*this);
+				}
 				bool operator()(const std::pair<const Key, T>& x, const std::pair<const Key, T>& y)
 				{
 					return (this->comp(x.first, y.first));
 				}
 			private:
+				Value_comp()
+				{}
 				Compare comp;
 		};
 		

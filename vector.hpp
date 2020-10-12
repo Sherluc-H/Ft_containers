@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 09:33:34 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/11 20:06:17 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/12 01:04:36 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include "reverse_iterator.hpp"
 # include <exception>
 # include <stdexcept>
-
-# include <iostream>
 
 namespace ft
 {
@@ -508,7 +506,7 @@ namespace ft
 				iterator it_end = this->end();
 				size_type i = 0;
 
-				while (it_begin != it_end)//&& i < n ?// peut etre pas besoin grace au resize, par contre resize au debut sert pour les capacity
+				while (it_begin != it_end)
 				{
 					*it_begin = val;
 					it_begin++;
@@ -602,7 +600,7 @@ namespace ft
 				this->pop_back();
 				return (position);
 			}
-			iterator erase(iterator first, iterator last)//a tester encore
+			iterator erase(iterator first, iterator last)
 			{
 				iterator tmp_first = first;
 				iterator tmp;

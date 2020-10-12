@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:31:49 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/08 00:00:22 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/12 00:40:23 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void ft_print_it_range(Iterator first, Iterator last)
     std::cout << "print" << std::endl;
     while (first != last)
     {
-        // std::cout << "b" << std::endl;
         std::cout << *first << std::endl;
         first++;
     }

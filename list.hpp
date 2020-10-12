@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:51:24 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/11 14:06:26 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/12 00:50:57 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include <memory>
 # include <limits>
 # include "reverse_iterator.hpp"
-
-// # include <iostream>
 
 namespace ft
 {
@@ -102,8 +100,6 @@ namespace ft
 					}
 					iterator &operator++()
 					{
-						// if (this->el->next == NULL)
-							// this->before_end = this->el;
 						this->el = this->el->next;
 						return (*this);
 					}
@@ -111,8 +107,6 @@ namespace ft
 					{
 						iterator tmp = *this;
 
-						// if (this->el->next == NULL)
-							// this->before_end = this->el;
 						this->el = this->el->next;
 						return (tmp);
 					}
@@ -316,8 +310,6 @@ namespace ft
 			{
 				T a = T();
 				T *t = &a;
-				// if (!this->first_el)
-				// 	return (0);
 				if (!this->first_el)
 					return (*t);
 				return (this->first_el->val);
@@ -325,8 +317,6 @@ namespace ft
 			const_reference front() const
 			{
 				T *t = NULL;
-				// if (!this->first_el)
-				// 	return (0);
 				if (!this->first_el)
 					return (*t);
 				return (this->first_el->val);
@@ -335,15 +325,13 @@ namespace ft
 			{
 				if (this->l_size == 0)
 				{
-					T a = T();//ne marche plus si c est str par exemple ? T a la place de int == 0 ca semble marcher
+					T a = T();
 					T *t = &a;
 					return (*t);
 				}
 				t_list_el *end_el;
 
 				end_el = this->first_el;
-				// if (!this->first_el)
-				// 	return (0);
 				while (end_el && end_el->next)
 					end_el = end_el->next;
 				return (end_el->val);
@@ -353,8 +341,6 @@ namespace ft
 				t_list_el *end_el;
 
 				end_el = first_el;
-				// if (!this->first_el)
-				// 	return (0);
 				while (end_el && end_el->next)
 					end_el = end_el->next;
 				return(end_el->val);
@@ -369,7 +355,7 @@ namespace ft
 			{
 				iterator it_begin = this->begin();
 				iterator it_end = this->end();
-				while (it_begin != it_end)//&& i < n ?
+				while (it_begin != it_end)
 				{
 					*it_begin = val;
 					it_begin++;
@@ -403,7 +389,7 @@ namespace ft
 				typename Alloc::template rebind<t_list_el>::other r;
 
 				tmp = this->first_el->next;
-				r.destroy(this->first_el);//destroy d abord
+				r.destroy(this->first_el);
 				r.deallocate(this->first_el, 1);
 				this->first_el = tmp;
 				this->l_size = this->l_size - 1;
@@ -427,7 +413,6 @@ namespace ft
 				while (end_el && end_el->next)
 					end_el = end_el->next;
 				new_el->previous = end_el;
-				// new_el->val = val;
 				new_el->next = NULL;
 				end_el->next = new_el;
 				this->l_size = this->l_size + 1;
@@ -462,7 +447,6 @@ namespace ft
 				t_list_el *el = this->first_el;
 				if (position == this->end())
 				{
-					// iterator tmp = position;
 					t_list_el *pos = el;
 					while (pos && pos->next)
 						pos = pos->next;
@@ -483,9 +467,7 @@ namespace ft
 						new_el->previous = pos;
 					if (pos)
 						pos->next = new_el;
-					// new_el->val = val;
 					this->l_size = this->l_size + 1;
-					// return (--position);
 					return (iterator(this->first_el, this->l_size - 1));
 				}
 				while (el && &(el->val) != &(*position) && el->next)
@@ -496,12 +478,11 @@ namespace ft
 				t_list_el *new_el = r.allocate(1);
 				r.construct(new_el, el2);
 				new_el->previous = el->previous;
-				// new_el->val = val;
 				new_el->next = el;
 				el->previous = new_el;
 				if (el == this->first_el)
 					this->first_el = new_el;
-				else if (prev_el)//a verifier
+				else if (prev_el)
 					prev_el->next = new_el;
 				this->l_size = this->l_size + 1;
 				return (--position);
@@ -511,12 +492,12 @@ namespace ft
 				size_type i = 0;
 				while (i < n)
 				{
-					this->insert(position, val);//postion a deplacer ?
+					this->insert(position, val);
 					i++;
 				}
 			}
 			template <class InputIterator>
-			void insert(iterator position, InputIterator first, InputIterator last)//rajouter protection cas n == int
+			void insert(iterator position, InputIterator first, InputIterator last)
 			{
 				F<InputIterator, std::numeric_limits<InputIterator>::is_integer> f;
 				f.insert(position, first, last, this);
@@ -557,7 +538,6 @@ namespace ft
 					tmp = first;
 					first++;
 					this->erase(tmp);
-					// first++;
 				}
 				return (last);
 			}
@@ -644,7 +624,7 @@ namespace ft
 				{
 					tmp = first;
 					first++;
-					this->splice(position, x, tmp);//peut etre probleme ici
+					this->splice(position, x, tmp);
 				}
 			}
 			void remove(const value_type& val)
@@ -705,21 +685,10 @@ namespace ft
 				iterator tmp = begin;
 				if (begin != end)
 					begin++;
-				// iterator tmp;
 				while (begin != end)
 				{
 					tmp = begin;
 					begin++;
-					// fonctionne mais error ici
-					// std::cout << *begin << "|" << *tmp << std::endl;
-					// if (binary_pred(*tmp, *begin))
-					// {
-					// 	// std::cout << "here:" << (int)(*begin) << "|" << (int)(*tmp) << std::endl;
-					// 	this->erase(begin);
-					// }
-					// else
-					// 	tmp = begin;
-					// begin++;
 					if (binary_pred(*prev_it, *tmp))
 						this->erase(tmp);
 					else
@@ -728,7 +697,7 @@ namespace ft
 			}
 			void merge(list& x)
 			{
-				if (this == &x || x.l_size == 0)//attention pas *this == x sinon compare les valeurs et non les pointers
+				if (this == &x || x.l_size == 0)
 					return;
 				if (this->size() == 0)
 				{

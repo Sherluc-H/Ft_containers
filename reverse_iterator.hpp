@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 10:12:49 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/09 18:06:04 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/12 00:52:24 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,6 @@ namespace ft
             {
                 return (this->base_it);
             }
-            // bool operator==(const reverse_iterator& it2)
-            // {
-            //     if (this->base_it == it2.base_it)
-            //         return (true);
-            //     return (false);
-            // }
-            // bool operator!=(const reverse_iterator& it2)
-            // {
-            //     return (!(*this == it2));
-            // }
             reference operator*() const
             {
                 iterator_type tmp = this->base_it;
@@ -85,12 +75,12 @@ namespace ft
                 this->base_it--;
                 return (tmp);
             }
-            reverse_iterator& operator+=(difference_type n)//ici ref a checker
+            reverse_iterator& operator+=(difference_type n)
             {
                 this->base_it -= n;
                 return (*this);
             }
-            reverse_iterator operator-(difference_type n) const//a check avec vector
+            reverse_iterator operator-(difference_type n) const
             {
                 return (reverse_iterator(this->base_it + n));
             }

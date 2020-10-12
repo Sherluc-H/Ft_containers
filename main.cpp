@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/11 22:49:27 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/12 20:05:01 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,91 +28,31 @@
 #include "ft_check_vector.hpp"
 #include "ft_check_map.hpp"
 
-// typedef struct	s_data
-// {
-// 	int a;
-// 	std::string s;
-// 	int b;
-// 	struct ~s_data
-// 	{
-// 		s.~string();
-// 	}
-// }				t_data;
+typedef struct	s_data
+{
+	int a;
+	std::string s;
+	int b;
+}				t_data;
 
 template <class T>
 void ft_data_type_struct_check()
 {
-	std::string data = "test";
-	// t_data data;
-	// data.a = 1;
-	// data.s = "test";
-	// data.b = 2;
-	// t_data *test = &data;
-	// std::cout << test->a << "|" << (*test).a << std::endl;
-	T list;
-	list.push_back(data);
-	// std::cout << list.front().b << std::endl;
-	// list.pop_front();
-	std::cout << "here" << std::endl;
-	// typename T::iterator ita = list.begin();
-	// std::cout << ita->a << ita->s << ita->b << std::endl;
-}
-
-template <class T>
-void ft_const_check()
-{
-	std::cout << "---const check---" << std::endl;
-	T cl;
-	cl.push_back(1);
-	cl.push_back(2);
-	typename T::iterator it_begin = cl.begin();
-	typename T::iterator it_end = cl.end();
-	*it_begin = 3;
-	while (it_begin != it_end)
-	{
-		std::cout << *it_begin << std::endl;
-		it_begin++;
-	}
-	const T cl2 = cl;
-	typename T::const_iterator cit_begin = cl2.begin();
-	typename T::const_iterator cit_end = cl2.end();
-	// *cit_begin = 3;
-	while (cit_begin != cit_end)
-	{
-		std::cout << *cit_begin << std::endl;
-		cit_begin++;
-	}
-
-	typename T::reverse_iterator rit_begin = cl.rbegin();
-	typename T::reverse_iterator rit_end = cl.rend();
-	*rit_begin = 6;
-	while (rit_begin != rit_end)
-	{
-		std::cout << *rit_begin << std::endl;
-		rit_begin++;
-	}
-	if (rit_begin == rit_end)
-		std::cout << "same" << std::endl;
-	else
-		std::cout << "not same" << std::endl;
-	// std::reverse_iterator<std::list<int>::iterator> cc = cl.rbegin();
-	// std::cout << *cc << std::endl;
-	// *cc = 1;
-	// typename T::const_reverse_iterator cri = cl.rbegin();//ne marchait pas
-	// ft::reverse_iterator<ft::list<int>::iterator> cd = cl.rbegin();
-	// *cd = 1;
-	T clr = cl;
-	typename T::reverse_iterator cri = clr.rbegin();
-	std::cout << *cri << std::endl;
-	*cri = 8;
-
-	typename T::const_reverse_iterator r2 = clr.rend();
-	r2 = cri;
-	std::cout << *r2 << std::endl;
-	*cri = 9;
-	// *r2 = 10;
-	*cri = 7;
-	std::cout << *r2 << std::endl;
+	t_data data;
+	data.a = 1;
+	data.s = "test";
+	data.b = 2;
+	t_data *test = &data;
+	std::cout << test->a << "|" << (*test).a << std::endl;
+	T one;
+	one.push_back(data);
+	one.push_back(data);
+	std::cout << one.front().b << std::endl;
+	typename T::iterator ita = one.begin();
+	std::cout << ita->a << ita->s << ita->b << std::endl;
+	std::cout << one.size() << std::endl;
+	one.pop_front();
+	std::cout << one.size() << std::endl;
 }
 
 class test
@@ -127,6 +67,15 @@ class test
 		{
 			delete this->p;
 			std::cout << "destructor test" << std::endl;
+		}
+		test(const test& t)
+		{
+			*this = t;
+		}
+		test& operator=(const test& t)
+		{
+			this->p = t.p;
+			return (*this);
 		}
 	private:
 		int *p;
@@ -207,6 +156,19 @@ template<class T>
 class Bigger
 {
 	public:
+		Bigger()
+		{}
+		~Bigger()
+		{}
+		Bigger(const Bigger& b)
+		{
+			*this = b;
+		}
+		Bigger& operator=(const Bigger& b)
+		{
+			(void)b;
+			return (*this);
+		}
 		bool operator()(const T& a, const T& b) const
 		{
 			return (a > b);
@@ -217,6 +179,19 @@ template<class T>
 class Smaller
 {
 	public:
+		Smaller()
+		{}
+		~Smaller()
+		{}
+		Smaller(const Smaller& s)
+		{
+			*this = s;
+		}
+		Smaller& operator=(const Smaller& s)
+		{
+			(void)s;
+			return (*this);
+		}
 		bool operator()(const T& a, const T& b) const
 		{
 			return (a < b);
@@ -244,12 +219,11 @@ int		main(int argc, char *argv[])
 			ft_list_iterator_check<ft::list<int> >();
 			ft_list_reverse_iterator_check<ft::list<int> >();
 			ft_list_modifiers_check<ft::list<int> >();
-			// ft_data_type_struct_check<ft::list<std::string> >();
-			// ft_const_check<ft::list<int> >();
 			ft_list_operations_check<ft::list<int> >();
-			// ft::list<int> a;
-			// ft::list<int> b;
-			// ft::swap(a, b);
+			ft_data_type_struct_check<ft::list<t_data> >();
+			ft::list<int> a;
+			ft::list<int> b;
+			ft::swap(a, b);
 			// std::cout << "ft" << std::endl;
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
@@ -259,12 +233,11 @@ int		main(int argc, char *argv[])
 			ft_list_iterator_check<std::list<int> >();
 			ft_list_reverse_iterator_check<std::list<int> >();
 			ft_list_modifiers_check<std::list<int> >();
-			// ft_data_type_struct_check<std::list<std::string> >();
-			// ft_const_check<std::list<int> >();
 			ft_list_operations_check<std::list<int> >();
-			// std::list<int> a;
-			// std::list<int> b;
-			// std::swap(a, b);
+			ft_data_type_struct_check<std::list<t_data> >();
+			std::list<int> a;
+			std::list<int> b;
+			std::swap(a, b);
 			// std::cout << "std" << std::endl;
 		}
 		else
@@ -281,6 +254,7 @@ int		main(int argc, char *argv[])
 			ft_vector_iterator_check<ft::vector<int> >();
 			ft_vector_reverse_iterator_check<ft::vector<int> >();
 			ft_vector_modifiers_check<ft::vector<int> >();
+			// std::cout << "ft" << std::endl;
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
@@ -289,6 +263,7 @@ int		main(int argc, char *argv[])
 			ft_vector_iterator_check<std::vector<int> >();
 			ft_vector_reverse_iterator_check<std::vector<int> >();
 			ft_vector_modifiers_check<std::vector<int> >();
+			// std::cout << "std" << std::endl;
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;
@@ -306,6 +281,7 @@ int		main(int argc, char *argv[])
 			ft_map_reverse_iterator_check<ft::map<int, int> >();
 			ft_map_modifiers_check<ft::map<int, int> >();
 			ft_map_operations_check<ft::map<int, int> >();
+			// std::cout << "ft" << std::endl;
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
@@ -316,6 +292,7 @@ int		main(int argc, char *argv[])
 			ft_map_reverse_iterator_check<std::map<int, int> >();
 			ft_map_modifiers_check<std::map<int, int> >();
 			ft_map_operations_check<std::map<int, int> >();
+			// std::cout << "std" << std::endl;
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;
@@ -328,11 +305,13 @@ int		main(int argc, char *argv[])
 		{
 			ft_check_stack<ft::stack<int, ft::list<int> > >();
 			// ft_check_stack<ft::stack<int, ft::deque<int> > >();
+			// std::cout << "ft" << std::endl;
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
 			ft_check_stack<std::stack<int, std::list<int> > >();
 			// ft_check_stack<std::stack<int, std::deque<int> > >();
+			// std::cout << "std" << std::endl;
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;
@@ -345,11 +324,13 @@ int		main(int argc, char *argv[])
 		{
 			ft_check_queue<ft::queue<int, ft::list<int> > >();
 			// ft_check_queue<ft::queue<int, ft::deque<int> > >();
+			// std::cout << "ft" << std::endl;
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
 			ft_check_queue<std::queue<int, std::list<int> > >();
 			// ft_check_queue<std::queue<int, std::deque<int> > >();
+			// std::cout << "std" << std::endl;
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;
@@ -366,6 +347,7 @@ int		main(int argc, char *argv[])
 			// ft_vector_iterator_check<ft::deque<int> >();
 			// ft_vector_reverse_iterator_check<ft::deque<int> >();
 			// ft_vector_modifiers_check<ft::deque<int> >();
+			// std::cout << "ft" << std::endl;
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
@@ -375,6 +357,7 @@ int		main(int argc, char *argv[])
 			// ft_vector_iterator_check<std::deque<int> >();
 			// ft_vector_reverse_iterator_check<std::deque<int> >();
 			// ft_vector_modifiers_check<std::deque<int> >();
+			// std::cout << "std" << std::endl;
 		}
 		else
 			std::cout << "namespace not recognized" << std::endl;
