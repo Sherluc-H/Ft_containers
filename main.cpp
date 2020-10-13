@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/12 20:05:01 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/13 21:09:01 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,7 +364,5 @@ int		main(int argc, char *argv[])
 	}
 	else
 		std::cout << "Wrong arguments" << std::endl;
-	std::list<int>::const_iterator it;
-	ft::list<int>::const_iterator it2;
 	return (0);
 }

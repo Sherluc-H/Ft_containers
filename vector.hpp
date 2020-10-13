@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 09:33:34 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/12 01:04:36 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/13 21:10:26 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -448,7 +448,7 @@ namespace ft
 
 					while (i < this->vec_size)
 					{
-						tmp[i] = this->p[i];
+						this->alloc.construct(&(tmp[i]), this->p[i]);
 						i++;
 					}
 					this->alloc.destroy(this->p);
@@ -523,7 +523,7 @@ namespace ft
 				(void)val;
 				if (this->vec_size >= this->vec_capacity)
 					ft_reallocate();
-				this->p[this->vec_size] = val;
+				this->alloc.construct(&(this->p[this->vec_size]), val);
 				this->vec_size = this->vec_size + 1;
 			}
 			void pop_back()
