@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 09:33:34 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/13 21:10:26 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/14 00:10:44 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -840,10 +840,6 @@ namespace ft
 	{
 		x.swap(y);
 	}
-	// typename ft::vector<int>::iterator operator+(const ptrdiff_t &a, const typename ft::vector<int>::iterator &b)
-	// {
-	// 	return (b + a);
-	// }
 }
 
 #endif

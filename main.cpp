@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 17:50:42 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/13 21:09:01 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/14 00:10:28 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,20 +343,12 @@ int		main(int argc, char *argv[])
 		{
 			ft_check_iterator_constructibility<ft::deque<int> >();
 			ft_list_common_check<ft::deque<int> >();
-			// ft_vector_common_check<ft::deque<int> >();
-			// ft_vector_iterator_check<ft::deque<int> >();
-			// ft_vector_reverse_iterator_check<ft::deque<int> >();
-			// ft_vector_modifiers_check<ft::deque<int> >();
 			// std::cout << "ft" << std::endl;
 		}
 		else if (argc == 3 && arg_str.compare("std") == 0)
 		{
 			ft_check_iterator_constructibility<std::deque<int> >();
 			ft_list_common_check<std::deque<int> >();
-			// ft_vector_common_check<std::deque<int> >();
-			// ft_vector_iterator_check<std::deque<int> >();
-			// ft_vector_reverse_iterator_check<std::deque<int> >();
-			// ft_vector_modifiers_check<std::deque<int> >();
 			// std::cout << "std" << std::endl;
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:40:53 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/12 19:57:31 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/14 00:16:10 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,6 @@ void	ft_vector_common_check(void)
 	ft_print_it_range(c_one.begin(), c_one.end());
 	ft_print_basic2(one);
 	ft_print_basic2(c_one);
-	// one.at(2) = 3;
-	// c_one.at(0) = 11;
 	one[0] = 3;
 	ft_print_it_range(one.begin(), one.end());
 	ft_print_it_range(c_one.begin(), c_one.end());
@@ -140,8 +138,6 @@ void	ft_vector_common_check(void)
 	ft_print_it_range(c_one.begin(), c_one.end());
 	ft_print_basic2(one);
 	ft_print_basic2(c_one);
-	// one[2] = 33;
-	// c_one[0] = 111;
 	ft_print_it_range(one.begin(), one.end());
 	ft_print_it_range(c_one.begin(), c_one.end());
 	ft_print_basic2(one);
@@ -303,8 +299,6 @@ void	ft_vector_iterator_check()
 
 	typename T::const_iterator one_cit_begin = one.begin();
 	typename T::const_iterator one_cit_end(one.end());
-	// one_it_begin = one_cit_begin;
-	// one_cit_begin = 0;
 	ft_print_it_range(one_cit_begin, one_cit_end);
 	std::cout << (*one_cit_begin) << std::endl;
 	std::cout << *one_cit_begin++ << std::endl;
@@ -470,12 +464,6 @@ void	ft_vector_iterator_check()
 	std::cout << c_one_it_end3[-1] << std::endl;
 	std::cout << c_one_it_end3[-2] << std::endl;
 	ft_print_it_range(c_one.begin(), c_one.end());
-	// c_one_it_begin3[0] = 10;
-	// c_one_it_end3[0] = 100;
-	ft_print_it_range(c_one.begin(), c_one.end());
-	// c_one_it_begin3[-1] = 20;
-	// c_one_it_end3[1] = 200;
-	ft_print_it_range(c_one.begin(), c_one.end());
 }
 
 template <class T>
@@ -528,8 +516,6 @@ void ft_vector_reverse_iterator_check()
 
 	typename T::const_reverse_iterator one_rcit_begin = one.rbegin();
 	typename T::const_reverse_iterator one_rcit_end(one.rend());
-	// *one_rcit_begin = 0;
-	// one_rit_begin = one_rcit_begin;
 	ft_print_it_range(one_rcit_begin, one_rcit_end);
 	std::cout << *--one_rcit_end << std::endl;
 	std::cout << *one_rcit_begin << std::endl;
@@ -697,12 +683,6 @@ void ft_vector_reverse_iterator_check()
 	std::cout << one_crit_end3[1] << std::endl;
 	std::cout << one_crit_end3[-1] << std::endl;
 	std::cout << one_crit_end3[-2] << std::endl;
-	ft_print_it_range(c_one.rbegin(), c_one.rend());
-	// one_crit_begin3[0] = 10;
-	// one_crit_end3[0] = 100;
-	ft_print_it_range(c_one.rbegin(), c_one.rend());
-	// one_crit_begin3[-1] = 20;
-	// one_crit_end3[1] = 200;
 	ft_print_it_range(c_one.rbegin(), c_one.rend());
 }
 

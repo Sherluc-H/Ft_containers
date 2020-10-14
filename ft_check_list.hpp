@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:36:46 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/12 19:42:10 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/14 00:09:51 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,8 +202,6 @@ void	ft_list_iterator_check()
 
 	typename T::const_iterator one_cit_begin = one.begin();
 	typename T::const_iterator one_cit_end(one.end());
-	// one_it_begin = one_cit_begin;
-	// one_cit_begin = 0;
 	ft_print_it_range(one_cit_begin, one_cit_end);
 	std::cout << (*one_cit_begin) << std::endl;
 	std::cout << *one_cit_begin++ << std::endl;
@@ -276,8 +274,6 @@ void ft_list_reverse_iterator_check()
 
 	typename T::const_reverse_iterator one_rcit_begin = one.rbegin();
 	typename T::const_reverse_iterator one_rcit_end(one.rend());
-	// *one_rcit_begin = 0;
-	// one_rit_begin = one_rcit_begin;
 	ft_print_it_range(one_rcit_begin, one_rcit_end);
 	std::cout << *--one_rcit_end << std::endl;
 	std::cout << *one_rcit_begin << std::endl;

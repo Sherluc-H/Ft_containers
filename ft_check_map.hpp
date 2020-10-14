@@ -6,7 +6,7 @@
 /*   By: lhuang <lhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:45:28 by lhuang            #+#    #+#             */
-/*   Updated: 2020/10/12 19:42:06 by lhuang           ###   ########.fr       */
+/*   Updated: 2020/10/14 00:09:49 by lhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ void	ft_map_common_check(void)
 	std::cout << (*one.begin()).first << (*one.begin()).second << std::endl;
 	std::cout << (*c_one.begin()).first << (*c_one.begin()).second << std::endl;
 	std::cout << "b1:" << b1.first << "|" << b1.second << "|" << "b2:" << b2.first << "|" << b2.second << std::endl;
-	// b1.first = 1;
 	b1.second = 100;
 	std::cout << (*one.begin()).first << (*one.begin()).second << std::endl;
 	std::cout << (*c_one.begin()).first << (*c_one.begin()).second << std::endl;
@@ -292,8 +291,6 @@ void	ft_map_iterator_check()
 
 	typename T::const_iterator one_cit_begin = one.begin();
 	typename T::const_iterator one_cit_end(one.end());
-	// one_it_begin = one_cit_begin;
-	// one_cit_begin = 0;
 	ft_print_it_range_pair(one_cit_begin, one_cit_end);
 	std::cout << ((*one_cit_begin)).first << std::endl;
 	std::cout << (*one_cit_begin++).first << std::endl;
@@ -366,8 +363,6 @@ void ft_map_reverse_iterator_check()
 
 	typename T::const_reverse_iterator one_rcit_begin = one.rbegin();
 	typename T::const_reverse_iterator one_rcit_end(one.rend());
-	// *one_rcit_begin = 0;
-	// one_rit_begin = one_rcit_begin;
 	ft_print_it_range_pair(one_rcit_begin, one_rcit_end);
 	std::cout << (*--one_rcit_end).first << std::endl;
 	std::cout << (*one_rcit_begin).first << std::endl;
