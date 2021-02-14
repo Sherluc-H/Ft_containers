@@ -71,6 +71,12 @@ void	ft_map_common_check(void)
 	seven = one;
 	ft_print_basic3(seven);
 
+	ft_check_all_comp(one, five);
+	ft_check_all_comp(five, four);
+	ft_check_all_comp(one, six);
+	ft_check_all_comp(six, seven);
+	ft_check_all_comp(five, five);
+
 	std::cout << "----------------------here" << std::endl;
 	ft_print_it_range_pair(one.begin(), one.end());
 	ft_print_it_range_pair(six.begin(), six.end());
